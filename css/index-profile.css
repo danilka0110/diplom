@@ -1,0 +1,79 @@
+.card-index-profile {
+    border: 1px solid rgb(209, 209, 209);
+    margin-left: 20%;
+    margin-top: 5%;
+    background: rgba(231, 235, 219, 0.808);
+    width: 50%;
+}
+.p-my-profile {
+    font-size: 32px;
+    margin-left: 2%;
+    margin-top: 1%;
+}
+.user-email {
+    color:rgb(131, 131, 131)
+}
+
+#avg_users {
+    width: 400px; 
+}
+
+@media screen and (max-width: 992px) and (min-width: 767px){
+    .card-index-profile {
+        margin: 0 auto;
+        border: 1px solid rgb(209, 209, 209);
+        background: rgba(231, 235, 219, 0.808);
+        width: 60%;
+    }
+    #avg_users {
+        width: 300px; 
+    }
+    .card-body {
+        text-align: left;
+    }
+}
+@media screen and (max-width: 768px) and (min-width: 577px){
+    .card-index-profile {
+        margin: 0 auto;
+        border: 1px solid rgb(209, 209, 209);
+        background: rgba(231, 235, 219, 0.808);
+        width: 70%;
+    }
+    #avg_users {
+        width: 300px; 
+    }
+    .card-body {
+        text-align: left;
+    }
+}
+@media screen and (max-width: 576px) and (min-width: 321px){
+    .card-index-profile {
+        margin: 0 auto;
+        border: 1px solid rgb(209, 209, 209);
+        background: rgba(231, 235, 219, 0.808);
+        width: 90%;
+    }
+    #avg_users {
+        width: 275px; 
+    }
+    .card-body {
+        text-align: left;
+    }
+}
+@media screen and (max-width: 320px) and (min-width: 0px){
+    .card-index-profile {
+        margin: 0 auto;
+        border: 1px solid rgb(209, 209, 209);
+        background: rgba(231, 235, 219, 0.808);
+        width: 90%;
+    }
+    #avg_users {
+        width: 250px; 
+    }
+    .card-body {
+        text-align: left;
+    }
+}
+#dtBasicExample {
+    word-break: break-all;
+}
