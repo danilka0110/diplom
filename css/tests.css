@@ -171,13 +171,11 @@ a {
 }
 
 .ok {
-    border: 1px dotted #ADC092;
     background: #cfe6ccd3;
-    color: #58715E;
+    color: #7F5354;
 }
 
 .error {
-    border: 1px dotted #DDB1B1;
     background: #e6c6c6c7;
     color: #7F5354;
 }
@@ -189,6 +187,14 @@ a {
 .error2 {
     text-decoration: line-through;
     color: #ff0000;
+}
+
+.ok .q{
+    color: rgb(0, 93, 0);
+}
+
+.error .q{
+    color: #6a0000;
 }
 
 .btn-next {

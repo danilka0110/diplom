@@ -106,7 +106,7 @@
                 <form action="test-create" method="post" id="addTest">
                     <div class="card mt-4 card-create">
                         <div class="card-header">
-                            <h2 class="text-center">Добавление теста</h2>
+                            <h2 class="text-center">Создание теста</h2>
                         </div>
 
                         <div class="card-body">

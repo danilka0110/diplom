@@ -548,7 +548,7 @@ function print_result_for_user_profile($test_all_data_result, $test_id){
 		$print_res .= "<span>Название теста: <b>$test_name</b></span>";
 	$print_res .= "</div>";
 	$print_res .= "<div>";
-		$print_res .= "<span>Автор: <b>$test_author</b></span>";
+		$print_res .= "<span>Автор теста: <b>$test_author</b></span>";
 	$print_res .= "</div>";
 
 
@@ -755,7 +755,6 @@ function category_list() {
 	$categories = [
 		'Бизнес',
 		'Биология',
-		'Внешность',
 		'Информатика',
 		'Искусство',
 		'История',
@@ -765,6 +764,7 @@ function category_list() {
 		'Медицина',
 		'Программирование',
 		'Психология',
+		'Спорт',
 		'Физика',
 		'Философия',
 		'Экономика',		
