@@ -91,6 +91,7 @@ function get_correct_answers($test){
     foreach($query as $item) {
 
         $data[$item['question_id']] = $item['answer_id'];
+		
 
     }
 	return $data;

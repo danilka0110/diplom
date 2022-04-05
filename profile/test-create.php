@@ -1,9 +1,11 @@
 <?php 
     require "../db.php";
+    require "../includes/functions.php";
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
     ob_start();
     date_default_timezone_set('Moscow');
     $date = date('Y-m-d', time());
+    $categories = category_list();
 ?>
 
 
@@ -141,8 +143,24 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+                                <div class="text-center mt-4 category-block">
+                                    <button type="button" class="btn btn-secondary addCategory">Добавить категорию</button>
+                                    <select name="category" id="1" style="width: 70%;">
+                                        <option>Без категории</option>
+                                        <?php  foreach($categories as $category):?>
+                                            <option><?=$category?></option>
+                                        <?php endforeach;?>
+                                    </select>
+                                </div>
+
+
+
+                                
                             </div>
-                            <div class="mt-2 text-center">
+                            <div class="mt-4 text-center">
                                 <h4>Добавление вопросов</h4>
                             </div>
                             <div class="questions">
@@ -253,6 +271,30 @@
                                     }
                                     $questionNum++;
                                 }
+
+                                if (isset($_POST['category'])) {
+                                    if ($_POST["category"] == 'Без категории') {
+                                        return false;
+                                    } 
+                                    if (!in_array($_POST["category"], $categories)) {
+                                        return false;
+                                    }
+                                    
+                                    $last_test = R::findLast('test');
+                                    $test_id = $last_test->id;
+                                    $category = R::dispense('category');
+                                    $category->test_id = $test_id;
+                                    $category->category = trim($_POST["category"]);
+                                    R::store($category);
+                                }
+                                    
+                                
+
+
+                                    
+                                
+                                
+
                                 (header("Location: tests"));
                                 ob_end_flush();
                             } else {

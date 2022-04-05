@@ -13,9 +13,9 @@
           if (!in_array("$category_data", $categories)) {
             header('Location: tests');
         } 
-          $category_tests = get_test_for_category($category_data);
+            $category_tests = get_test_for_category($category_data);
         } else {
-          header('Location: tests');
+            header('Location: tests');
         }
       }
     //pagination
@@ -229,7 +229,11 @@
                     <?php endfor ;?>
                     <div class="page-list" align="center">
                         <?php for ($p = 0; $p < $page_count; $p++) :?>
-                        <a href="tests?page=<?=$p;?>"><button class="btn btn-outline-primary" id="<?=$p?>"><?=$p+1?></button></a>
+                            <?php if ($p == $_GET['page']):?>
+                                <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary active" id="<?=$p?>"><?=$p+1?></button></a>
+                            <?php else:?>
+                                <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary page_btn" id="<?=$p?>"><?=$p+1?></button></a>
+                            <?php endif;?>
                         <?php endfor ;?>
                     </div>
                 <?php elseif ($_POST['search'] != NULL && $_GET['category'] == NULL) :?>
@@ -279,9 +283,9 @@
                                 <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
                                 <span class="test-date-for-img"><?=$category_tests[$i]['date']?></span>
                             </div>
-                            <a href="test?test=<?=$category_tests[$i]['id']?>"><img
+                            <a href="test?test=<?=$category_tests[$i]['test_id']?>"><img
                                     src="<?=$category_tests[$i]['img_link']?>" class="card-img-test" alt="..."></a>
-                            <a href="test?test=<?=$category_tests[$i]['id']?>"
+                            <a href="test?test=<?=$category_tests[$i]['test_id']?>"
                                 class="test-name-for-img"><?=$category_tests[$i]['test_name']?></a>
                             <div class="test-author-for-img mt-1">
                                 <img src="../img/author.png" alt="author.png" style="width:12px">
@@ -290,9 +294,9 @@
                                 <span><?=$category_tests[$i]['count_passes']?></span>
                             </div>
                             <div class="card-body">
-                                <p class="card-text"><?=$tests_search[$i]['description']?></p>
+                                <p class="card-text"><?=$category_tests[$i]['description']?></p>
                                 <div class="text-center">
-                                    <a href="test?test=<?=$tests_search[$i]['id']?>"
+                                    <a href="test?test=<?=$category_tests[$i]['test_id']?>"
                                         class="btn btn-primary btn-test">Пройти
                                         тест</a>
                                 </div>
@@ -420,7 +424,7 @@
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/tests.js"></script>
+
 
 
 </body>

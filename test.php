@@ -31,7 +31,7 @@ if (isset($_POST['test'])) {
         echo print_result($test_all_data_result, $test); // вывод результатов
     }
     else exit('Ошибка!');
-
+    
     die;
 
     // print_r($_POST);
