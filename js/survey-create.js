@@ -28,31 +28,17 @@ $(document).on('click', '.addAnswer', function() {
     if (answer == 1) {
         answerBlock.append(`
         <div class="row">
-            <div class="col-12 col-md-9 col-lg-10 col-xl-10">
+            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <label for="answer_text_1_1" class="form-label">Ответ</label>
-                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Ответ #${answer}" autocomplete="off" data-numanswer="${answer}">
-            </div>
-            <div class="col-12 col-md-3 col-lg-2 col-xl-2">
-                <label for="answer_score_1_1" class="form-label">Балл</label>
-                <select name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
-                    <option>0</option>
-                    <option>1</option>
-                </select>
+                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
             </div>
         </div>`);
     } else {
         answerBlock.append(`
         <div class="row">
-            <div class="col-12 col-md-9 col-lg-10 col-xl-10">
+            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 <label for="answer_text_1_1" class="form-label"></label>
-                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Ответ #${answer}" autocomplete="off" data-numanswer="${answer}">
-            </div>
-            <div class="col-12 col-md-3 col-lg-2 col-xl-2">
-                <label for="answer_score_1_1" class="form-label"></label>
-                <select name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
-                    <option>0</option>
-                    <option>1</option>
-                </select>
+                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
             </div>
         </div>`);
     }

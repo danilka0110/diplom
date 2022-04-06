@@ -1,5 +1,6 @@
 <?php 
     require "../db.php";
+    require "../includes/functions-surveys.php";
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
     ob_start();
 ?>
@@ -97,11 +98,28 @@
 
 
 <div class="main-profile">
+    <div class="container"> 
+        <div class="text-center mt-4">
+            <a href="survey-create" type="button" class="btn btn-primary">Создать опрос</a>
+        </div>
 
-<p>
-    ОПРОСЫ
-</p>
 
+
+        <?php if ($surveys): ?>
+
+
+
+
+
+        <?php  else: //tests ?>
+            <h3>Нет опросов</h3>
+        <?php endif //tests ?>
+
+
+
+
+
+    </div>
 </div>
 
 

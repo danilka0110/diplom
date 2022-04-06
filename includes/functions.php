@@ -80,18 +80,18 @@ function get_test_name($test_id) {
 
 function get_correct_answers($test){
 	if( !$test ) return false;
-	$query = R::getAll("SELECT q.id AS question_id, a.id AS answer_id
+	$query = R::getAll("SELECT q.id AS question_id, a.id AS answer_id, q.type AS question_type
 		FROM questions q
 		LEFT JOIN answers a
 			ON q.id = a.question_id
 		LEFT JOIN test
 			ON test.id = q.test_id
 				WHERE q.test_id = $test AND a.correct_answer = '1' AND test.enable = '1'");
+
 	$data = null;
     foreach($query as $item) {
 
-        $data[$item['question_id']] = $item['answer_id'];
-		
+		$data[$item['question_id']] = $item['answer_id'];		
 
     }
 	return $data;

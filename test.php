@@ -31,15 +31,16 @@ if (isset($_POST['test'])) {
         echo print_result($test_all_data_result, $test); // вывод результатов
     }
     else exit('Ошибка!');
-    print_arr($_POST);
-    print_arr($result);
-    print_arr($test_all_data);
-    print_arr($test_all_data_result);
+
     die;
 
+    // echo("_POST");   
     // print_arr($_POST);
+    // echo("result");
     // print_arr($result);
+    // echo("test_all_data");
     // print_arr($test_all_data);
+    // echo("test_all_data_result");
     // print_arr($test_all_data_result);
 }
 
@@ -210,7 +211,7 @@ if (isset($_GET['test'])) {
                                 <p class="q"><?=$answer?></p>
                                 <?php else: // выводим варианты ответов?>
                                 <p class="a">
-                                    <input required class="input-ans" type="radio" name="question-<?=$id_question?>"
+                                    <input required class="input-ans" type="radio</p>" name="question-<?=$id_question?>"
                                         id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
                                     <label for="answer-<?=$id_answer?>"><?=$answer?></label>
                                 </p>
