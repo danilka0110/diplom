@@ -50,18 +50,18 @@ function get_test_for_category($category_data) {
 
 function get_test_data($test_id){
 	if(!$test_id) return;
-	$query = R::getAll("SELECT q.question, q.parent_test, a.id, a.answer, a.parent_question
+	$query = R::getAll("SELECT q.question, q.test_id, a.id, a.answer, a.question_id
 		FROM questions q
 		LEFT JOIN answers a
-			ON q.id = a.parent_question
+			ON q.id = a.question_id
 		LEFT JOIN test
-			ON test.id = q.parent_test
-				WHERE q.parent_test = $test_id AND test.enable = '1'");
+			ON test.id = q.test_id
+				WHERE q.test_id = $test_id AND test.enable = '1'");
 	$data = null;
     foreach($query as $item) {
-        if( !$item['parent_question'] ) return false;
-		$data[$item['parent_question']][0] = $item['question'];
-		$data[$item['parent_question']][$item['id']] = $item['answer'];
+        if( !$item['question_id'] ) return false;
+		$data[$item['question_id']][0] = $item['question'];
+		$data[$item['question_id']][$item['id']] = $item['answer'];
     }
 	return $data;
 }
@@ -83,10 +83,10 @@ function get_correct_answers($test){
 	$query = R::getAll("SELECT q.id AS question_id, a.id AS answer_id
 		FROM questions q
 		LEFT JOIN answers a
-			ON q.id = a.parent_question
+			ON q.id = a.question_id
 		LEFT JOIN test
-			ON test.id = q.parent_test
-				WHERE q.parent_test = $test AND a.correct_answer = '1' AND test.enable = '1'");
+			ON test.id = q.test_id
+				WHERE q.test_id = $test AND a.correct_answer = '1' AND test.enable = '1'");
 	$data = null;
     foreach($query as $item) {
 

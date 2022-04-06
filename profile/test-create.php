@@ -233,7 +233,7 @@
                                 }
 
                                 R::store($test);
-                                $parent_test = $test->id;
+                                $test_id = $test->id;
                         
                                 $questionNum = 1;
                         
@@ -247,7 +247,7 @@
                                     }
                             
                                     
-                                    $question->parent_test = $parent_test;
+                                    $question->test_id = $test_id;
                                     $question->question = $question_name;
                                     R::store($question);
                                     $questionId = $question->id;
@@ -262,7 +262,7 @@
                                             continue;
                                         }
                             
-                                        $answer->parent_question = $questionId;
+                                        $answer->question_id = $questionId;
                                         $answer->answer = $answer_name;
                                         $answer->correct_answer = $correct_answer; 
                         

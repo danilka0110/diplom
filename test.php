@@ -31,11 +31,14 @@ if (isset($_POST['test'])) {
         echo print_result($test_all_data_result, $test); // вывод результатов
     }
     else exit('Ошибка!');
-    
+    print_arr($_POST);
+    print_arr($result);
+    print_arr($test_all_data);
+    print_arr($test_all_data_result);
     die;
 
-    // print_r($_POST);
-    // print_r($result);
+    // print_arr($_POST);
+    // print_arr($result);
     // print_arr($test_all_data);
     // print_arr($test_all_data_result);
 }
