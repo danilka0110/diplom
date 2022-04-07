@@ -33,7 +33,7 @@ function get_tests_for_search($search_data){
 	return $data;
 }
 
-function get_test_for_category($category_data) {
+function get_tests_for_category($category_data) {
     $data = R::getAll("SELECT * 
 		FROM test t 
 		LEFT JOIN category c 
@@ -746,7 +746,6 @@ function formatstr($str) {
 			return $str;
 		else:
 			if ($str != NULL):
-			echo("не число");
 			return false;
 			endif;
 		endif;

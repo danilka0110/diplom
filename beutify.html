@@ -1,26 +1,41 @@
 <?php 
     require "db.php";
-    require_once 'includes/functions.php';
+    require_once 'includes/surveys-functions.php';
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
     ob_start();
-    $tests = get_tests();
-
-    //pagination
-    $page = $_GET['page'];
-    $count = 8;
-    $page_count = (count($tests)) / $count;
-
-    if(isset($_POST['search'])) {
-      if ($_POST['search'] != NULL) {
-        $search_data = $_POST['search'];
+    $surveys = get_surveys();
+    // $popular_tests = get_popular_tests();
+    // $categories = category_list();
+    // if(isset($_GET['category'])) {
+    //     if ($_GET['category'] != NULL) {
+    //       $category_data = $_GET['category'];
+          
+    //       if (!in_array("$category_data", $categories)) {
+    //         header('Location: tests');
+    //     } 
+    //         $category_tests = get_test_for_category($category_data);
+    //     } else {
+    //         header('Location: tests');
+    //     }
+    //   }
+    // //pagination
+    // $str = $_GET['page'];
+    // $page = formatstr($str);
+    // if($page === false) header('Location: tests');
+    // $count = 8;
+    // $page_count = (count($tests)) / $count;
+    // if ($page > $page_count || $page < 0) header('Location: tests');
+    // if(isset($_POST['search'])) {
+    //   if ($_POST['search'] != NULL) {
+    //     $search_data = $_POST['search'];
         
-        $tests_search = get_tests_for_search($search_data);
-        $page_count_search = (count($tests_search)) / $count;
+    //     $tests_search = get_tests_for_search($search_data);
+    //     $page_count_search = (count($tests_search)) / $count;
         
-      } else {
-        header('Location: testim');
-      }
-    }
+    //   } else {
+    //     header('Location: tests');
+    //   }
+    // }
 
 
 ?>
@@ -32,7 +47,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тесты</title>
+    <title>Опросы</title>
     <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
@@ -79,10 +94,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="tests">Тесты</a>
+                        <a class="nav-link" aria-current="page" href="tests">Тесты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="surveys">Опросы</a>
+                        <a class="nav-link active" href="surveys">Опросы</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contacts">Контакты</a>
@@ -118,24 +133,32 @@
         </div>
     </nav>
 
+
+
+
     <div class="main">
-
-
         <?php if ($tests): ?>
         <div class="container-fluid tests-container">
+            <div class="row">
+                <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
+                <div class="container-fluid tests-container">
 
+                    <h3 class="text-center">Популярные опросы</h3>
+                    <div class="container-fluid tests-container text-center">
 
-            <div class="mb-5">
-
-                <form method="POST">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
-                            aria-describedby="button-addon2" name="search">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
+                        <?php foreach($categories as $category) :?>
+                        <a href="tests?category=<?=$category?>"><button
+                                class="btn btn-outline-primary mt-2 btn-category"
+                                id="<?=$category?>"><?=$category?></button></a>
+                        <?php endforeach?>
                     </div>
-                </form>
-                <div class="row">
-                    <?if ($_POST == NULL) :?>
+                    <form method="POST">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
+                                aria-describedby="button-addon2" name="search">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
+                        </div>
+                    </form>
                     <?php for ($i = $page*$count; $i < (($page+1)*$count); $i++):?>
                     <?php if ($tests[$i]['id'] != NULL) :?>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
@@ -165,158 +188,121 @@
                     </div>
                     <?php endif ;?>
                     <?php endfor ;?>
-                    <div class="page-list" align="center">
-                        <?php for ($p = 0; $p < $page_count; $p++) :?>
-                        <a href="testim?page=<?=$p;?>"><button class="page_button"><?=$p+1?></button></a>
 
-                        <?php endfor ;?>
-                    </div>
-                    <?php else :?>
-                    <?php for ($i = 0; $i < count($tests_search); $i++):?>
-                    <?php if ($tests_search[$i]['id'] != NULL) :?>
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                        <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$tests_search[$i]['date']?></span>
-                            </div>
-                            <a href="test?test=<?=$tests_search[$i]['id']?>"><img
-                                    src="<?=$tests_search[$i]['img_link']?>" class="card-img-test" alt="..."></a>
-                            <a href="test?test=<?=$tests_search[$i]['id']?>"
-                                class="test-name-for-img"><?=$tests_search[$i]['test_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
-                                <span><?=$tests_search[$i]['author']?></span>
-                                <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                                <span><?=$tests_search[$i]['count_passes']?></span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?=$tests_search[$i]['description']?></p>
-                                <div class="text-center">
-                                    <a href="test?test=<?=$tests_search[$i]['id']?>"
-                                        class="btn btn-primary btn-test">Пройти
-                                        тест</a>
-                                </div>
-                            </div>
+
+
+
+                </div>
+                <?php  else: //tests ?>
+                <h3>Нет опросов</h3>
+                <?php endif //tests ?>
+
+            </div>
+        </div>
+
+
+
+        <footer class="bg-dark text-center text-white">
+            <div class="container p-4">
+                <section class="mb-4">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                        distinctio earum repellat quaerat voluptatibus placeat nam,
+                        commodi optio pariatur est quia magnam eum harum corrupti dicta,
+                        aliquam sequi voluptate quas.
+                    </p>
+                </section>
+
+                <section class="">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <?php endif ;?>
-                    <?php endfor ;?>
-                    <?php endif ;?>
-                </div>
+                </section>
+
             </div>
-            <?php  else: //tests ?>
-            <h3>Нет тестов</h3>
-            <?php endif //tests ?>
-
-        </div>
-    </div>
-
-
-
-    <footer class="bg-dark text-center text-white">
-        <div class="container p-4">
-            <section class="mb-4">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                    distinctio earum repellat quaerat voluptatibus placeat nam,
-                    commodi optio pariatur est quia magnam eum harum corrupti dicta,
-                    aliquam sequi voluptate quas.
-                </p>
-            </section>
-
-            <section class="">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2022 Copyright:
-            <a class="text-white" href="#">Paradigm Tests</a>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-    </script>
-    <script src="js/test.js"></script>
-
-
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2022 Copyright:
+                <a class="text-white" href="#">Paradigm Tests</a>
+            </div>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+            integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
+        </script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
 </body>
 
 </html>

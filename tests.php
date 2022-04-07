@@ -13,7 +13,7 @@
           if (!in_array("$category_data", $categories)) {
             header('Location: tests');
         } 
-            $category_tests = get_test_for_category($category_data);
+            $category_tests = get_tests_for_category($category_data);
         } else {
             header('Location: tests');
         }

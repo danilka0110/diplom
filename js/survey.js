@@ -80,20 +80,20 @@ if ($('.question').length != 1) {
 // -------------------------------------------------------------------- //
 
     $('#btn').click(function() {
-        var test = +$('#test-id').text();
-        var res = {'test':test};
+        var survey = +$('#survey-id').text();
+        var res = {'survey':survey};
         error = false;
         $('.question').each(function() {
-            var id = $(this).data('id');
-            res[id] = $('input[name=question-' + id + ']:checked').val();
+            var id = $(this).data('id'); 
+            res[id] = $('input[name=question-' + id + ']:checked').val(); console.log(res[id]);
             if (res[id] == undefined) {
                 error = true;
             }
-        });
+        }); console.log(res);
         if (error == false) {
             $('.result-error').hide();
             $.ajax({
-                url: 'test',
+                url: 'survey', 
                 type: 'POST',
                 data: res,
                 success: function(html) {

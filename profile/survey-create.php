@@ -255,7 +255,7 @@
                                             continue;
                                         }
                                         
-                                        $survey_answer->survey_question_id = $questionId;
+                                        $survey_answer->question_id = $questionId;
                                         $survey_answer->answer = $answer_name;
                         
                                         R::store($survey_answer);

@@ -4,33 +4,34 @@ date_default_timezone_set('Moscow');
 $date = date('Y-m-d', time());
 
 require_once 'db.php';
-require_once 'includes/functions.php';
+require_once 'includes/functions-surveys.php';
 $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
-if (isset($_POST['test'])) {
-    $test = (int)$_POST['test']; // sql injection crash
-    unset($_POST['test']);
-    $result = get_correct_answers($test);
-    if (!is_array($result)) exit('Ошибка!');
-    // данные теста
-    $test_all_data = get_test_data($test);
-    // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
-    $test_all_data_result = get_test_data_result($test_all_data, $result);
-    if($_POST) {
+if (isset($_POST['survey'])) { 
+    print_arr($_POST);
+    // $survey = (int)$_POST['survey']; // sql injection crash
+    // unset($_POST['survey']);
+    // $result = get_correct_answers($test);
+    // if (!is_array($result)) exit('Ошибка!');
+    // // данные теста
+    // $test_all_data = get_test_data($test);
+    // // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
+    // $test_all_data_result = get_test_data_result($test_all_data, $result);
+    // if($_POST) {
 
-        $test_for_count_passes = R::load('test', $test);
-        $count_passes = $test_for_count_passes->count_passes;
-        $count_passes++;
-        $test_for_count_passes->count_passes = $count_passes;
-        R::store($test_for_count_passes);
+    //     $test_for_count_passes = R::load('test', $test);
+    //     $count_passes = $test_for_count_passes->count_passes;
+    //     $count_passes++;
+    //     $test_for_count_passes->count_passes = $count_passes;
+    //     R::store($test_for_count_passes);
 
-        if($user) :
-        save($test, $user);
-        save_result($test_all_data_result, $test, $user->id, $date);     
-        else :
-        endif ;
-        echo print_result($test_all_data_result, $test); // вывод результатов
-    }
-    else exit('Ошибка!');
+    //     if($user) :
+    //     save($test, $user);
+    //     save_result($test_all_data_result, $test, $user->id, $date);     
+    //     else :
+    //     endif ;
+    //     echo print_result($test_all_data_result, $test); // вывод результатов
+    // }
+    // else exit('Ошибка!');
 
     die;
 
@@ -44,25 +45,29 @@ if (isset($_POST['test'])) {
     // print_arr($test_all_data_result);
 }
 
-// список тестов
+// список опросов
 
-$tests = get_tests();
+$surveys = get_surveys();
 
-if (isset($_GET['test'])) {
-    $test_id = (int)$_GET['test']; // sql injection crash
-    $test_data = get_test_data($test_id);
-    $test_name_and_description = get_test_name($test_id);
-    foreach($test_name_and_description as $item) {
-		$test_name = $item['test_name'];
-		$test_description = $item['description'];
-        $test_img_link = $item['img_link'];
-        $test_author = $item['author'];
+if (isset($_GET['survey'])) {
+    $survey_id = (int)$_GET['survey']; // sql injection crash
+    $survey_data = get_survey_data($survey_id);
+    $survey_name_and_description = get_survey_name($survey_id);
+    foreach($survey_name_and_description as $item) {
+		$survey_name = $item['survey_name'];
+		$survey_description = $item['description'];
+        $survey_img_link = $item['img_link'];
+        $survey_author = $item['author'];
     }
-    if(is_array($test_data)) {
-        $count_questions = count($test_data);
-        $pagination = pagination($count_questions, $test_data);
+    if(is_array($survey_data)) {
+        $count_questions = count($survey_data);
+        $pagination = pagination($count_questions, $survey_data);
     }
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -163,121 +168,70 @@ if (isset($_GET['test'])) {
             <div class="wrap">
 
 
-
-
-                <?php if ($tests): ?>
+                <?php if ($surveys):?>
                 <div class="content">
-                    <?php if(isset($test_data)) : ?>
-
-
+                    <?php if(isset($survey_data)) :?>
 
 
                         <div class="test-head">
-                            <a style="font-size: 26px" class="test-name"><?=$test_name?></a>
+                            <a style="font-size: 26px" class="test-name"><?=$survey_name?></a>
                             <div>
-                                <img src="<?=$test_img_link?>" alt="img" width="150px" height="150px" class="test-img">
-                                <span class="test-description"><?=$test_description?></span>
+                                <img src="<?=$survey_img_link?>" alt="img" width="150px" height="150px" class="test-img">
+                                <span class="test-description"><?=$survey_description?></span>
                             </div>
                             <p>Всего вопросов: <?=$count_questions?></p>
-                            <p>Автор: <?=$test_author?></p>
+                            <p>Автор: <?=$survey_author?></p>
 
                             <button class="btn btn-primary" id="test-start">Пройти тест</button>
                         </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
                     <div class="test-show none">
-                        <span style="font-size: 26px" class="test-name"><?=$test_name?></span>
+                        <span style="font-size: 26px" class="test-name"><?=$survey_name?></span>
                         <hr>
                         <?=$pagination?>
-                        <span class="none" id="test-id"><?=$test_id?></span>
+                        <span class="none" id="survey-id"><?=$survey_id?></span>
                         <div class="test-data">
-                            <?php foreach($test_data as $id_question => $item): // получаем каждый конкретный вопрос + ответы ?>
+                            <?php foreach($survey_data as $id_question => $item): // получаем каждый конкретный вопрос + ответы ?>
                             <div class="question" data-id="<?=$id_question?>" id="question-<?=$id_question?>">
-
                                 <?php foreach($item as $id_answer => $answer): // проходимся по массиву вопрос/ответы?>
-
                                 <?php if (!$id_answer): //выводим вопрос?>
                                 <p class="q"><?=$answer?></p>
                                 <?php else: // выводим варианты ответов?>
                                 <p class="a">
-                                    <input required class="input-ans" type="radio" name="question-<?=$id_question?>"
+                                    <input required class="input-ans" type="checkbox" name="question-<?=$id_question?>"
                                         id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
                                     <label for="answer-<?=$id_answer?>"><?=$answer?></label>
                                 </p>
-
                                 <?php endif; // id_answer?>
-
                                 <?php endforeach; //$item ?>
                             </div>
                             <?php endforeach; //$test_data ?>
-                            <!-- <div class="buttons">
-                                <a class="center btn-next btn btn-primary" id="btn-next">Следующий
-                                    вопрос</a>
-                                </div> -->
                         </div>
 
 
                         <p class="none result-error" style="color:red">Вы ответили не на все вопросы</p>
                         <!-- <p class="none next-error" style="color:red">Вопросов больше нет</p> -->
-
-
                         <div class="buttons text-center">
                             <button type="submit" class="center btn-finish btn btn-success" id="btn">Закончить
                                 тест</button>
                         </div>
-
-
-                    <?php else: header('Location: tests'); ob_end_flush(); // isset($test_data) ?>
-
+                    <?php else: header('Location: surveys'); ob_end_flush(); // isset($test_data) ?>
                     <?php endif; // isset($test_data) ?>
                     </div>
-
-
-
-
-
-
-
-
-
-
                 </div>
-
-
-
                 <?php  else: //tests ?>
                 <h3>Нет тестов</h3>
                 <?php endif //tests ?>
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
-    <script src="js/test.js"></script>
+    <script src="js/survey.js"></script>
 </body>
 
 </html>
