@@ -53,6 +53,12 @@ $('.addQuestion').on('click', function() {
     questionBlock.append(`
         <div class="question_${questionNum} mt-4" data-question="${questionNum}">
             <label for="question_${questionNum}" class="form-label">Вопрос #${questionNum}</label>
+
+            <div>
+                <input type="checkbox" name="ifcheckbox_${questionNum}" id="ifcheckbox_${questionNum}">
+                <label for="ifcheckbox_${questionNum}" class="form-label">Множественный выбор</label>
+            </div>
+
             <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}">
             <div class="answers">
                 <div class="answer-items">

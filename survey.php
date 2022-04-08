@@ -6,48 +6,48 @@ $date = date('Y-m-d', time());
 require_once 'db.php';
 require_once 'includes/functions-surveys.php';
 $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
+
+
+
+
+
+
 if (isset($_POST['survey'])) { 
-    print_arr($_POST);
-    // $survey = (int)$_POST['survey']; // sql injection crash
-    // unset($_POST['survey']);
-    // $result = get_correct_answers($test);
-    // if (!is_array($result)) exit('Ошибка!');
-    // // данные теста
-    // $test_all_data = get_test_data($test);
-    // // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
-    // $test_all_data_result = get_test_data_result($test_all_data, $result);
-    // if($_POST) {
 
-    //     $test_for_count_passes = R::load('test', $test);
-    //     $count_passes = $test_for_count_passes->count_passes;
-    //     $count_passes++;
-    //     $test_for_count_passes->count_passes = $count_passes;
-    //     R::store($test_for_count_passes);
+    $survey_id = (int)$_POST['survey']; // sql injection crash
+    unset($_POST['survey']);
+ 
 
-    //     if($user) :
-    //     save($test, $user);
-    //     save_result($test_all_data_result, $test, $user->id, $date);     
-    //     else :
-    //     endif ;
-    //     echo print_result($test_all_data_result, $test); // вывод результатов
-    // }
-    // else exit('Ошибка!');
+    $survey_all_data = get_test_data($survey_id);
+
+    $survey_correct = survey_correct($survey_id, $survey_all_data); 
+    if (!is_array($survey_correct)) exit('Ошибка! kek'); 
+
+    if($_POST) {
+        
+        
+        if ($user):
+            save($survey_id, $user->id);
+        else:
+    
+        endif;
+        echo print_result($survey_id);
+
+    } else exit('Ошибка!');
 
     die;
-
+    
     // echo("_POST");   
     // print_arr($_POST);
-    // echo("result");
-    // print_arr($result);
-    // echo("test_all_data");
-    // print_arr($test_all_data);
-    // echo("test_all_data_result");
-    // print_arr($test_all_data_result);
+    // echo("survey_all_data");
+    // print_arr($survey_all_data);
+
 }
 
 // список опросов
 
 $surveys = get_surveys();
+
 
 if (isset($_GET['survey'])) {
     $survey_id = (int)$_GET['survey']; // sql injection crash
@@ -193,17 +193,52 @@ if (isset($_GET['survey'])) {
                         <span class="none" id="survey-id"><?=$survey_id?></span>
                         <div class="test-data">
                             <?php foreach($survey_data as $id_question => $item): // получаем каждый конкретный вопрос + ответы ?>
+
+
+
+                                
                             <div class="question" data-id="<?=$id_question?>" id="question-<?=$id_question?>">
                                 <?php foreach($item as $id_answer => $answer): // проходимся по массиву вопрос/ответы?>
-                                <?php if (!$id_answer): //выводим вопрос?>
-                                <p class="q"><?=$answer?></p>
-                                <?php else: // выводим варианты ответов?>
-                                <p class="a">
-                                    <input required class="input-ans" type="checkbox" name="question-<?=$id_question?>"
-                                        id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
-                                    <label for="answer-<?=$id_answer?>"><?=$answer?></label>
-                                </p>
-                                <?php endif; // id_answer?>
+
+
+
+                                    <?php if($item['type'] == 'radio'): ?>
+
+                                        <?php if (!$id_answer): //выводим вопрос?>
+                                        <p class="q radio"><?=$answer?></p>
+                                        <?php elseif ($id_answer != 'type'): // выводим варианты ответов?>
+                                        <p class="a">
+                                            <input required class="input-ans radio" type="radio" name="question-<?=$id_question?>"
+                                                id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
+                                            <label for="answer-<?=$id_answer?>"><?=$answer?></label>
+                                        </p>
+                                        <?php endif; // id_answer?>
+
+
+
+
+                                    <?php elseif($item['type'] == 'checkbox'): // id_answer?>
+
+                                        <?php if (!$id_answer): //выводим вопрос?>
+                                        <p class="q checkbox"><?=$answer?></p>
+                                        <?php elseif ($id_answer != 'type'): // выводим варианты ответов?>
+                                        <p class="a">
+                                            <input required class="input-ans checkbox-answers" type="checkbox" name="question-<?=$id_question?>"
+                                                id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
+                                            <label for="answer-<?=$id_answer?>"><?=$answer?></label>
+                                        </p>
+                                        <?php endif; // id_answer?>
+
+                                    <?php endif; // id_answer?>
+
+
+
+
+
+
+
+
+
                                 <?php endforeach; //$item ?>
                             </div>
                             <?php endforeach; //$test_data ?>

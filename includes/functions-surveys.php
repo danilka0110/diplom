@@ -43,8 +43,27 @@ function category_list() {
 
 //************************// ВЫВОД ОПРОСОВ ************************//
 
-function print_arr($arr){
+function print_arr($arr) {
 	echo '<pre>'  . print_r($arr, true) . '</pre>';
+}
+
+function survey_correct($survey_id, $survey_all_data) {
+        $data = R::getAll("SELECT survey_name
+                FROM survey
+                        WHERE id = '$survey_id' AND enable = '1'");
+
+
+        foreach($_POST as $q => $a){
+                // удалим из POST то что пользователь писал сам через панель разработчика
+                if(!isset($survey_all_data[$q])){
+                        unset($_POST[$q]);
+                        continue;
+                }
+
+        }
+
+
+        if(!$data) return false; else return $data;
 }
 
 function get_surveys() {
@@ -97,7 +116,7 @@ $data = R::getAll("SELECT *
 
 function get_survey_data($survey_id){
 	if(!$survey_id) return;
-	$query = R::getAll("SELECT q.question, q.survey_id, a.id, a.answer, a.question_id
+	$query = R::getAll("SELECT q.question, q.survey_id, q.type, a.id, a.answer, a.question_id
 		FROM surveyquestions q
 		LEFT JOIN surveyanswers a
 			ON q.id = a.question_id
@@ -108,6 +127,7 @@ function get_survey_data($survey_id){
     foreach($query as $item) {
         if( !$item['question_id'] ) return false;
 		$data[$item['question_id']][0] = $item['question'];
+                $data[$item['question_id']]['type'] = $item['type'];
 		$data[$item['question_id']][$item['id']] = $item['answer'];
     }
 	return $data;
@@ -142,11 +162,124 @@ function pagination($count_questions, $survey_data){
 	return $pagination;
 }
 
+function save($survey_id, $user_id) {
+
+        $survey_name = get_survey_name($survey_id);
+	foreach($survey_name as $item) {
+		$survey_name = $item['survey_name'];
+	}
+        
+
+	$user_save_survey = R::findOne('usersurveydata', 'user_id = :user_id AND survey_id = :survey_id', [':user_id' => $user_id, ':survey_id' => $survey_id]); 
+
+
+	if($user_save_survey) {
+
+
+                $query = R::find('usersurveydata', 'user_id = :user_id AND survey_id = :survey_id', [':user_id' => $user_id, ':survey_id' => $survey_id]);
+		R::trashAll($query);
+
+
+            		foreach($_POST as $key => $item) {
+                        if(is_array($item)) {
+                                foreach($item as $it) {
+                                        // $key - номер вопроса ### $it - номер ответа
+
+                                        $users_save_survey = R::dispense('usersurveydata');
+                                        $users_save_survey->user_id = $user_id;
+                                        $users_save_survey->survey_id = $survey_id;
+                                        $users_save_survey->survey_name = $survey_name;
+                                        $users_save_survey->question_id = $key;
+                                        $users_save_survey->type = 'checkbox';
+                                        $users_save_survey->answer_id = $it;
+                                        R::store($users_save_survey);
+
+                                }
+                        }
+                        
+                        else {
+                                // $key - номер вопроса ### $item - номер ответа
+
+                                $users_save_survey = R::dispense('usersurveydata');
+                                $users_save_survey->user_id = $user_id;
+                                $users_save_survey->survey_id = $survey_id;
+                                $users_save_survey->survey_name = $survey_name;
+                                $users_save_survey->question_id = $key;
+                                $users_save_survey->type = 'radio';
+                                $users_save_survey->answer_id = $item;
+                                R::store($users_save_survey);
+                                
+                        }
+		}
+	} 
+        
+
+
+
+        
+        else {
+		foreach($_POST as $key => $item) {
+                        if(is_array($item)) {
+                                foreach($item as $it) {
+                                        // $key - номер вопроса ### $it - номер ответа
+                                        
+                                        $users_save_survey = R::dispense('usersurveydata');
+                                        $users_save_survey->user_id = $user_id;
+                                        $users_save_survey->survey_id = $survey_id;
+                                        $users_save_survey->survey_name = $survey_name;
+                                        $users_save_survey->question_id = $key;
+                                        $users_save_survey->type = 'checkbox';
+                                        $users_save_survey->answer_id = $it;
+                                        R::store($users_save_survey);
+
+                                }
+                        }
+                        
+                        else {
+                                // $key - номер вопроса ### $item - номер ответа
+
+                                $users_save_survey = R::dispense('usersurveydata');
+                                $users_save_survey->user_id = $user_id;
+                                $users_save_survey->survey_id = $survey_id;
+                                $users_save_survey->survey_name = $survey_name;
+                                $users_save_survey->question_id = $key;
+                                $users_save_survey->type = 'radio';
+                                $users_save_survey->answer_id = $item;
+                                R::store($users_save_survey);
+                                
+                        }
+		}
+	}
+
+}
+
+
+function get_test_data($survey_id){
+	if(!$survey_id) return;
+	$query = R::getAll("SELECT q.question, q.survey_id, a.id, a.answer, a.question_id
+		FROM surveyquestions q
+		LEFT JOIN surveyanswers a
+			ON q.id = a.question_id
+		LEFT JOIN survey
+			ON survey_id = q.survey_id
+				WHERE q.survey_id = $survey_id AND survey.enable = '1'");
+	$data = null;
+    foreach($query as $item) {
+        if( !$item['question_id'] ) return false;
+		$data[$item['question_id']][0] = $item['question'];
+		$data[$item['question_id']][$item['id']] = $item['answer'];
+    }
+	return $data;
+}
 
 
 
 
+function print_result($survey_id) {
 
+echo("qq поздравляю!");
+
+}
 
 
 

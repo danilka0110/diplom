@@ -6,6 +6,11 @@
     date_default_timezone_set('Moscow');
     $date = date('Y-m-d', time());
     $categories = category_list();
+
+    if (isset($_POST['btn-save'])) {
+        (header("Location: surveys"));
+        ob_end_flush();
+    }
 ?>
 
 
@@ -167,6 +172,17 @@
                                 <div class="question-items">
                                     <div class="question_1 mt-4" data-question="1">
                                         <label for="question_1" class="form-label">Вопрос #1</label>
+
+
+                                        
+                                        <div>
+                                            <input type="checkbox" name="ifcheckbox_1" id="ifcheckbox_1">
+                                            <label for="ifcheckbox_1" class="form-label">Множественный выбор</label>
+                                        </div>
+                                       
+
+
+
                                         <input required type="text" name="question_1" id="question_1" class="form-control" autocomplete="off" placeholder="Вопрос #1" maxlength="255">
                                         <div class="answers">
                                             <div class="answer-items">
@@ -224,7 +240,7 @@
                                 } else {
                                     $survey->img_link = trim($_POST['img_link']);
                                 }
-
+                                
                                 R::store($survey);
                                 $survey_id = $survey->id;
                                 $questionNum = 1;
@@ -235,6 +251,12 @@
                                     
                                     $question_name = trim($_POST['question_' . $questionNum]);
                                     
+                                    if (isset($_POST['ifcheckbox_' . $questionNum])) {
+                                        $type = 'checkbox';
+                                    } else {
+                                        $type = 'radio';
+                                    }
+
                                     if (!isset($survey_questions)) {
                                         continue;
                                     }
@@ -242,6 +264,7 @@
                                     
                                     $survey_questions->survey_id = $survey_id;
                                     $survey_questions->question = $question_name;
+                                    $survey_questions->type = $type;
                                     R::store($survey_questions);
                                     $questionId = $survey_questions->id;
                             
@@ -280,15 +303,6 @@
                                     R::store($surveys_category);
                                 }
                                     
-                                
-
-
-                                    
-                                
-                                
-
-                                (header("Location: surveys"));
-                                ob_end_flush();
                             } else {
                                 echo '<div style="color: red;" class="text-center">'.array_shift($errors).'</div><br>';
                                 die;

@@ -7,16 +7,20 @@ require_once 'db.php';
 require_once 'includes/functions.php';
 $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
 if (isset($_POST['test'])) {
+
+    print_arr($_POST);
+
+
     $test = (int)$_POST['test']; // sql injection crash
     unset($_POST['test']);
     $result = get_correct_answers($test);
-    if (!is_array($result)) exit('Ошибка!');
+    if (!is_array($result)) exit('Ошибка! kek');
     // данные теста
     $test_all_data = get_test_data($test);
     // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
     $test_all_data_result = get_test_data_result($test_all_data, $result);
     if($_POST) {
-
+        echo("зашел сюда");
         $test_for_count_passes = R::load('test', $test);
         $count_passes = $test_for_count_passes->count_passes;
         $count_passes++;
@@ -30,8 +34,8 @@ if (isset($_POST['test'])) {
         endif ;
         echo print_result($test_all_data_result, $test); // вывод результатов
     }
-    else exit('Ошибка!');
-
+    else exit('Ошибка!!@#!@%!@%@!#@!');
+    
     die;
 
     // echo("_POST");   

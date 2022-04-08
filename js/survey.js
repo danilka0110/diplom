@@ -79,16 +79,53 @@ if ($('.question').length != 1) {
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 
+
     $('#btn').click(function() {
         var survey = +$('#survey-id').text();
         var res = {'survey':survey};
         error = false;
+        
         $('.question').each(function() {
-            var id = $(this).data('id'); 
-            res[id] = $('input[name=question-' + id + ']:checked').val(); console.log(res[id]);
-            if (res[id] == undefined) {
+            var checkboxesChecked = [];
+            findClass = $(this).find(".q").attr("class");
+
+            
+            if (findClass == 'q checkbox') {
+
+                findCountCheckboxesInQuestion = $(this).find(".checkbox-answers");
+
+
+
+                var id = $(this).data('id');
+
+
+                for (let i = 0; i < findCountCheckboxesInQuestion.length; i++) {
+
+                    if (findCountCheckboxesInQuestion[i].checked) {
+                        checkboxesChecked.push(findCountCheckboxesInQuestion[i].value); // положим в массив выбранный
+                     }
+
+                    // res[id] = [$('input[name=question-' + id + ']:checked').val()]; console.log(res[id]);
+                    
+                }
+                res[id] = checkboxesChecked;
+                
+                
+                // console.log($('input[name=question-' + id + ']:checked').length);
+            } 
+
+            else if (findClass == 'q radio') {
+
+
+
+                var id = $(this).data('id'); 
+                res[id] = $('input[name=question-' + id + ']:checked').val();
+            }
+
+            if (res[id] == undefined || res[id] == 0) {
                 error = true;
             }
+
         }); console.log(res);
         if (error == false) {
             $('.result-error').hide();
@@ -112,6 +149,96 @@ if ($('.question').length != 1) {
     });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // $('#btn').click(function() {
+    //     var survey = +$('#survey-id').text();
+    //     var res = {'survey':survey};
+
+
+    //     error = false;
+    //     var i_c = 1;
+    //     $('.question').each(function() {
+            
+    //         findClass = $(this).find(".q").attr("class");
+
+            
+    //         if (findClass == 'q checkbox') {
+
+                
+    //                 var id = $(this).data('id'); 
+    //                 res[id] = $('input[name=question-' + id + ']:checked').val(); console.log(res[id]);
+    //                 i_c++;
+                
+                
+
+
+    //         } 
+
+    //         else if (findClass == 'q radio') {
+    //             var id = $(this).data('id'); 
+    //             res[id] = $('input[name=question-' + id + ']:checked').val(); console.log(res[id]);
+    //         }
+
+
+    //         if (res[id] == undefined) {
+    //             error = true;
+    //         }
+
+
+
+
+    //     }); console.log(res);
+    //     if (error == false) {
+    //         $('.result-error').hide();
+    //         $.ajax({
+    //             url: 'survey', 
+    //             type: 'POST',
+    //             data: res,
+    //             success: function(html) {
+    //                 $('.test-show').html(html);
+    //             },
+    //             error:function() {
+    //                 alert('Error!');
+    //             }
+    //         });
+    //     } else {
+    //         $('.result-error').show();
+    //         $('.result-error').fadeOut(150, function() {
+    //             $('.result-error').fadeIn(150);
+    //         });
+    //     }
+    // });
+
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
+// ---------------------- SHOW STATS AND RESULT ----------------------- //
+// -------------------------------------------------------------------- //
+// -------------------------------------------------------------------- //
 
     $("body").on('click', '#btn-show-results', function() {
         if ($(this).html() == 'Показать результат') {

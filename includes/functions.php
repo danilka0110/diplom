@@ -139,7 +139,7 @@ function get_test_data_result($test_all_data, $result){
 
 	// добавим неверный ответ, если таковой был
 	foreach($_POST as $q => $a){
-		// удалим из POST "левые" значения вопросов
+		// удалим из POST то что пользователь писал сам через панель разработчика
 		if(!isset($test_all_data[$q])){
 			unset($_POST[$q]);
 			continue;
@@ -438,7 +438,7 @@ function save($test_id, $user) {
 
 
 	if($users_save_test) {
-		$query = R::find('usertestresult', 'user_id = :user_id AND test_id = :test_id', [':user_id' => $user->id, ':test_id' => $test_id]);	
+		$query = R::find('usertestresult', 'user_id = :user_id AND test_id = :test_id', [':user_id' => $user->id, ':test_id' => $test_id]);
 		R::trashAll($query);
 		foreach($_POST as $key => $item) {
 			$users_save_test = R::dispense('usertestresult');

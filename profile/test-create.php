@@ -6,6 +6,11 @@
     date_default_timezone_set('Moscow');
     $date = date('Y-m-d', time());
     $categories = category_list();
+
+    if (isset($_POST['btn-save'])) {
+        (header("Location: tests"));
+        ob_end_flush();
+    }
 ?>
 
 
@@ -287,16 +292,6 @@
                                     $category->category = trim($_POST["category"]);
                                     R::store($category);
                                 }
-                                    
-                                
-
-
-                                    
-                                
-                                
-
-                                (header("Location: tests"));
-                                ob_end_flush();
                             } else {
                                 echo '<div style="color: red;" class="text-center">'.array_shift($errors).'</div><br>';
                                 die;
