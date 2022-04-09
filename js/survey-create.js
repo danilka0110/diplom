@@ -7,43 +7,106 @@ $(document).on('click', '.addAnswer', function() {
     let question = $(this).data('question');
     let answer = $(this).data('answer');
     let answerBlock = $(this).parents('.answers').find('.answer-items');
+    let type = 'radio';
 
-    if (answer == 10) {
-        return "нельзя создать больше 10 вариантов ответа";
+    if ($(`#ifcheckbox_${question}`).is(':checked')){ 
+
+        let prevCreateAnswers = ($(`[id^=answer_radio_${question}]`))
+
+        prevCreateAnswers.removeAttr('type');
+        prevCreateAnswers.attr('type', 'checkbox');
+
+        type = 'checkbox';
+        
+    } 
+    
+    else {
+        let prevCreateAnswers = ($(`[id^=answer_radio_${question}]`))
+
+        prevCreateAnswers.removeAttr('type');
+        prevCreateAnswers.attr('type', 'radio');
+
+        type = 'radio';
     }
-    if ($('.question_' + question).hasClass('wasDelete')) {
 
+
+    if ($('.question_' + question).hasClass('wasDelete')) {
         let takeLastAnswerData = ($('.question_' + $(this).data('question') + ' .answers .answer-items .row input:last').attr('data-numanswer'));
         if (takeLastAnswerData == undefined) {
             answer = 0;
         } else {
             answer = takeLastAnswerData;
+            if (answer == 10) answer = 9;
         $('.question_' + question).removeClass('wasDelete');
         }
 
     }
+    if (answer == 10) {
+        return "нельзя создать больше 10 вариантов ответа";
+    }
     answer++;
 
     $(this).data('answer', answer);
-    if (answer == 1) {
-        answerBlock.append(`
-        <div class="row">
-            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                <label for="answer_text_1_1" class="form-label">Ответ</label>
-                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+
+
+    if(type == 'radio') {
+        if (answer == 1) {
+            answerBlock.append(`
+            <div class="row">
+                <label for="answer_text_1_${question}_${answer}" class="form-label">Варианты ответов:</label><br>
+                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
+                <input type="radio" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
+    
             </div>
-        </div>`);
-    } else {
-        answerBlock.append(`
-        <div class="row">
-            <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                <label for="answer_text_1_1" class="form-label"></label>
-                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+            <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
+                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
             </div>
-        </div>`);
+            </div>`);
+        } else {
+            answerBlock.append(`
+            <div class="row">
+                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
+                    <input type="radio" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
+    
+                </div>
+                <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
+                    <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+                </div>
+            </div>`);
+        }
     }
 
+    else if (type == 'checkbox') {
+        if (answer == 1) {
+            answerBlock.append(`
+            <div class="row">
+                <label for="answer_text_1_${question}_${answer}" class="form-label">Варианты ответов:</label><br>
+                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
+                <input type="checkbox" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
+    
+            </div>
+            <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
+                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+            </div>
+            </div>`);
+        } else {
+            answerBlock.append(`
+            <div class="row">
+                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
+                    <input type="checkbox" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
+    
+                </div>
+                <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
+                    <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+                </div>
+            </div>`);
+        }
+    }
+
+
 });
+
+
 $('.addQuestion').on('click', function() {
     if (questionNum == 80) {
         return "нельзя создать больше 80 вопросов";
@@ -55,7 +118,7 @@ $('.addQuestion').on('click', function() {
             <label for="question_${questionNum}" class="form-label">Вопрос #${questionNum}</label>
 
             <div>
-                <input type="checkbox" name="ifcheckbox_${questionNum}" id="ifcheckbox_${questionNum}">
+                <input type="checkbox" name="ifcheckbox_${questionNum}" id="ifcheckbox_${questionNum}" data-question="${questionNum}">
                 <label for="ifcheckbox_${questionNum}" class="form-label">Множественный выбор</label>
             </div>
 
@@ -78,6 +141,43 @@ $('.addQuestion').on('click', function() {
         ($(this).data('question', questionNum));
         prevQuestionForDeleteBtn = questionNum-1;
         $(".removeQuestion[data-question=" + prevQuestionForDeleteBtn + "]").remove();
+
+
+
+
+
+
+        $("[id^='ifcheckbox_']").change(function () {
+
+            let qstn = ($(this).data('question'));
+        
+            if ($(`#ifcheckbox_${qstn}`).is(':checked')){ 
+        
+                let prevCreateAnswers = ($(`[id^=answer_radio_${qstn}]`))
+        
+                prevCreateAnswers.removeAttr('type');
+                prevCreateAnswers.attr('type', 'checkbox');
+        
+                type = 'checkbox';
+                
+            } 
+            
+            else {
+                let prevCreateAnswers = ($(`[id^=answer_radio_${qstn}]`))
+        
+                prevCreateAnswers.removeAttr('type');
+                prevCreateAnswers.attr('type', 'radio');
+        
+                type = 'radio';
+            }
+        
+        });
+
+
+
+
+
+
 });
 
 $("body").on('click', '.removeAnswer', function() {
@@ -118,24 +218,63 @@ $("body").on('click', '.removeQuestion', function() {
         `);
     }
 });
+
+
+
 $(document).ready(function () {
     $("#img_link").change(function () {
         $(".create-test-img").removeAttr('src');
         let src = $("#img_link").val();
         if (src == '') {
-            src = 'http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg';
+            src = 'https://avatars.mds.yandex.net/get-zen_doc/1860332/pub_5e5e171223f6716bacbc56cd_5e5e1718618046487a51ff7d/scale_1200';
             $(".create-test-img").attr('src', src);
         }
         $(".create-test-img").attr('src', src);
     });
-    $("#test_name").change(function () {
-        $(".create-test-name").removeAttr('val');
-        let test_name = $("#test_name").val();
-        $(".create-test-name").html(test_name);
+    $("#survey_name").change(function () {
+        $(".create-survey-name").removeAttr('val');
+        let survey_name = $("#survey_name").val();
+        $(".create-survey-name").html(survey_name);
     });
-    $("#test_description").change(function () {
-        $(".create-test-description").removeAttr('val');
-        let test_description = $("#test_description").val();
-        $(".create-test-description").html(test_description);
+    $("#survey_description").change(function () {
+        $(".create-survey-description").removeAttr('val');
+        let survey_description = $("#survey_description").val();
+        $(".create-survey-description").html(survey_description);
     });
+
+
+
+
+
 });
+
+
+
+$("[id^='ifcheckbox_']").change(function () {
+
+    let qstn = ($(this).data('question'));
+
+    if ($(`#ifcheckbox_${qstn}`).is(':checked')){ 
+
+        let prevCreateAnswers = ($(`[id^=answer_radio_${qstn}]`))
+
+        prevCreateAnswers.removeAttr('type');
+        prevCreateAnswers.attr('type', 'checkbox');
+
+        type = 'checkbox';
+        
+    } 
+    
+    else {
+        let prevCreateAnswers = ($(`[id^=answer_radio_${qstn}]`))
+
+        prevCreateAnswers.removeAttr('type');
+        prevCreateAnswers.attr('type', 'radio');
+
+        type = 'radio';
+    }
+
+});
+
+
+

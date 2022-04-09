@@ -31,7 +31,7 @@ if (isset($_POST['survey'])) {
         else:
     
         endif;
-        echo print_result($survey_id);
+        echo print_result($survey_all_data, $survey_id);
 
     } else exit('Ошибка!');
 
@@ -126,7 +126,7 @@ if (isset($_GET['survey'])) {
                         <a class="nav-link" aria-current="page" href="tests">Тесты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="surveys">Опросы</a>
+                        <a class="nav-link active" href="surveys">Опросы</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contacts">Контакты</a>
@@ -261,6 +261,12 @@ if (isset($_GET['survey'])) {
             </div>
         </div>
     </div>
+
+    
+    
+ 
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"

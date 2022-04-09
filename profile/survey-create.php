@@ -22,7 +22,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Тесты</title>
+	<title>Создание опроса</title>
 	<link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
@@ -119,11 +119,11 @@
                         <div class="card-body">
                             <div class="head-block">
                                 <div>
-                                    <label for="test_name" class="form-label">Название опроса</label>
+                                    <label for="survey_name" class="form-label">Название опроса</label>
                                     <input required type="text" name="survey_name" id="survey_name" class="form-control" autocomplete="off" placeholder="Название опроса" maxlength="64">
                                 </div>
                                 <div>
-                                    <label for="test_name" class="form-label mt-4">Описание опроса</label>
+                                    <label for="survey_name" class="form-label mt-4">Описание опроса</label>
                                     <textarea required type="text" name="survey_description" id="survey_description" class="form-control" autocomplete="off" placeholder="Описание опроса" maxlength="255"></textarea>
                                 </div>
                                 <div>
@@ -136,13 +136,13 @@
                                         <span class="test-date-for-img"><?=$date?></span>
                                     </div>
                                     <img src="https://avatars.mds.yandex.net/get-zen_doc/1860332/pub_5e5e171223f6716bacbc56cd_5e5e1718618046487a51ff7d/scale_1200" class="card-img-test create-test-img" alt="...">    
-                                    <a class="test-name-for-img create-test-name">Название опроса</a>  
+                                    <a class="test-name-for-img create-survey-name">Название опроса</a>  
                                     <div class="test-author-for-img mt-1">
                                         <img src="../img/author.png" alt="author.png" style="width:14px">
                                         <span><?=$user->login?></span>
                                     </div> 
                                     <div class="card-body">
-                                        <p class="card-text create-test-description">Описание опроса</p>
+                                        <p class="card-text create-survey-description">Описание опроса</p>
                                         <div class="text-center">
                                             <a class="btn btn-primary btn-test">Пройти опрос</a>
                                         </div>
@@ -176,25 +176,19 @@
 
                                         
                                         <div>
-                                            <input type="checkbox" name="ifcheckbox_1" id="ifcheckbox_1">
+                                            <input type="checkbox" name="ifcheckbox_1" id="ifcheckbox_1" data-question="1">
                                             <label for="ifcheckbox_1" class="form-label">Множественный выбор</label>
                                         </div>
                                        
-
-
+                                            
 
                                         <input required type="text" name="question_1" id="question_1" class="form-control" autocomplete="off" placeholder="Вопрос #1" maxlength="255">
                                         <div class="answers">
                                             <div class="answer-items">
-                                                <div class="row">
-                                                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
-                                                        <label for="answer_text_1_1" class="form-label">Варианты ответа:</label>
-                                                        <input required type="text" name="answer_text_1_1" id="answer_text_1_1" class="form-control" placeholder = "Вариант #1" autocomplete="off" data-numanswer="1" maxlength="255">
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
        
-                                            <button type="button" class="btn btn-primary border addAnswer" data-question="1" data-answer="1" style="display: inline; margin-top: 15px;">+</button>
+                                            <button type="button" class="btn btn-primary border addAnswer" data-question="1" data-answer="0" style="display: inline; margin-top: 15px;">+</button>
 
                                             <button type="button" class="btn btn-danger border removeAnswer" data-question="1" data-click="0" style="display: inline; margin-top: 15px;">X</button>
 

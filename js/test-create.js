@@ -8,9 +8,6 @@ $(document).on('click', '.addAnswer', function() {
     let answer = $(this).data('answer');
     let answerBlock = $(this).parents('.answers').find('.answer-items');
 
-    if (answer == 10) {
-        return "нельзя создать больше 10 вариантов ответа";
-    }
     if ($('.question_' + question).hasClass('wasDelete')) {
 
         let takeLastAnswerData = ($('.question_' + $(this).data('question') + ' .answers .answer-items .row input:last').attr('data-numanswer'));
@@ -18,9 +15,13 @@ $(document).on('click', '.addAnswer', function() {
             answer = 0;
         } else {
             answer = takeLastAnswerData;
+            if (answer == 10) answer = 9;
         $('.question_' + question).removeClass('wasDelete');
         }
 
+    }
+    if (answer == 10) {
+        return "нельзя создать больше 10 вариантов ответа";
     }
     answer++;
 

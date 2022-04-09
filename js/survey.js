@@ -126,7 +126,7 @@ if ($('.question').length != 1) {
                 error = true;
             }
 
-        }); console.log(res);
+        });
         if (error == false) {
             $('.result-error').hide();
             $.ajax({

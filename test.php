@@ -7,10 +7,6 @@ require_once 'db.php';
 require_once 'includes/functions.php';
 $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
 if (isset($_POST['test'])) {
-
-    print_arr($_POST);
-
-
     $test = (int)$_POST['test']; // sql injection crash
     unset($_POST['test']);
     $result = get_correct_answers($test);
@@ -20,7 +16,6 @@ if (isset($_POST['test'])) {
     // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
     $test_all_data_result = get_test_data_result($test_all_data, $result);
     if($_POST) {
-        echo("зашел сюда");
         $test_for_count_passes = R::load('test', $test);
         $count_passes = $test_for_count_passes->count_passes;
         $count_passes++;
@@ -122,7 +117,7 @@ if (isset($_GET['test'])) {
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="tests">Тесты</a>
+                        <a class="nav-link active" aria-current="page" href="tests">Тесты</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="surveys">Опросы</a>
