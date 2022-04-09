@@ -92,6 +92,7 @@ if ($('.question').length != 1) {
         });
         if (error == false) {
             $('.result-error').hide();
+            $('.spinner-border').removeClass('none');
             $.ajax({
                 url: 'test',
                 type: 'POST',

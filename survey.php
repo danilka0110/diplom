@@ -6,25 +6,18 @@ $date = date('Y-m-d', time());
 require_once 'db.php';
 require_once 'includes/functions-surveys.php';
 $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
-
-
-
-
-
-
 if (isset($_POST['survey'])) { 
-
     $survey_id = (int)$_POST['survey']; // sql injection crash
     unset($_POST['survey']);
- 
-
     $survey_all_data = get_test_data($survey_id);
-
     $survey_correct = survey_correct($survey_id, $survey_all_data); 
-    if (!is_array($survey_correct)) exit('Ошибка! kek'); 
-
+    if (!is_array($survey_correct)) exit('Ошибка!'); 
     if($_POST) {
-        
+        $survey_for_count_passes = R::load('survey', $survey_id);
+        $count_passes = $survey_for_count_passes->count_passes;
+        $count_passes++;
+        $survey_for_count_passes->count_passes = $count_passes;
+        R::store($survey_for_count_passes);
         
         if ($user):
             save($survey_id, $user->id);
@@ -33,7 +26,9 @@ if (isset($_POST['survey'])) {
         endif;
         echo print_result($survey_all_data, $survey_id);
 
-    } else exit('Ошибка!');
+    } 
+
+    else exit('Ошибка!');
 
     die;
     
@@ -163,8 +158,8 @@ if (isset($_GET['survey'])) {
             </div>
         </div>
     </nav>
-    <div class="main">
-        <div class="container">
+    <div class="main-surv">
+        <div class="container-fluid">
             <div class="wrap">
 
 
@@ -244,12 +239,13 @@ if (isset($_GET['survey'])) {
                             <?php endforeach; //$test_data ?>
                         </div>
 
-
                         <p class="none result-error" style="color:red">Вы ответили не на все вопросы</p>
                         <!-- <p class="none next-error" style="color:red">Вопросов больше нет</p> -->
                         <div class="buttons text-center">
                             <button type="submit" class="center btn-finish btn btn-success" id="btn">Закончить
-                                тест</button>
+                                опрос
+                                <span class="spinner-border spinner-border-sm none" role="status" aria-hidden="true"></span>
+                            </button>
                         </div>
                     <?php else: header('Location: surveys'); ob_end_flush(); // isset($test_data) ?>
                     <?php endif; // isset($test_data) ?>
@@ -266,7 +262,103 @@ if (isset($_GET['survey'])) {
     
  
 
+    <footer class="bg-dark text-center text-white">
+            <div class="container p-4">
+                <section class="mb-4">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                        distinctio earum repellat quaerat voluptatibus placeat nam,
+                        commodi optio pariatur est quia magnam eum harum corrupti dicta,
+                        aliquam sequi voluptate quas.
+                    </p>
+                </section>
 
+                <section class="">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                            <h5 class="text-uppercase">Links</h5>
+
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <a href="#!" class="text-white">Link 1</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 2</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 3</a>
+                                </li>
+                                <li>
+                                    <a href="#!" class="text-white">Link 4</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+                © 2022 Copyright:
+                <a class="text-white" href="#">Paradigm Tests</a>
+            </div>
+        </footer>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"

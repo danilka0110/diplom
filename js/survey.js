@@ -129,6 +129,7 @@ if ($('.question').length != 1) {
         });
         if (error == false) {
             $('.result-error').hide();
+            $('.spinner-border').removeClass('none');
             $.ajax({
                 url: 'survey', 
                 type: 'POST',
@@ -150,118 +151,24 @@ if ($('.question').length != 1) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // $('#btn').click(function() {
-    //     var survey = +$('#survey-id').text();
-    //     var res = {'survey':survey};
-
-
-    //     error = false;
-    //     var i_c = 1;
-    //     $('.question').each(function() {
-            
-    //         findClass = $(this).find(".q").attr("class");
-
-            
-    //         if (findClass == 'q checkbox') {
-
-                
-    //                 var id = $(this).data('id'); 
-    //                 res[id] = $('input[name=question-' + id + ']:checked').val(); console.log(res[id]);
-    //                 i_c++;
-                
-                
-
-
-    //         } 
-
-    //         else if (findClass == 'q radio') {
-    //             var id = $(this).data('id'); 
-    //             res[id] = $('input[name=question-' + id + ']:checked').val(); console.log(res[id]);
-    //         }
-
-
-    //         if (res[id] == undefined) {
-    //             error = true;
-    //         }
-
-
-
-
-    //     }); console.log(res);
-    //     if (error == false) {
-    //         $('.result-error').hide();
-    //         $.ajax({
-    //             url: 'survey', 
-    //             type: 'POST',
-    //             data: res,
-    //             success: function(html) {
-    //                 $('.test-show').html(html);
-    //             },
-    //             error:function() {
-    //                 alert('Error!');
-    //             }
-    //         });
-    //     } else {
-    //         $('.result-error').show();
-    //         $('.result-error').fadeOut(150, function() {
-    //             $('.result-error').fadeIn(150);
-    //         });
-    //     }
-    // });
-
-
-
-
-
-
-
-
-
-
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 // ---------------------- SHOW STATS AND RESULT ----------------------- //
 // -------------------------------------------------------------------- //
 // -------------------------------------------------------------------- //
 
-    $("body").on('click', '#btn-show-results', function() {
-        if ($(this).html() == 'Показать результат') {
-            $('#btn-show-stats').html("Показать статистику");
-            $('.stats').hide();
-            $('.test-q-and-a').show();
-            $(this).html("Скрыть результат");
+
+    $("body").on('click', '#stats', function() {
+        let data = ($(this).data('stats'));
+        if ($(this).html() == 'Показать полную статистику') {
+            $('.stats_block_' + data).show();
+            $(this).html("Скрыть полную статистику");
         } else {
-            $('.test-q-and-a').hide();
-            $(this).html("Показать результат");
+            $('.stats_block_' + data).hide();
+            $(this).html("Показать полную статистику");
         }
     });
 
 
-    $("body").on('click', '#btn-show-stats', function() {
-        if ($(this).html() == 'Показать статистику') {
-            $('#btn-show-results').html("Показать результат");
-            $('.test-q-and-a').hide();
-            $('.stats').show();
-            $(this).html("Скрыть статистику");
-        } else {
-            $('.stats').hide();
-            $(this).html("Показать статистику");
-        }
-    });
+    
 });

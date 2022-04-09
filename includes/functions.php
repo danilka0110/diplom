@@ -224,8 +224,8 @@ function print_result($test_all_data_result, $test_id){
 
 
 		$print_res .= '</div>';	// .count-res
-		$print_res .= '<a class="btn btn-primary" id="btn-show-results">Показать результат</a>';
-		$print_res .= '<a class="btn btn-primary" id="btn-show-stats" style="margin-left: 1%">Показать статистику</a>';
+		$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-results">Показать результат</a>';
+		$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-stats">Показать статистику</a>';
 		// вывод теста...
 		$print_res .= '<div class="test-q-and-a none mt-4">';
 		foreach($test_all_data_result as $id_question => $item){ // получаем вопрос + ответы
@@ -285,7 +285,7 @@ function print_result($test_all_data_result, $test_id){
 			$avg_value = round(($correct_score / $count_all),2);
 			$print_res .= "<p>Пользователей прошло тест: <b>{$count_all}</b></p>";
 			$print_res .= "<p>Средний результат среди всех пользователей: <b>{$avg_value}</b></p>";
-			$print_res .= '<div style="width: 300px; height: 200px" id="correct_and_incorrect_answers_graph_second"><canvas id="graph-2"></canvas></div>';
+			$print_res .= '<div style="width: 260px; height: 160px" id="correct_and_incorrect_answers_graph_second"><canvas id="graph-2"></canvas></div>';
 			$print_res .= "<script>
 								const data = {
 									labels: [
@@ -649,7 +649,7 @@ function print_result_for_user_profile($test_all_data_result, $test_id){
 			$avg_value = round(($correct_score / $count_all),2);
 			$print_res .= "<p>Пользователей прошло тест: <b>{$count_all}</b></p>";
 			$print_res .= "<p>Средний результат среди всех пользователей: <b>{$avg_value}</b></p>";
-			$print_res .= '<div style="width: 300px; height: 200px" id="correct_and_incorrect_answers_graph_second"><canvas id="graph-2"></canvas></div>';
+			$print_res .= '<div style="width: 260px; height: 160px" id="correct_and_incorrect_answers_graph_second"><canvas id="graph-2"></canvas></div>';
 			$print_res .= "<script>
 								const data = {
 									labels: [
