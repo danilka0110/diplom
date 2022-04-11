@@ -236,7 +236,7 @@
                                 } else {
                                     $test->img_link = trim($_POST['img_link']);
                                 }
-
+                                $test->date = $date; 
                                 R::store($test);
                                 $test_id = $test->id;
                         
@@ -315,7 +315,7 @@
 </body>
 
 </html>
-<?php else : 
+<?php else :
   header('Location: /'); 
   ob_end_flush();
 ?>  

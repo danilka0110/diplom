@@ -235,6 +235,7 @@
                                     $survey->img_link = trim($_POST['img_link']);
                                 }
                                 
+                                $survey->date = $date;
                                 R::store($survey);
                                 $survey_id = $survey->id;
                                 $questionNum = 1;

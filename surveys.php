@@ -304,7 +304,7 @@
                     <?php endif ;?>
                     <?php endfor ;?>
                     <?php else :?>
-                        <h4 class="text-center">Тестов с данной категории пока нет</h4>                      
+                        <h4 class="text-center">Опросов с данной категории пока нет</h4>                      
                     <?php endif ;?>  
 
 
@@ -313,7 +313,7 @@
 
             </div>
         <?php  else: //tests ?>
-        <h3>Нет тестов</h3>
+        <h3>Нет опросов</h3>
         <?php endif //tests ?>
 
     </div>

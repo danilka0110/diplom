@@ -16,7 +16,8 @@ if (isset($_POST['test'])) {
     // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
     $test_all_data_result = get_test_data_result($test_all_data, $result);
     if($_POST) {
-        $test_for_count_passes = R::load('test', $test);
+
+        $test_for_count_passes = R::findOne('test', 'id = :test_id', [':test_id' => $test]);
         $count_passes = $test_for_count_passes->count_passes;
         $count_passes++;
         $test_for_count_passes->count_passes = $count_passes;

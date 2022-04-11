@@ -162,7 +162,7 @@ function pagination($count_questions, $survey_data){
 	return $pagination;
 }
 
-function save($survey_id, $user_id) {
+function save($survey_id, $user_id, $date) {
 
         $survey_name = get_survey_name($survey_id);
 	foreach($survey_name as $item) {
@@ -171,7 +171,6 @@ function save($survey_id, $user_id) {
         
 
 	$user_save_survey = R::findOne('usersurveydata', 'user_id = :user_id AND survey_id = :survey_id', [':user_id' => $user_id, ':survey_id' => $survey_id]); 
-
 
 	if($user_save_survey) {
 
@@ -192,6 +191,7 @@ function save($survey_id, $user_id) {
                                         $users_save_survey->question_id = $key;
                                         $users_save_survey->type = 'checkbox';
                                         $users_save_survey->answer_id = $it;
+                                        $users_save_survey->date = $date;
                                         R::store($users_save_survey);
 
                                 }
@@ -207,6 +207,7 @@ function save($survey_id, $user_id) {
                                 $users_save_survey->question_id = $key;
                                 $users_save_survey->type = 'radio';
                                 $users_save_survey->answer_id = $item;
+                                $users_save_survey->date = $date;
                                 R::store($users_save_survey);
                                 
                         }

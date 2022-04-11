@@ -331,8 +331,8 @@ function print_result($test_all_data_result, $test_id){
 										type: 'bar',
 										label: 'Результат',
 										data: [{$correct_answer_count}, {$avg_value}],
-										borderColor: 'rgb(255, 99, 132)',
-										backgroundColor: 'rgba(255, 99, 132, 0.2)'
+										borderColor: 'rgba(255, 99, 132, 1)',
+										backgroundColor: 'rgba(255, 99, 132, 0.3)'
 									}, {
 										type: 'line',
 										label: 'Линия',
@@ -695,8 +695,8 @@ function print_result_for_user_profile($test_all_data_result, $test_id){
 										type: 'bar',
 										label: 'Результат',
 										data: [{$correct_answer_count}, {$avg_value}],
-										borderColor: 'rgb(255, 99, 132)',
-										backgroundColor: 'rgba(255, 99, 132, 0.2)'
+										borderColor: 'rgba(255, 99, 132, 1)',
+										backgroundColor: 'rgba(255, 99, 132, 0.3)'
 									}, {
 										type: 'line',
 										label: 'Линия',

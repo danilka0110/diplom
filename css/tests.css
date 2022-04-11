@@ -125,20 +125,21 @@ a {
 }
 
 .test-head {
-    border: 1px solid #adadad;
-    border-radius: 1%;
-    padding: 10px;
+    padding: 20px;
     margin: 10% 0 20px 0;
-    background: rgba(218, 231, 215, 0.787);
+    border: 2px solid #adadad;
+    border-radius: 1%;
 }
 
+
 .test-show {
-    border: 1px solid #adadad;
-    border-radius: 1%;
-    padding: 10px;
+    padding: 20px;
     margin: 10% 0 20px 0;
-    background: rgba(218, 231, 215, 0.787);
+    border: 2px solid #adadad;
+    border-radius: 1%;
 }
+
+
 
 .test-result {
     border: 1px solid #adadad;
@@ -367,11 +368,11 @@ input[type='radio']:checked:after {
     }
 }
 
-.main-surv {
+/* .main-surv {
     flex: 1 0 auto;
     background-image: url(../img/bg-surv.png);     
     background-position: center center;      
     background-repeat: no-repeat;      
     background-attachment: fixed;      
     background-size: cover;      
-}
+} */

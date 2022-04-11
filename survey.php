@@ -13,14 +13,15 @@ if (isset($_POST['survey'])) {
     $survey_correct = survey_correct($survey_id, $survey_all_data); 
     if (!is_array($survey_correct)) exit('Ошибка!'); 
     if($_POST) {
-        $survey_for_count_passes = R::load('survey', $survey_id);
+        
+        $survey_for_count_passes = R::findOne('survey', 'id = :survey_id', [':survey_id' => $survey_id]);
         $count_passes = $survey_for_count_passes->count_passes;
         $count_passes++;
         $survey_for_count_passes->count_passes = $count_passes;
         R::store($survey_for_count_passes);
-        
+
         if ($user):
-            save($survey_id, $user->id);
+            save($survey_id, $user->id, $date);
         else:
     
         endif;
@@ -158,7 +159,7 @@ if (isset($_GET['survey'])) {
             </div>
         </div>
     </nav>
-    <div class="main-surv">
+    <div class="main">
         <div class="container-fluid">
             <div class="wrap">
 
