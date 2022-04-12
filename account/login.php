@@ -39,18 +39,18 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="../index">
-        <img src="../img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top" style="margin-right: 16px;">
-            <span class="brand-else">Paradigm Tests </span>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+  <nav class="navbar navbar-expand-lg navbar-dark index-navbar bg-dark">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+              <img src="../img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-right: 12px; margin-top: -5px">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="../tests">Тесты</a>
@@ -61,82 +61,97 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../contacts">Контакты</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" style="margin-right: 28px">
                     <a class="nav-link" href="../about">О нас</a>
                 </li>
+            </ul>  
+            <ul class="navbar-nav mr-auto mb-2 mb-lg-0 navbar-profile">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-secondary" href="login">Вход</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-secondary" href="reg">Регистрация</a>
+                </li>
             </ul>
-                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../account/login">Вход</a>
-                    </li>
-                </ul>
+          </div>
+      </div>
+  </nav>
+
+
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <img src="../img/log.svg" alt="img" class="img-fluid">
         </div>
-    </div>
-</nav>
-<div class="acc-form">
-    <section class="vh-100">
-        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-            <div class="container h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-                <div class="card" style="border-radius: 50px;">
-                    <div class="card-body p-5">
-                    <h2 class="text-uppercase text-center mb-5">Авторизация</h2>
-                    <form action="login" method="POST" class="sign_form">
-                        <div class="form-outline mb-4">
-                        <input required type="login" class="form-control form-control-lg" placeholder = "Логин" name="login">
-                        </div>
-                        <div class="form-outline mb-4">
-                        <input required type="password" class="form-control form-control-lg" placeholder = "Пароль" name="password">
-                        </div>
-                        <?php
-                        $data = $_POST;
-                            $_SESSION['login'] = $data['login'];
-                            $_SESSION['password'] = $data['password'];
-                            if(isset($data['log']))
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+              <h3>Авторизация</h3>
+            </div>
+            <form action="login" method="POST" class="sign_form">
+                <div class="form-outline mb-4">
+                    <input required type="login" class="form-control form-control-lg" placeholder = "Логин" name="login">
+                </div>
+                <div class="form-outline mb-2">
+                    <input required type="password" class="form-control form-control-lg" placeholder = "Пароль" name="password">
+                </div>
+              
+                <?php
+                    $data = $_POST;
+                        $_SESSION['login'] = $data['login'];
+                        $_SESSION['password'] = $data['password'];
+                        if(isset($data['log']))
+                        {
+                            $errors = array();
+                            $user = R::findOne('users', 'login = ?', array($data['login']));
+
+                            if($user)
+                            {                           
+                                //логин существует, проверяем пароль
+                                if(password_verify($data['password'], $user->password))
+                                {
+                                    $_SESSION['logged_user'] = $user;
+                                    header('Location: /'); 
+                                    ob_end_flush();
+                                    exit();
+
+                                } else 
+                                {
+                                    $errors[] = 'Пароль введен неверно!';
+                                }
+                            } else
                             {
-                                $errors = array();
-                                $user = R::findOne('users', 'login = ?', array($data['login']));
+                                $errors[] = 'Пользователь с таким логином не найден!';
+                            }
 
-                                if($user)
-                                {                           
-                                    //логин существует, проверяем пароль
-                                    if(password_verify($data['password'], $user->password))
-                                    {
-                                        $_SESSION['logged_user'] = $user;
-                                        header('Location: /'); 
-                                        ob_end_flush();
-                                        exit();
+                            if(!empty($errors))
+                            {
+                                echo '<div style="color: red;">'.array_shift($errors).'</div>';
+                            }
+                        } 
+                    ?>
 
-                                    } else 
-                                    {
-                                        $errors[] = 'Пароль введен неверно!';
-                                    }
-                                } else
-                                {
-                                    $errors[] = 'Пользователь с таким логином не найден!';
-                                }
+              <div class="mb-4 align-items-center text-end">
+                <span class="mr-auto"><a href="forgot" class="forgot-pass">Забыли пароль?</a></span> 
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-lg btn-acc" name="log">Войти</button>
+              </div>
+              <p class="text-center text-muted mt-2 mb-0">Еще не зарегистрированы? <a href="reg" class="fw-bold text-body"><u>Зарегистрироваться</u></a></p>
 
-                                if(!empty($errors))
-                                {
-                                    echo '<div style="color: red;">'.array_shift($errors).'</div>';
-                                }
-                            } 
-                        ?>
-                        <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" name="log">Войти</button>
-                        </div>
-                        <p class="text-center text-muted mt-3 mb-0">Забыли пароль? <a href="forgot" class="fw-bold text-body"><u>Восстановить</u></a></p>
-                        <p class="text-center text-muted mt-2 mb-0">Еще не зарегистрированы? <a href="reg" class="fw-bold text-body"><u>Зарегистрироваться</u></a></p>
-                    </form>
-                    </div>
-                </div>
-                </div>
+            </form>
             </div>
-            </div>
+          </div>
+          
         </div>
-    </section>
-</div>
+        
+      </div>
+    </div>
+  </div>
+
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
 		integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 	</script>

@@ -76,3 +76,82 @@
 #dtBasicExample {
     word-break: break-all;
 }
+
+
+.nav-profile ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 15px;
+    width: 15%;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+}
+
+@media screen and (max-width: 1412px) {
+    .nav-profile ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0px;
+        width: 15%;
+        position: fixed;
+        height: 100%;
+        overflow: auto;
+    }
+}
+
+.nav-profile li>a {
+    display: block;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.nav-profile li>.active {
+    background-color: #0d6efd;
+    border-radius: 1.25rem 0.25rem 1.25rem 0.25rem;
+}
+
+.nav-profile li>.nav-profile-item>a{
+    color: white;
+}
+
+.nav-profile li>a:hover:not(.active) {
+    background-color: #0d6dfd43;
+    color: white;
+    border-radius: 1.25rem 0.25rem 1.25rem 0.25rem;
+}
+
+.nav-profile ul{
+    background-color: #212529;
+}
+.nav-profile {
+    margin-top: 60px;
+}
+.main-profile {
+    margin-left:15%
+}
+@media screen and (max-width: 992px) {
+    .nav-profile ul {
+        display: none;
+    }   
+    .main-profile {
+        text-align: center;
+        margin-left:0%;
+    }
+}
+@media screen and (min-width: 993px) {
+    .navbar-brand {
+        margin-left: 8px;
+    }
+}
+
+.nav-profile li>a>div>span {
+    margin-left: 1px;
+}
+
+.adm:hover {
+    background-color: #141414;
+    color: white;
+    border-radius: 1.25rem 0.25rem 1.25rem 0.25rem;
+}

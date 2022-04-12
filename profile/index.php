@@ -45,7 +45,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/tests.css">
-    <link rel="stylesheet" href="../css/index-profile.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 
 <body>
@@ -98,15 +98,64 @@
 
     <div class="nav-profile">
         <ul id="ul-nav-profile">
-            <li><a class="active" href="index"><?php echo $user->login?></a></li>
-            <li><a href="tests">Мои тесты</a></li>
-            <li><a href="surveys">Мои опросы</a></li>
+            <hr style="color: #fff; margin-top: -15px;">
+            <li>           
+                <a class="active" href="index">
+                    <div class="nav-profile-item active">
+                        <?php if($user->img_link == 'img/user-profile-nav.png') $user->img_link = '../img/user-profile-nav.png'?>
+                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img">
+                        <span>Профиль</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="tests">
+                    <div class="nav-profile-item">
+                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                        <span style="margin-left: -3px">Тесты</span>
+                    </div>
+                </a>
+            </li>
+
+            <li>
+                <a href="surveys">
+                    <div class="nav-profile-item">
+                        <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                        <span>Опросы</span>
+                    </div>
+                </a>
+            </li>
+
             <?php if ($user->role == 1) :?>
-            <li><a href="admin">Админ. панель</a></li>
+            <li>
+                <a href="admin" class="adm">
+                    <div class="nav-profile-item">
+                        <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                        <span>Админ. панель</span>
+                    </div>
+                </a>
+            </li>
             <?php endif ;?>
+            <li>
+                <a href="help">
+                    <div class="nav-profile-item">
+                        <img src="../img/help.png" alt="help" width=24px height=24px>
+                        <span>Помощь</span>
+                    </div>
+                </a>
+            </li>
+            <li class="drop-nav-profile-item">
+                <hr style="color: #fff; margin-bottom: 10px;">
+                <a href="../account/logout">
+                    <div class="nav-profile-item">
+                        <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                        <span>Выход</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
-
+    
     <div class="main-profile">
         <p class="p-my-profile">Мой профиль</p>
         <?php 
@@ -150,9 +199,9 @@
                         <table id="dtBasicExample" class="table mt-3 table-striped table-bordered table-secondary" width="100%">
                             <thead>
                                 <tr>
-                                    <th scope="col" class="th-sm">Название теста</th>
-                                    <th scope="col" class="th-sm">Дата прохождения</th>
-                                    <th scope="col" class="th-sm">%</th>
+                                    <th class='table-dark' scope="col" class="th-sm">Название теста</th>
+                                    <th class='table-dark' scope="col" class="th-sm">Дата прохождения</th>
+                                    <th class='table-dark' scope="col" class="th-sm">%</th>
                                 </tr>
                             </thead>
                             <tbody>

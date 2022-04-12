@@ -35,17 +35,6 @@ body {
     flex: 1 0 auto;
 }
 
-.index-img {
-    background-image: url(../img/index-img.png);
-    height: 100vh;
-    background-repeat: no-repeat;
-    background-position: center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-
 /*
     ------------------------------------------
                       navbar
@@ -72,67 +61,20 @@ nav li a {
 
 .brand {
     position: absolute;
-    margin-top: 4px;
-    /* 50% of your logo width */
-    margin-left: -69px;
+    margin-top: 3px;
+    margin-left: -73px;
 }
 
 .brand-else {
     position: absolute;
-    margin-top: 4px;
-    /* 50% of your logo width */
+    margin-top: 3px;
     margin-left: -5px;
 }
 
 
-.nav-profile ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 15%;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-}
 
-.nav-profile li>a {
-    display: block;
-    color: #fff;
-    padding: 8px 16px;
-    text-decoration: none;
-}
 
-.nav-profile li>a.active {
-    background-color: #068053;
-    color: white;
-}
 
-.nav-profile li>a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-}
-
-.nav-profile ul{
-    background-color: #212529;
-}
-.nav-profile {
-    margin-top: 60px;
-}
-.main-profile {
-    margin-left:15%
-}
-@media screen and (max-width: 992px) {
-    .nav-profile ul {
-        display: none;
-    }   
-    .main-profile {
-        text-align: center;
-        margin-left:0%;
-    }
-}
-#mobile-nav-menu {
-    color: #fff;
-}
 
 /*
     ------------------------------------------
@@ -140,66 +82,37 @@ nav li a {
     ------------------------------------------
 */
 
-/* .card {
-    background: -webkit-linear-gradient(left, #f3dac9, #d7e9f1);
-    background: -moz-linear-gradient(left, #f3dac9, #d7e9f1);
-    background: -o-linear-gradient(left, #f3dac9, #d7e9f1);
-    background: linear-gradient(to right, #f3dac9, #d7e9f1);
-} */
 
-.btn-auth {
-    color: #fff;
+.contents {
+    margin-top: 14%;
 }
 
-.acc-form {
-    background: url(../img/index-img.png);
-    background-size: cover;
-    -moz-background-size: cover;
-    /* Firefox 3.6 */
-    background-position: center;
-    /* Internet Explorer 7/8 */
-    height: 100vh;
+.img-fluid {
+    margin-top: 7%;
 }
 
-.gradient-custom-3 {
-    /* fallback for old browsers */
-    background: #84fab0;
-
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
-
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
-
+.forgot-pass {
+    text-align: end;
 }
 
-.gradient-custom-4 {
-    /* fallback for old browsers */
-    background: #84fab0;
-
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
-
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+.btn-acc {
+    background: #6c63ff;
+    color: white;
 }
 
-@media screen and (max-width: 500px) {
-    .acc-form {
-        background: url(../img/index-img.png);
-        background-size: cover;
-        -moz-background-size: cover;
-        /* Firefox 3.6 */
-        background-position: center;
-        /* Internet Explorer 7/8 */
-        height: 850px;
-        background-repeat: repeat-y;
-        background: #84fab0;
+.btn-acc:hover {
+    background: #3f3d56;
+    color: white;
+}
 
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+@media screen and (max-width: 991px) {
+    .img-fluid {
+        margin-top: 23%;
+    }
+}
 
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background: linear-gradient(to right, rgba(132, 250, 176, 1), rgba(143, 211, 244, 1));
+@media screen and (max-width: 767px) {
+    .img-fluid {
+        margin-top: 0;
     }
 }

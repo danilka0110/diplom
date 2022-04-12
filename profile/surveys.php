@@ -35,6 +35,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
 <body>
 
@@ -86,15 +87,45 @@
 </nav>
 
 <div class="nav-profile">
-  <ul id="ul-nav-profile">
-    <li><a href="../profile"><?php echo $user->login?></a></li>
-    <li><a href="tests">Мои тесты</a></li>
-    <li><a class="active" href="">Мои опросы</a></li>
-    <?php if ($user->role == 1) :?>
-    <li><a href="admin">Админ. панель</a></li>
-    <?php endif ;?>
-  </ul>
-</div>
+        <ul id="ul-nav-profile">
+            <hr style="color: #fff; margin-top: -15px;">
+            <li>           
+                <a href="index">
+                    <div class="nav-profile-item active"> 
+                        <img src="../img/user-profile-nav.png" alt="user-profile-nav" width=24px height=24px>
+                        <span><?php echo $user->login?></span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="tests">
+                    <div class="nav-profile-item">
+                        <img src="../img/tests-profile-nav.png" alt="tests-profile-nav" width=24px height=24px>
+                        <span>Мои тесты</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="surveys" class="active">
+                    <div class="nav-profile-item">
+                        <img src="../img/surveys-profile-nav.png" alt="surveys-profile-nav" width=24px height=24px>
+                        <span>Мои опросы</span>
+                    </div>
+                </a>
+            </li>
+            <?php if ($user->role == 1) :?>
+            <li>
+
+                <a href="admin">
+                    <div class="nav-profile-item">
+                        <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                        <span>Админ. панель</span>
+                    </div>
+                </a>
+            </li>
+            <?php endif ;?>
+        </ul>
+    </div>
 
 
 <div class="main-profile">
