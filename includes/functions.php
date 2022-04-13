@@ -587,8 +587,8 @@ function print_result_for_user_profile($test_all_data_result, $test_id){
 
 
 		$print_res .= '</div>';	// .count-res
-		$print_res .= '<a class="btn btn-primary" id="btn-show-results">Показать результат</a>';
-		$print_res .= '<a class="btn btn-primary" id="btn-show-stats" style="margin-left: 1%">Показать статистику</a>';
+		$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-results">Показать результат</a>';
+		$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-stats">Показать статистику</a>';
 		// вывод теста...
 		$print_res .= '<div class="test-q-and-a none mt-4">';
 		foreach($test_all_data_result as $id_question => $item){ // получаем вопрос + ответы

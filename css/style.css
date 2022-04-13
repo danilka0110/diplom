@@ -41,11 +41,11 @@ body {
     ------------------------------------------
 */
 
-nav a {
+.navbar a {
     font-size: 18px;
 }
 
-nav li a {
+.navbar li a {
     margin-right: 10px;
 }
 

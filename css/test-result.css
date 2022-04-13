@@ -1,0 +1,31 @@
+body {
+    color: #1a202c;
+    background-color: #e2e8f0;       
+}
+
+.main-profile {
+    margin-top:20px;
+    padding: 15px;
+}
+
+
+
+.wrap {
+    margin-top: 5%;
+}
+
+@media screen and (max-width: 991px) {
+    .wrap {
+        text-align: left;
+    }
+}
+
+@media screen and (min-width: 373px){
+    #btn-show-results {
+        margin-right: 1%;
+    }
+
+    #btn-show-stats {
+        margin-left: 0%;
+    }
+}

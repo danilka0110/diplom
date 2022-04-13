@@ -41,7 +41,7 @@ function category_list() {
 
 
 
-//************************// ВЫВОД ОПРОСОВ ************************//
+//************************// ВЫВОД ВОПРОСОВ ************************//
 
 function print_arr($arr) {
 	echo '<pre>'  . print_r($arr, true) . '</pre>';
@@ -111,8 +111,6 @@ $data = R::getAll("SELECT *
         if(!$data) return false;
         return $data;
 }
-
-
 
 function get_survey_data($survey_id){
 	if(!$survey_id) return;

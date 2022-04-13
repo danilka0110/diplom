@@ -155,3 +155,7 @@
     color: white;
     border-radius: 1.25rem 0.25rem 1.25rem 0.25rem;
 }
+
+.main-breadcrumb a:hover {
+    text-decoration:underline;
+}

@@ -1,21 +1,39 @@
-<?php 
+<?php
     require "../db.php";
     require_once '../includes/functions.php';
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
     ob_start();
-    $my_tests = get_test_by_author($user->login);
-    $count_my_test = count($my_test);
-    $count_my_test = 0;
-    foreach ($my_tests as $item) {
-        if($item['enable'] == 1) {
-            $count_my_test += 1;
-        }
-       
-    }
 ?>
 
-
 <?php if($user) : ?>
+
+<?php 
+    $my_tests = get_test_by_author($user->login);
+    $count_my_tests = 0;
+    foreach ($my_tests as $item) {
+        if($item['enable'] == 1) {
+            $count_my_tests += 1;
+        }
+    }
+
+    $my_surveys = R::getAll("SELECT s.id, s.survey_name, s.description, s.img_link, s.author, s.date, s.count_passes, s.enable
+    FROM survey s
+        WHERE s.author = '$user->login'");
+        
+    $count_my_surveys = 0;
+    foreach ($my_surveys as $item) {
+        if($item['enable'] == 1) {
+            $count_my_surveys += 1;
+        }
+    }
+
+    $tests_user = R::getAll("SELECT test_id, test_name, correct_score, all_count, date
+        FROM usersandtests
+            WHERE user_id = $user->id");
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,6 +64,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/tests.css">
     <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/index-profile.css">
 </head>
 
 <body>
@@ -99,11 +118,14 @@
     <div class="nav-profile">
         <ul id="ul-nav-profile">
             <hr style="color: #fff; margin-top: -15px;">
-            <li>           
+            <li>
                 <a class="active" href="index">
                     <div class="nav-profile-item active">
-                        <?php if($user->img_link == 'img/user-profile-nav.png') $user->img_link = '../img/user-profile-nav.png'?>
-                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img">
+                        <?php if($user->img_link == '0'): ?>
+                            <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%">
+                        <?php else: ?>
+                            <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%">
+                        <?php endif; ?>  
                         <span>Профиль</span>
                     </div>
                 </a>
@@ -111,7 +133,8 @@
             <li>
                 <a href="tests">
                     <div class="nav-profile-item">
-                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                            style="margin-left: 3px">
                         <span style="margin-left: -3px">Тесты</span>
                     </div>
                 </a>
@@ -155,96 +178,233 @@
             </li>
         </ul>
     </div>
-    
+
     <div class="main-profile">
-        <p class="p-my-profile">Мой профиль</p>
-        <?php 
+        <div class="container">
+            <div class="main-body">
+                <nav aria-label="breadcrumb" class="main-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Профиль</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Мой профиль</li>
+                    </ol>
+                </nav>
 
-    $tests_user = R::getAll("SELECT test_id, test_name, correct_score, all_count, date
-        FROM usersandtests
-            WHERE user_id = $user->id");
-    // print_arr($tests_user);
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
 
-    ?>
-        <div class="card card-index-profile">
-            <div class="card-header text-center">
-                <span><?php echo $user->login?></span>
-                <p class="user-email"><?php echo $user->email?></p>
-            </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                        <span style="color: blue">Мои тесты:</span>
-                        <a href="tests"><p style="font-size: 20px; color: black"><?=$count_my_test;?></p></a>
-                    </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
-                        <span style="color: blue">Мои опросы:</span>
-                        <p style="font-size: 20px">#</p>
-                    </div>
-                </div>
-                <hr>
+                                    <?php if($user->img_link == '0'): ?>
+                                        <img src="../img/user-profile-nav.png" alt="" width="150" height="150" class="navbar-profile-img" style="border-radius: 50%">
+                                    <?php else: ?>
+                                        <img src="<?=$user->img_link?>" alt="" width="150" height="150" class="navbar-profile-img" style="border-radius: 50%">
+                                    <?php endif; ?>  
 
-                <?php
-                    if (isset($_GET['test'])) {
-                        $test_id = (int)$_GET['test'];
-                    }   
-                    $test_data = get_test_data($test_id);
-                ?>
-
-                            
-                <div id="search-input-sidenav">
-                            
-                    <div class="test_data">
-                        <h4 class="text-center">Пройденные тесты:</h4>
-                        <table id="dtBasicExample" class="table mt-3 table-striped table-bordered table-secondary" width="100%">
-                            <thead>
-                                <tr>
-                                    <th class='table-dark' scope="col" class="th-sm">Название теста</th>
-                                    <th class='table-dark' scope="col" class="th-sm">Дата прохождения</th>
-                                    <th class='table-dark' scope="col" class="th-sm">%</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php foreach ($tests_user as $test_one):?>
-                                    <tr class="sidenav-item sidenav-link">
-                                        <td><a href="index?test=<?=$test_one['test_id']?>"><?=$test_one['test_name']?>
-                                        </td>
-                                        <td><?=$test_one['date']?></td>
-                                        <td><?=round( ($test_one['correct_score'] / $test_one['all_count'] * 100 ), 2)?>%
-                                        </td>
-                                        
-                                    </tr>
-                                    <?php endforeach;?>
-                            </tbody>
-                        </table>
-                        <?php if($test_data) :?>
-                        <div class="result">
-                            <?php 
-                                $query_choice = R::getAll("SELECT question_id, answer_id
-                                    FROM usertestresult
-                                        WHERE test_id = $test_id AND user_id = $user->id");
-                                // print_Arr($test_user_choice);
-                                $user_choice = null;
-                                foreach ($query_choice as $item) {
-                                    $user_choice[$item['question_id']] = $item['answer_id'];
-                                }
-                                $result = get_correct_answers($test_id);
-                                $test_all_data_result_user = get_test_data_result_for_user_profile($test_data, $result, $user_choice);
-                                echo print_result_for_user_profile($test_all_data_result_user, $test_id);
-                            ?>
+                                    <div class="mt-3" style="width: 250px">
+                                        <h4><?=$user->login?></h4>
+                                        <div class="text-secondary">
+                                            <?=$user->email?>
+                                        </div>
+                                        <div class="row text-center mt-2">
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                <span style="color: blue">Мои тесты:</span>
+                                                <a href="tests">
+                                                    <p style="font-size: 20px; color: black"><?=$count_my_tests;?></p>
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                                                <span style="color: blue">Мои опросы:</span>
+                                                <a href="surveys">
+                                                    <p style="font-size: 20px; color: black"><?=$count_my_surveys;?></p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+                        <form action="" method="post" id="changeData">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 my-auto">
+                                            <h6 class="mb-0">Фамилия:</h6>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
+                                            <?php if($user->surname):?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Фамилия" id="surname" name="surname" value="<?=$user->surname?>" maxlength="32">
+                                                </div>
+                                            <?php else:?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Фамилия" id="surname" name="surname" maxlength="32">
+                                                </div>
+                                            <?php endif;?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 my-auto">
+                                            <h6 class="mb-0">Имя:</h6>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
+                                            <?php if($user->firstname):?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Имя" id="firstname" name="firstname" value="<?=$user->firstname?>" maxlength="32">
+                                                </div>
+                                            <?php else:?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Имя" id="firstname" name="firstname" maxlength="32">
+                                                </div>
+                                            <?php endif;?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 my-auto">
+                                            <h6 class="mb-0">Отчество:</h6>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
+                                            <?php if($user->patronymic):?>
+                                                <div class="input-group input-group-sm flex-nowrap" maxlength="32">
+                                                    <input type="text" class="form-control" placeholder="Отвество" id="patronymic" name="patronymic" value="<?=$user->patronymic?>">
+                                                </div>
+                                            <?php else:?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Отвество" id="patronymic" name="patronymic" maxlength="32">
+                                                </div>
+                                            <?php endif;?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 my-auto">
+                                            <h6 class="mb-0">Изображение для профиля:</h6>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
+                                            <?php if($user->img_link):?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg" id="img_link" name="img_link" value="<?=$user->img_link?>" maxlength="255">
+                                                </div>
+                                            <?php else:?>
+                                                <div class="input-group input-group-sm flex-nowrap">
+                                                    <input type="text" class="form-control" placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg" id="img_link" name="img_link" maxlength="255">
+                                                </div>
+                                            <?php endif;?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-success" name="btn-save" id="btn-save">Сохранить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php 
+                                if (isset($_POST['btn-save'])) {
 
+                                    $errors = array();
+                                    if (trim(strlen($_POST['surname'])) > 32) {
+                                        $errors[] = 'Введите фамилию менее 32 сивмолов';
+                                    }
+                                    if (trim(strlen($_POST['firstname'])) > 32) {
+                                        $errors[] = 'Введите имя менее 32 сивмолов';
+                                    }
+                                    if (trim(strlen($_POST['patronymic'])) > 32) {
+                                        $errors[] = 'Введите отчество менее 32 сивмолов';
+                                    }
+                                    if (trim(strlen($_POST['img_link']) > 255)) {
+                                        $errors[] = 'Больше 255 в ссылке на изображение не допускается';
+                                    }
+                                    if (trim($_POST['surname'] == $user->surname)
+                                    && (trim($_POST['firstname'] == $user->firstname))
+                                    && (trim($_POST['patronymic'] == $user->patronymic))
+                                    && (trim($_POST['img_link'] == $user->img_link))) {
+                                        $errors[] = 'Вы должны изменить данные!';
+                                    }
+                                    if (empty($errors)) {
+                                        $user->surname = trim($_POST['surname']);
+                                        $user->firstname = trim($_POST['firstname']);
+                                        $user->patronymic = trim($_POST['patronymic']);
 
-
-
-                        <?php else : ?>
-                        <p>Выберите тест</p>
-                        <?php endif; ?>
+                                        if ($_POST['img_link'] == '') {
+                                            $user->img_link = '0';
+                                        } else {
+                                            $user->img_link = trim($_POST['img_link']);
+                                        }
+                                        R::store($user);
+                                        header("Location: index");
+                                        ob_end_flush();
+                                    }
+                                        else {
+                                            echo '<div style="color: red;" class="text-center">'.array_shift($errors).'</div><br>';
+                                    }
+                                }
+                            ?>
+                        </form>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-10 offset-xl-1 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div id="search-input-sidenav">
+                                    <div class="test_data">
+                                        <h4 class="text-center">Пройденные тесты:</h4>
+                                        <table id="dtBasicExample" class="table mt-3 table-striped table-bordered table-secondary" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class='table-dark' scope="col" class="th-sm">Название теста</th>
+                                                    <th class='table-dark' scope="col" class="th-sm">Дата прохождения</th>
+                                                    <th class='table-dark' scope="col" class="th-sm">%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php foreach ($tests_user as $test_one):?>
+                                                    <tr class="sidenav-item sidenav-link">
+                                                        <td><a href="test-result?test=<?=$test_one['test_id']?>"><?=$test_one['test_name']?>
+                                                        </td>
+                                                        <td><?=$test_one['date']?></td>
+                                                        <td><?=round( ($test_one['correct_score'] / $test_one['all_count'] * 100 ), 2)?>%
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    <?php endforeach;?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+                
             </div>
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
@@ -258,7 +418,7 @@
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js">
     </script>
     <script src="../js/profile.js"></script>
-    
+
 </body>
 
 </html>

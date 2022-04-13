@@ -161,8 +161,8 @@
     .index-navbar .navbar-profile-dropdown {
         margin-right: 0;
         border-radius: 1.25rem 0.25rem 1.25rem 0.25rem;
-        background: #ff4a17;
-        width: 170px;
+        background: #1f1f1fc6;
+        width: 100%;
     }
     .navbar-profile {
         width: 170px;
@@ -309,7 +309,7 @@
     border: 2px solid rgb(143, 143, 143);
     border-radius: 50%;
     padding: 7px;
-    animation:spin 4s linear infinite;
+    animation:spin 4s linear;
 }
 
 .first-card-index:hover {

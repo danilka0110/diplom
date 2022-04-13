@@ -71,14 +71,22 @@
                   <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                           data-bs-toggle="dropdown" aria-expanded="false">
-                          <img src="<?=$user->img_link?>" alt="Профиль" width="34px" height="34px" class="navbar-profile-img">
+                          <?php if($user->img_link == '0'): ?>
+                              <img src="../img/user-profile-nav.png" alt="" width="34" height="34" class="navbar-profile-img" style="border-radius: 50%">
+                          <?php else: ?>
+                              <img src="<?=$user->img_link?>" alt="" width="34" height="34" class="navbar-profile-img" style="border-radius: 50%">
+                          <?php endif; ?>  
                           <span style="margin-left: 2px;">Профиль</span>
                       </a>
                       <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdown">
                           <li>
 
                             <a class="dropdown-item" href="profile">
-                              <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img">
+                              <?php if($user->img_link == '0'): ?>
+                                  <img src="../img/user-profile-nav.png" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%">
+                              <?php else: ?>
+                                  <img src="<?=$user->img_link?>" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%">
+                              <?php endif; ?>  
                               <span style="margin-left: 2px;"><?php echo $user->login?></span>
                             </a>
 
@@ -167,7 +175,7 @@
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 justify-content-center anim-items block-test-constructor">
         <div class="card text-center first-card-index anim-show-second-block second-cards">
           <img src="img/tests.png" alt="tests" class="img-card-index">
-          <h5 class="card-title mt-2">Создавайте тесты</h5>
+          <h5 class="card-title mt-4">Создавайте тесты</h5>
           <div class="card-body">
             <p class="card-text">Вы может создавать тесты по различным категориям. Нужно всего лишь зарегистрировать аккаунт!</p>
             <a href="profile/test-create" class="btn btn-primary second-block-btn-card-1 mt-2">Создать тест</a>
