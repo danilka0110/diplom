@@ -90,7 +90,7 @@ if ($('.question').length != 1) {
             findClass = $(this).find(".q").attr("class");
 
             
-            if (findClass == 'q checkbox') {
+            if (findClass == 'q checkbox question-show') {
 
                 findCountCheckboxesInQuestion = $(this).find(".checkbox-answers");
 
@@ -114,7 +114,7 @@ if ($('.question').length != 1) {
                 // console.log($('input[name=question-' + id + ']:checked').length);
             } 
 
-            else if (findClass == 'q radio') {
+            else if (findClass == 'q radio question-show') {
 
 
 

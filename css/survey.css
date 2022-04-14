@@ -5,3 +5,16 @@ body {
 .survey-results {
     font-size: 16px;
 }
+
+#test-start {
+    width: 30%;
+    height: 47px;
+    font-size: 20px;
+    background: #43528f;
+    border: none
+}
+
+#test-start:hover {
+    background: #556191;
+    border: 2px solid white;
+}

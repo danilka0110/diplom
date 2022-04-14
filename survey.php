@@ -199,9 +199,11 @@ if (isset($_GET['survey'])) {
 
                                 
                             <div class="question" data-id="<?=$id_question?>" id="question-<?=$id_question?>">
+
+
+
+
                                 <?php foreach($item as $id_answer => $answer): // проходимся по массиву вопрос/ответы?>
-
-
 
                                     <?php if($item['type'] == 'radio'): ?>
 
@@ -214,9 +216,6 @@ if (isset($_GET['survey'])) {
                                             <label for="answer-<?=$id_answer?>"><?=$answer?></label>
                                         </p>
                                         <?php endif; // id_answer?>
-
-
-
 
                                     <?php elseif($item['type'] == 'checkbox'): // id_answer?>
 
@@ -232,20 +231,18 @@ if (isset($_GET['survey'])) {
 
                                     <?php endif; // id_answer?>
 
-
-
-
-
-
-
-
-
                                 <?php endforeach; //$item ?>
+
+
+
+
+
+                                
                             </div>
                             <?php endforeach; //$test_data ?>
                         </div>
 
-                        <p class="none result-error" style="color:red">Вы ответили не на все вопросы</p>
+                        <p class="none result-error" style="color:red; font-size: 16px;">Вы ответили не на все вопросы</p>
                         <!-- <p class="none next-error" style="color:red">Вопросов больше нет</p> -->
                         <div class="buttons text-center">
                             <button type="submit" class="center btn-finish btn btn-success" id="btn">Закончить
