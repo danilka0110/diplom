@@ -22,7 +22,7 @@
     $str = $_GET['page'];
     $page = formatstr($str);
     if($page === false) header('Location: tests');
-    $count = 8;
+    $count = 16;
     $page_count = (count($tests)) / $count;
     if ($page > $page_count || $page < 0) header('Location: tests');
     if(isset($_POST['search'])) {
@@ -36,7 +36,6 @@
         header('Location: tests');
       }
     }
-
 
 ?>
 
@@ -67,13 +66,11 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
-
-        
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tests.css">
+    <link rel="stylesheet" href="css/tests-carousel.css">
 </head>
 
 <body>
@@ -138,104 +135,123 @@
         </div>
     </nav>
 
-<div class="main">
-    <?php if ($tests): ?>
-    <div class="container-fluid tests-container">
-        <div class="row">
-                <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
-                    <div class="container-fluid tests-container">
-                        
-                        <h3 class="text-center">Популярные тесты</h3>
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-                                <div class="card" style="width: 33,33333%;">
-                                    <div class="card-body">
-                                        <?php foreach ($popular_tests as $popular_test) :?>
-                                            <div class="mt-2">
-                                                <a href="test?test=<?=$popular_test['id']?>"><img src="<?=$popular_test['img_link']?>" class="card-img-test popular_test_img" alt="..."></a>
-                                                <a href="test?test=<?=$popular_test['id']?>" style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
-                                            </div>
-                                        <?php endforeach ;?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-                                <div class="card" style="width: 33,33333%;">
-                                    <div class="card-body">
-                                        <?php foreach ($popular_tests as $popular_test) :?>
-                                            <div class="mt-2">
-                                                <a href="test?test=<?=$popular_test['id']?>"><img src="<?=$popular_test['img_link']?>" class="card-img-test popular_test_img" alt="..."></a>
-                                                <a href="test?test=<?=$popular_test['id']?>" style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
-                                            </div>
-                                        <?php endforeach ;?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-                                <div class="card" style="width: 33,33333%;">
-                                    <div class="card-body">
-                                        <?php foreach ($popular_tests as $popular_test) :?>
-                                            <div class="mt-2">
-                                                <a href="test?test=<?=$popular_test['id']?>"><img src="<?=$popular_test['img_link']?>" class="card-img-test popular_test_img" alt="..."></a>
-                                                <a href="test?test=<?=$popular_test['id']?>" style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
-                                            </div>
-                                        <?php endforeach ;?>
-                                    </div>
-                                </div>
-                            </div>  
-                        </div>
-                    </div>
-                    <div class="container-fluid tests-container text-center">
 
-                        <?php foreach($categories as $category) :?>
-                        <a href="tests?category=<?=$category?>"><button class="btn btn-outline-primary mt-2 btn-category" id="<?=$category?>"><?=$category?></button></a>
-                        <?php endforeach?>
-                    </div>
-                    <form method="POST">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
-                                aria-describedby="button-addon2" name="search">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
+    <div class="main">
+        <?php if ($tests): ?>      
+            <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
+                <div class="container-fluid popular-tests-container text-center">
+                    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner w-100">
+                            <h3>Популярные тесты</h3>
+                            <div class="row mt-4">
+                                <?php foreach ($popular_tests as $key => $popular_test) :?>
+                                    <?php if ($key == 0): ?>
+                                        <div class="carousel-item active text-center">
+                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                <div class="card card-body">
+                                                    <a href="test?test=<?=$popular_test['id']?>"><img
+                                                            src="<?=$popular_test['img_link']?>" class="popular_test_img" alt="img"></a>
+                                                    <a href="test?test=<?=$popular_test['id']?>"
+                                                        style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="carousel-item text-center">
+                                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                                <div class="card card-body">
+                                                    <a href="test?test=<?=$popular_test['id']?>"><img
+                                                            src="<?=$popular_test['img_link']?>" class="popular_test_img" alt="img"></a>
+                                                    <a href="test?test=<?=$popular_test['id']?>"
+                                                        style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                <?php endforeach ;?>
+                            </div>
+                            <button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+                                data-bs-slide="prev">
+                                <img src="img/prev.png" alt="" width="34" height="34"></img>
+                            </button>
+                            <button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+                                data-bs-slide="next">
+                                <img src="img/next.png" alt="" width="34" height="34">
+                            </button>
                         </div>
-                    </form>
-                    <?php for ($i = $page*$count; $i < (($page+1)*$count); $i++):?>
-                    <?php if ($tests[$i]['id'] != NULL) :?>
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                        <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$tests[$i]['date']?></span>
-                            </div>
-                            <a href="test?test=<?=$tests[$i]['id']?>"><img src="<?=$tests[$i]['img_link']?>"
-                                    class="card-img-test" alt="..."></a>
-                            <a href="test?test=<?=$tests[$i]['id']?>"
-                                class="test-name-for-img"><?=$tests[$i]['test_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
-                                <span><?=$tests[$i]['author']?></span>
-                                <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                                <span><?=$tests[$i]['count_passes']?></span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?=$tests[$i]['description']?></p>
-                                <div class="text-center">
-                                    <a href="test?test=<?=$tests[$i]['id']?>" class="btn btn-primary btn-test">Пройти
-                                        тест</a>
-                                </div>
+                    </div>
+                </div>
+            <?php else :?>
+            <?php endif ;?>
+            
+
+
+
+        <div class="container-fluid tests-container">
+            <div class="row">
+                <?php if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
+
+                <div class="container-fluid tests-container text-center">
+
+                    <?php foreach($categories as $category) :?>
+                    <a href="tests?category=<?=$category?>"><button class="btn btn-outline-primary mt-2 btn-category"
+                            id="<?=$category?>"><?=$category?></button></a>
+                    <?php endforeach?>
+                </div>
+                <form method="POST">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
+                            aria-describedby="button-addon2" name="search">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
+                    </div>
+                </form>
+                <?php for ($i = $page*$count; $i < (($page+1)*$count); $i++):?>
+                <?php if ($tests[$i]['id'] != NULL) :?>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
+                    <div class="card card-test" style="width: 15rem; min-height: 24rem;">
+                        <a href="test?test=<?=$tests[$i]['id']?>"><img src="<?=$tests[$i]['img_link']?>"
+                                class="card-img-test" alt="..."></a>
+
+                        <a href="test?test=<?=$tests[$i]['id']?>"
+                            class="test-name-for-img"><?=$tests[$i]['test_name']?></a>
+
+                        <div class="test-author-for-img mt-1 text-center">
+                            <?php $user_img = get_user_img($tests[$i]['author']); ?>
+                            <?php if($user_img): ?>
+                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                            <?php else: ?>
+                                <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
+                            <?php endif; ?>
+                            <span><?=$tests[$i]['author']?></span>
+                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
+                            <span><?=$tests[$i]['count_passes']?></span>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text test_description"><?=$tests[$i]['description']?></p>
+                            <div class="text-center">
+                                <a href="test?test=<?=$tests[$i]['id']?>" class="btn btn-primary btn-test">Пройти
+                                    тест</a>
                             </div>
                         </div>
+
+
                     </div>
-                    <?php endif ;?>
+                    <hr>
+                </div>
+                <?php endif ;?>
+                <?php endfor ;?>
+                <div class="page-list" align="center">
+                    <?php for ($p = 0; $p < $page_count; $p++) :?>
+                    <?php if ($p == $_GET['page']):?>
+                    <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary active"
+                            id="<?=$p?>"><?=$p+1?></button></a>
+                    <?php else:?>
+                    <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary page_btn"
+                            id="<?=$p?>"><?=$p+1?></button></a>
+                    <?php endif;?>
                     <?php endfor ;?>
-                    <div class="page-list" align="center">
-                        <?php for ($p = 0; $p < $page_count; $p++) :?>
-                            <?php if ($p == $_GET['page']):?>
-                                <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary active" id="<?=$p?>"><?=$p+1?></button></a>
-                            <?php else:?>
-                                <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary page_btn" id="<?=$p?>"><?=$p+1?></button></a>
-                            <?php endif;?>
-                        <?php endfor ;?>
-                    </div>
+                </div>
                 <?php elseif ($_POST['search'] != NULL && $_GET['category'] == NULL) :?>
                     <h3 class="text-center">Вы искали: <?=$search_data?></h3>
                     <?php if ($tests_search) :?>
@@ -243,83 +259,93 @@
                     <?php if ($tests_search[$i]['id'] != NULL) :?>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
                         <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$tests_search[$i]['date']?></span>
-                            </div>
-                            <a href="test?test=<?=$tests_search[$i]['id']?>"><img
-                                    src="<?=$tests_search[$i]['img_link']?>" class="card-img-test" alt="..."></a>
+                            <a href="test?test=<?=$tests_search[$i]['id']?>"><img src="<?=$tests_search[$i]['img_link']?>"
+                                    class="card-img-test" alt="..."></a>
+
                             <a href="test?test=<?=$tests_search[$i]['id']?>"
                                 class="test-name-for-img"><?=$tests_search[$i]['test_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
+
+
+
+                            <div class="test-author-for-img mt-1 text-center">
+                                <?php $user_img = get_user_img($tests_search[$i]['author']); ?>
+                                <?php if($user_img): ?>
+                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                <?php else: ?>
+                                <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
+                                <?php endif; ?>
                                 <span><?=$tests_search[$i]['author']?></span>
                                 <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
                                 <span><?=$tests_search[$i]['count_passes']?></span>
                             </div>
+
                             <div class="card-body">
-                                <p class="card-text"><?=$tests_search[$i]['description']?></p>
+                                <p class="card-text test_description"><?=$tests_search[$i]['description']?></p>
                                 <div class="text-center">
-                                    <a href="test?test=<?=$tests_search[$i]['id']?>"
-                                        class="btn btn-primary btn-test">Пройти
+                                    <a href="test?test=<?=$tests_search[$i]['id']?>" class="btn btn-primary btn-test">Пройти
                                         тест</a>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                     <?php endif ;?>
                     <?php endfor ;?>
                     <?php else :?>
-                        <h3 class="text-center">Ничего не найдено</h3>                      
-                    <?php endif ;?>   
+                    <h3 class="text-center">Ничего не найдено</h3>
+                    <?php endif ;?>
+
+
                 <?php else :?>
                     <h3 class="text-center mb-4"><?=$category_data?></h3>
                     <?php if ($category_tests) :?>
-                    <?php for ($i = 0; $i < count($category_tests); $i++):?>
-                    <?php if ($category_tests[$i]['id'] != NULL) :?>
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                        <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$category_tests[$i]['date']?></span>
-                            </div>
-                            <a href="test?test=<?=$category_tests[$i]['test_id']?>"><img
-                                    src="<?=$category_tests[$i]['img_link']?>" class="card-img-test" alt="..."></a>
-                            <a href="test?test=<?=$category_tests[$i]['test_id']?>"
-                                class="test-name-for-img"><?=$category_tests[$i]['test_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
-                                <span><?=$category_tests[$i]['author']?></span>
-                                <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                                <span><?=$category_tests[$i]['count_passes']?></span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?=$category_tests[$i]['description']?></p>
-                                <div class="text-center">
-                                    <a href="test?test=<?=$category_tests[$i]['test_id']?>"
-                                        class="btn btn-primary btn-test">Пройти
-                                        тест</a>
+                        <?php for ($i = 0; $i < count($category_tests); $i++):?>
+                            <?php if ($category_tests[$i]['id'] != NULL) :?>
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
+                                    <div class="card card-test" style="width: 14rem;">
+                                        <a href="test?test=<?=$category_tests[$i]['test_id']?>"><img
+                                                src="<?=$category_tests[$i]['img_link']?>" class="card-img-test" alt="..."></a>
+                                        <a href="test?test=<?=$category_tests[$i]['test_id']?>"
+                                            class="test-name-for-img"><?=$category_tests[$i]['test_name']?></a>
+                                        <div class="test-author-for-img mt-1 text-center">
+                                            <?php $user_img = get_user_img($category_tests[$i]['author']); ?>
+                                            <?php if($user_img): ?>
+                                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                            <?php else: ?>
+                                            <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
+                                            <?php endif; ?>
+                                            <span><?=$category_tests[$i]['author']?></span>
+                                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
+                                            <span><?=$category_tests[$i]['count_passes']?></span>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text test_description"><?=$category_tests[$i]['description']?></p>
+                                            <div class="text-center">
+                                                <a href="test?test=<?=$category_tests[$i]['test_id']?>"
+                                                    class="btn btn-primary btn-test">Пройти
+                                                    тест</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endif ;?>
-                    <?php endfor ;?>
+                            <?php endif ;?>
+                        <?php endfor ;?>
                     <?php else :?>
-                        <h4 class="text-center">Тестов с данной категории пока нет</h4>                      
-                    <?php endif ;?>  
+                    <h4 class="text-center">Тестов с данной категории пока нет</h4>
+                <?php endif ;?>
 
 
 
                 <?php unset($_GET['category']); endif ;?>
 
             </div>
-        <?php  else: //tests ?>
-        <h3>Нет тестов</h3>
-        <?php endif //tests ?>
+            <?php  else: //tests ?>
+            <h3>Нет тестов</h3>
+            <?php endif //tests ?>
 
+        </div>
     </div>
-</div>
 
 
 
@@ -420,10 +446,14 @@
             <a class="text-white" href="#">Paradigm Tests</a>
         </div>
     </footer>
+
+
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="js/tests.js"></script>
 
 
 

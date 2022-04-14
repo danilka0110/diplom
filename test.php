@@ -95,6 +95,7 @@ if (isset($_GET['test'])) {
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tests.css">
+    <link rel="stylesheet" href="css/test.css">
 </head>
 
 <body>
@@ -159,106 +160,85 @@ if (isset($_GET['test'])) {
             </div>
         </div>
     </nav>
+
+
+
+
+    
     <div class="main">
         <div class="container">
             <div class="wrap">
-
-
-
-
-                <?php if ($tests): ?>
+               <?php if ($tests): ?>
                 <div class="content">
                     <?php if(isset($test_data)) : ?>
 
 
 
-
+                        
                         <div class="test-head">
-                            <a style="font-size: 26px" class="test-name"><?=$test_name?></a>
-                            <div>
-                                <img src="<?=$test_img_link?>" alt="img" width="150px" height="150px" class="test-img">
-                                <span class="test-description"><?=$test_description?></span>
+                            <div class="text-center">
+                                <img src="<?=$test_img_link?>" alt="img" width="160px" height="160px" class="test-img">
+                                <p style="font-size: 32px" class="test-head-test-name mt-4"><?=$test_name?></p>
+                                <button class="btn btn-primary mt-4" id="test-start">Начать тест</button>
                             </div>
-                            <p>Всего вопросов: <?=$count_questions?></p>
-                            <p>Автор: <?=$test_author?></p>
 
-                            <button class="btn btn-primary" id="test-start">Пройти тест</button>
+                            <div class="test-description mt-5">
+                                <p>Описание теста: <?=$test_description?></p>
+                                <p>Всего вопросов: <?=$count_questions?></p>
+                                <p>Автор: <?=$test_author?></p>
+                            </div>
+
                         </div>
 
 
 
 
 
-
-
-
-
-
-
-
-
-                    <div class="test-show none">
-                        <span style="font-size: 26px" class="test-name"><?=$test_name?></span>
-                        <hr>
-                        <?=$pagination?>
+                    <div class="test-show none test-decoration">
+                    <?=$pagination?>
                         <span class="none" id="test-id"><?=$test_id?></span>
                         <div class="test-data">
+
                             <?php foreach($test_data as $id_question => $item): // получаем каждый конкретный вопрос + ответы ?>
-                            <div class="question" data-id="<?=$id_question?>" id="question-<?=$id_question?>">
+                                <div class="question" data-id="<?=$id_question?>" id="question-<?=$id_question?>">
 
-                                <?php foreach($item as $id_answer => $answer): // проходимся по массиву вопрос/ответы?>
+                                    <?php foreach($item as $id_answer => $answer): // проходимся по массиву вопрос/ответы?>
 
-                                <?php if (!$id_answer): //выводим вопрос?>
-                                <p class="q"><?=$answer?></p>
-                                <?php else: // выводим варианты ответов?>
-                                <p class="a">
-                                    <input required class="input-ans" type="radio" name="question-<?=$id_question?>"
-                                        id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
-                                    <label for="answer-<?=$id_answer?>"><?=$answer?></label>
-                                </p>
+                                    <?php if (!$id_answer): //выводим вопрос?>
+                                    <p class="q question-show"><?=$answer?></p>
+                                    <?php else: // выводим варианты ответов?>
+                                    <p class="a question-show">
+                                        <input required class="input-ans" type="radio" name="question-<?=$id_question?>"
+                                            id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
+                                        <label for="answer-<?=$id_answer?>"><?=$answer?></label>
+                                    </p>
 
-                                <?php endif; // id_answer?>
+                                    <?php endif; // id_answer?>
 
-                                <?php endforeach; //$item ?>
+                                    <?php endforeach; //$item ?>
+
+
+                                
+                                </div>
+                                <?php endforeach; //$test_data ?>
                             </div>
-                            <?php endforeach; //$test_data ?>
-                            <!-- <div class="buttons">
-                                <a class="center btn-next btn btn-primary" id="btn-next">Следующий
-                                    вопрос</a>
-                                </div> -->
-                        </div>
 
-
-                        <p class="none result-error" style="color:red">Вы ответили не на все вопросы</p>
-                        <!-- <p class="none next-error" style="color:red">Вопросов больше нет</p> -->
-
+                        <p class="none result-error" style="color:red; font-size: 16px;">Вы ответили не на все вопросы</p>
 
                         <div class="buttons text-center">
                             <button type="submit" class="center btn-finish btn btn-success" id="btn">Закончить
                                 тест
                                 <span class="spinner-border spinner-border-sm none" role="status" aria-hidden="true"></span>
                             </button>
-                        </div>
 
+                        </div>
 
                     <?php else: header('Location: tests'); ob_end_flush(); // isset($test_data) ?>
 
                     <?php endif; // isset($test_data) ?>
                     </div>
 
-
-
-
-
-
-
-
-
-
                 </div>
-
-
-
                 <?php  else: //tests ?>
                 <h3>Нет тестов</h3>
                 <?php endif //tests ?>
@@ -268,109 +248,6 @@ if (isset($_GET['test'])) {
 
 
 
-
-
-
-
-
-
-    <footer class="bg-dark text-center text-white">
-            <div class="container p-4">
-                <section class="mb-4">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                        distinctio earum repellat quaerat voluptatibus placeat nam,
-                        commodi optio pariatur est quia magnam eum harum corrupti dicta,
-                        aliquam sequi voluptate quas.
-                    </p>
-                </section>
-
-                <section class="">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-                © 2022 Copyright:
-                <a class="text-white" href="#">Paradigm Tests</a>
-            </div>
-        </footer>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"

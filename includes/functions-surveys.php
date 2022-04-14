@@ -112,6 +112,18 @@ $data = R::getAll("SELECT *
         return $data;
 }
 
+function get_user_img($user_login){
+	$query = R::getAll("SELECT img_link
+		FROM users
+			WHERE login = '$user_login'");
+    foreach($query as $item) {
+
+		$data = $item['img_link'];
+
+    }
+	return $data;
+}
+
 function get_survey_data($survey_id){
 	if(!$survey_id) return;
 	$query = R::getAll("SELECT q.question, q.survey_id, q.type, a.id, a.answer, a.question_id
@@ -276,6 +288,7 @@ function get_test_data($survey_id){
 
 function print_result($survey_all_data, $survey_id) {
         $print_res = '<div class="test-data">';
+        $print_res = '<div class="survey-results">';
                 $print_res .= '<div class="text-center mb-4 survey_bg_ty">';
                         $print_res .= '<img src="../img/success_passes.png" style="margin-top: -5px;">';
                         $print_res .= '<span style="margin-left: 1%; font-size: 24px; font-family: Georgia, serif;">Спасибо, что прошли наш опрос!</span>';
@@ -483,7 +496,7 @@ function print_result($survey_all_data, $survey_id) {
         
 
 
-
+        $print_res .= '</div>';
         $print_res .= '</div>';
 
         return $print_res;

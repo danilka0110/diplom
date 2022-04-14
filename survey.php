@@ -95,6 +95,8 @@ if (isset($_GET['survey'])) {
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tests.css">
+    <link rel="stylesheet" href="css/test.css">
+    <link rel="stylesheet" href="css/survey.css">
 </head>
 
 <body>
@@ -169,22 +171,25 @@ if (isset($_GET['survey'])) {
                     <?php if(isset($survey_data)) :?>
 
 
-                        <div class="test-head">
-                            <a style="font-size: 26px" class="test-name"><?=$survey_name?></a>
-                            <div>
-                                <img src="<?=$survey_img_link?>" alt="img" width="150px" height="150px" class="test-img">
-                                <span class="test-description"><?=$survey_description?></span>
-                            </div>
-                            <p>Всего вопросов: <?=$count_questions?></p>
-                            <p>Автор: <?=$survey_author?></p>
 
-                            <button class="btn btn-primary" id="test-start">Пройти тест</button>
+                        <div class="test-head">
+                            <div class="text-center">
+                                <img src="<?=$survey_img_link?>" alt="img" width="160px" height="160px" class="test-img">
+                                <p style="font-size: 32px" class="test-head-test-name mt-4"><?=$survey_name?></p>
+                                <button class="btn btn-primary mt-4" id="test-start">Начать опрос</button>
+                            </div>
+
+                            <div class="test-description mt-5">
+                                <p>Описание теста: <?=$survey_description?></p>
+                                <p>Всего вопросов: <?=$count_questions?></p>
+                                <p>Автор: <?=$survey_author?></p>
+                            </div>
+
                         </div>
 
 
+
                     <div class="test-show none">
-                        <span style="font-size: 26px" class="test-name"><?=$survey_name?></span>
-                        <hr>
                         <?=$pagination?>
                         <span class="none" id="survey-id"><?=$survey_id?></span>
                         <div class="test-data">
@@ -201,9 +206,9 @@ if (isset($_GET['survey'])) {
                                     <?php if($item['type'] == 'radio'): ?>
 
                                         <?php if (!$id_answer): //выводим вопрос?>
-                                        <p class="q radio"><?=$answer?></p>
+                                        <p class="q radio question-show"><?=$answer?></p>
                                         <?php elseif ($id_answer != 'type'): // выводим варианты ответов?>
-                                        <p class="a">
+                                        <p class="a question-show">
                                             <input required class="input-ans radio" type="radio" name="question-<?=$id_question?>"
                                                 id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
                                             <label for="answer-<?=$id_answer?>"><?=$answer?></label>
@@ -216,9 +221,9 @@ if (isset($_GET['survey'])) {
                                     <?php elseif($item['type'] == 'checkbox'): // id_answer?>
 
                                         <?php if (!$id_answer): //выводим вопрос?>
-                                        <p class="q checkbox"><?=$answer?></p>
+                                        <p class="q checkbox question-show"><?=$answer?></p>
                                         <?php elseif ($id_answer != 'type'): // выводим варианты ответов?>
-                                        <p class="a">
+                                        <p class="a question-show">
                                             <input required class="input-ans checkbox-answers" type="checkbox" name="question-<?=$id_question?>"
                                                 id="answer-<?=$id_answer?>" value="<?=$id_answer?>">
                                             <label for="answer-<?=$id_answer?>"><?=$answer?></label>
@@ -263,103 +268,7 @@ if (isset($_GET['survey'])) {
     
  
 
-    <footer class="bg-dark text-center text-white">
-            <div class="container p-4">
-                <section class="mb-4">
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                        distinctio earum repellat quaerat voluptatibus placeat nam,
-                        commodi optio pariatur est quia magnam eum harum corrupti dicta,
-                        aliquam sequi voluptate quas.
-                    </p>
-                </section>
-
-                <section class="">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                            <h5 class="text-uppercase">Links</h5>
-
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#!" class="text-white">Link 1</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 2</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 3</a>
-                                </li>
-                                <li>
-                                    <a href="#!" class="text-white">Link 4</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-                © 2022 Copyright:
-                <a class="text-white" href="#">Paradigm Tests</a>
-            </div>
-        </footer>
+   
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"

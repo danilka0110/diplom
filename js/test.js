@@ -98,6 +98,7 @@ if ($('.question').length != 1) {
                 type: 'POST',
                 data: res,
                 success: function(html) {
+                    $('.test-show').removeClass('test-decoration');
                     $('.test-show').html(html);
                 },
                 error:function() {

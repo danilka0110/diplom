@@ -97,6 +97,18 @@ function get_correct_answers($test){
 	return $data;
 }
 
+function get_user_img($user_login){
+	$query = R::getAll("SELECT img_link
+		FROM users
+			WHERE login = '$user_login'");
+    foreach($query as $item) {
+
+		$data = $item['img_link'];
+
+    }
+	return $data;
+}
+
 /**
 * строим пагинацию
 **/
@@ -107,9 +119,9 @@ function pagination($count_questions, $test_data){
 	for($i = 1; $i <= $count_questions; $i++){
 		$key = array_shift($keys);
 		if( $i == 1 ){
-			$pagination .= '<div class="pag"><a class="pagination-answers nav-active-page first-question" href="#question-' . $key . '">0' . $i . '</a></div>';
+			$pagination .= '<div class="pag"><a class="pagination-answers nav-active-page first-question" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
 		}elseif ( $i < 10 ){
-			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">0' . $i . '</a></div>';
+			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
 		}else{
 			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">' . $i . '</a></div>';
 		}
@@ -186,6 +198,7 @@ function print_result($test_all_data_result, $test_id){
 	$percent_incorrect = round(100 - $percent, 2);
 	// вывод результатов
 	$print_res = '<div class="test-data">';
+	$print_res = '<div class="test-results">';
 	$print_res .= '<div class="text-center mb-4" style="background: #9ad35f; height: 40px;">';
 	$print_res .= '<img src="../img/success_passes.png" style="margin-top: -5px;">';
 	$print_res .= '<span style="margin-left: 1%; font-size: 24px; font-family: Georgia, serif;">Результат</span>';
@@ -367,7 +380,7 @@ function print_result($test_all_data_result, $test_id){
 		$print_res .= '</div>';
 
 
-
+	$print_res .= "<div>"; // .test-results
 	$print_res .= '</div>'; // .test-data
 
 	return $print_res;

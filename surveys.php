@@ -69,6 +69,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tests.css">
+    <link rel="stylesheet" href="css/tests-carousel.css">
 </head>
 
 <body>
@@ -136,55 +137,58 @@
 
 
 
-    <div class="main">
+<div class="main">
     <?php if ($surveys): ?>
-    <div class="container-fluid tests-container">
-        <div class="row">
-                <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
-                    <div class="container-fluid tests-container">
-                        
-                        <h3 class="text-center">Популярные опросы</h3>
-                        <div class="row">
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-                                <div class="card" style="width: 33,33333%;">
-                                    <div class="card-body">
-                                        <?php foreach ($popular_surveys as $popular_survey) :?>
-                                            <div class="mt-2">
-                                                <a href="survey?survey=<?=$popular_survey['id']?>"><img src="<?=$popular_survey['img_link']?>" class="card-img-test popular_test_img" alt="..."></a>
-                                                <a href="survey?survey=<?=$popular_survey['id']?>" style="margin-left: 5px;"><?=$popular_survey['survey_name']?></a>
+        <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
+            <div class="container-fluid popular-tests-container text-center">
+                <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner w-100">
+                        <h3>Популярные тесты</h3>
+                        <div class="row mt-4">
+                            <?php foreach ($popular_surveys as $key => $popular_survey) :?>
+                                <?php if ($key == 0): ?>
+                                    <div class="carousel-item active text-center">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                            <div class="card card-body">
+                                                <a href="survey?survey=<?=$popular_survey['id']?>"><img
+                                                        src="<?=$popular_survey['img_link']?>" class="popular_test_img" alt="img"></a>
+                                                <a href="survey?survey=<?=$popular_survey['id']?>"
+                                                    style="margin-left: 5px;"><?=$popular_survey['survey_name']?></a>
                                             </div>
-                                        <?php endforeach ;?>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-                                <div class="card" style="width: 33,33333%;">
-                                    <div class="card-body">
-                                        <?php foreach ($popular_surveys as $popular_survey) :?>
-                                            <div class="mt-2">
-                                                <a href="survey?survey=<?=$popular_survey['id']?>"><img src="<?=$popular_survey['img_link']?>" class="card-img-test popular_test_img" alt="..."></a>
-                                                <a href="survey?survey=<?=$popular_survey['id']?>" style="margin-left: 5px;"><?=$popular_survey['survey_name']?></a>
+                                <?php else: ?>
+                                    <div class="carousel-item text-center">
+                                        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                            <div class="card card-body">
+                                                <a href="survey?survey=<?=$popular_survey['id']?>"><img
+                                                        src="<?=$popular_survey['img_link']?>" class="popular_test_img" alt="img"></a>
+                                                <a href="survey?survey=<?=$popular_survey['id']?>"
+                                                    style="margin-left: 5px;"><?=$popular_survey['survey_name']?></a>
                                             </div>
-                                        <?php endforeach ;?>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 mt-4">
-                                <div class="card" style="width: 33,33333%;">
-                                    <div class="card-body">
-                                        <?php foreach ($popular_surveys as $popular_survey) :?>
-                                            <div class="mt-2">
-                                                <a href="survey?survey=<?=$popular_survey['id']?>"><img src="<?=$popular_survey['img_link']?>" class="card-img-test popular_test_img" alt="..."></a>
-                                                <a href="survey?survey=<?=$popular_survey['id']?>" style="margin-left: 5px;"><?=$popular_survey['survey_name']?></a>
-                                            </div>
-                                        <?php endforeach ;?>
-                                    </div>
-                                </div>
-                            </div>
+                                <?php endif; ?>
+                            <?php endforeach ;?>
                         </div>
+                        <button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+                            data-bs-slide="prev">
+                            <img src="img/prev.png" alt="" width="34" height="34"></img>
+                        </button>
+                        <button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+                            data-bs-slide="next">
+                            <img src="img/next.png" alt="" width="34" height="34">
+                        </button>
                     </div>
+                </div>
+            </div>
+        <?php else :?>
+        <?php endif ;?>
+      
+        <div class="container-fluid tests-container">
+            <div class="row">
+                <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
                     <div class="container-fluid tests-container text-center">
-
                         <?php foreach($categories as $category) :?>
                         <a href="surveys?category=<?=$category?>"><button class="btn btn-outline-primary mt-2 btn-category" id="<?=$category?>"><?=$category?></button></a>
                         <?php endforeach?>
@@ -197,33 +201,35 @@
                         </div>
                     </form>
                     <?php for ($i = $page*$count; $i < (($page+1)*$count); $i++):?>
-                    <?php if ($surveys[$i]['id'] != NULL) :?>
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                        <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$surveys[$i]['date']?></span>
-                            </div>
-                            <a href="survey?survey=<?=$surveys[$i]['id']?>"><img src="<?=$surveys[$i]['img_link']?>"
-                                    class="card-img-test" alt="..."></a>
-                            <a href="survey?survey=<?=$surveys[$i]['id']?>"
-                                class="test-name-for-img"><?=$surveys[$i]['survey_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
-                                <span><?=$surveys[$i]['author']?></span>
-                                <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                                <span><?=$surveys[$i]['count_passes']?></span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?=$surveys[$i]['description']?></p>
-                                <div class="text-center">
-                                    <a href="survey?survey=<?=$surveys[$i]['id']?>" class="btn btn-primary btn-test">Пройти
-                                        опрос</a>
+                        <?php if ($surveys[$i]['id'] != NULL) :?>
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
+                                <div class="card card-test" style="width: 14rem;">
+                                    <a href="survey?survey=<?=$surveys[$i]['id']?>"><img src="<?=$surveys[$i]['img_link']?>"
+                                            class="card-img-test" alt="..."></a>
+                                    <a href="survey?survey=<?=$surveys[$i]['id']?>"
+                                        class="test-name-for-img"><?=$surveys[$i]['survey_name']?></a>
+                                    <div class="test-author-for-img mt-1 text-center">
+                                        <?php $user_img = get_user_img($surveys[$i]['author']); ?>
+                                        <?php if($user_img): ?>
+                                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                        <?php else: ?>
+                                            <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
+                                        <?php endif; ?>
+                                        <span><?=$surveys[$i]['author']?></span>
+                                        <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
+                                        <span><?=$surveys[$i]['count_passes']?></span>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <p class="card-text test_description"><?=$surveys[$i]['description']?></p>
+                                        <div class="text-center">
+                                            <a href="survey?survey=<?=$surveys[$i]['id']?>" class="btn btn-primary btn-test">Пройти
+                                                тест</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <?php endif ;?>
+                        <?php endif ;?>
                     <?php endfor ;?>
                     <div class="page-list" align="center">
                         <?php for ($p = 0; $p < $page_count; $p++) :?>
@@ -237,36 +243,37 @@
                 <?php elseif ($_POST['search'] != NULL && $_GET['category'] == NULL) :?>
                     <h3 class="text-center">Вы искали: <?=$search_data?></h3>
                     <?php if ($surveys_search) :?>
-                    <?php for ($i = 0; $i < count($surveys_search); $i++):?>
-                    <?php if ($surveys_search[$i]['id'] != NULL) :?>
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                        <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$surveys_search[$i]['date']?></span>
-                            </div>
-                            <a href="survey?survey=<?=$surveys_search[$i]['id']?>"><img
-                                    src="<?=$surveys_search[$i]['img_link']?>" class="card-img-test" alt="..."></a>
-                            <a href="survey?survey=<?=$surveys_search[$i]['id']?>"
-                                class="test-name-for-img"><?=$surveys_search[$i]['survey_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
-                                <span><?=$surveys_search[$i]['author']?></span>
-                                <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                                <span><?=$surveys_search[$i]['count_passes']?></span>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text"><?=$surveys_search[$i]['description']?></p>
-                                <div class="text-center">
-                                    <a href="survey?survey=<?=$surveys_search[$i]['id']?>"
-                                        class="btn btn-primary btn-test">Пройти
-                                        опрос</a>
+                        <?php for ($i = 0; $i < count($surveys_search); $i++):?>
+                            <?php if ($surveys_search[$i]['id'] != NULL) :?>
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
+                                    <div class="card card-test" style="width: 14rem;">
+                                        <a href="survey?survey=<?=$surveys_search[$i]['id']?>"><img
+                                                src="<?=$surveys_search[$i]['img_link']?>" class="card-img-test" alt="..."></a>
+                                        <a href="survey?survey=<?=$surveys_search[$i]['id']?>"
+                                            class="test-name-for-img"><?=$surveys_search[$i]['survey_name']?></a>
+                                        <div class="test-author-for-img mt-1 text-center">
+                                            <?php $user_img = get_user_img($surveys_search[$i]['author']); ?>
+                                            <?php if($user_img): ?>
+                                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                            <?php else: ?>
+                                                <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
+                                            <?php endif; ?>
+                                            <span><?=$surveys_search[$i]['author']?></span>
+                                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
+                                            <span><?=$surveys_search[$i]['count_passes']?></span>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <p class="card-text test_description"><?=$surveys_search[$i]['description']?></p>
+                                            <div class="text-center">
+                                                <a href="survey?survey=<?=$surveys_search[$i]['id']?>" class="btn btn-primary btn-test">Пройти
+                                                    тест</a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php endif ;?>
-                    <?php endfor ;?>
+                            <?php endif ;?>
+                        <?php endfor ;?>
                     <?php else :?>
                         <h3 class="text-center">Ничего не найдено</h3>                      
                     <?php endif ;?>   
@@ -277,25 +284,26 @@
                     <?php if ($category_surveys[$i]['id'] != NULL) :?>
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
                         <div class="card card-test" style="width: 14rem;">
-                            <div>
-                                <img class="test-date-img" src="img/date.png" alt="date.png" style="width:16px">
-                                <span class="test-date-for-img"><?=$category_surveys[$i]['date']?></span>
-                            </div>
                             <a href="survey?survey=<?=$category_surveys[$i]['survey_id']?>"><img
                                     src="<?=$category_surveys[$i]['img_link']?>" class="card-img-test" alt="..."></a>
                             <a href="survey?survey=<?=$category_surveys[$i]['survey_id']?>"
                                 class="test-name-for-img"><?=$category_surveys[$i]['survey_name']?></a>
-                            <div class="test-author-for-img mt-1">
-                                <img src="../img/author.png" alt="author.png" style="width:12px">
+                            <div class="test-author-for-img mt-1 text-center">
+                                <?php $user_img = get_user_img($category_surveys[$i]['author']); ?>
+                                <?php if($user_img): ?>
+                                    <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                <?php else: ?>
+                                    <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
+                                <?php endif; ?>
                                 <span><?=$category_surveys[$i]['author']?></span>
                                 <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
                                 <span><?=$category_surveys[$i]['count_passes']?></span>
                             </div>
+
                             <div class="card-body">
-                                <p class="card-text"><?=$category_surveys[$i]['description']?></p>
+                                <p class="card-text test_description"><?=$category_surveys[$i]['description']?></p>
                                 <div class="text-center">
-                                    <a href="survey?survey=<?=$category_surveys[$i]['survey_id']?>"
-                                        class="btn btn-primary btn-test">Пройти
+                                    <a href="survey?survey=<?=$category_surveys[$i]['survey_id']?>" class="btn btn-primary btn-test">Пройти
                                         опрос</a>
                                 </div>
                             </div>
@@ -311,10 +319,10 @@
 
                 <?php unset($_GET['category']); endif ;?>
 
-            </div>
-        <?php  else: //tests ?>
-        <h3>Нет опросов</h3>
-        <?php endif //tests ?>
+        </div>
+    <?php  else: //tests ?>
+    <h3>Нет опросов</h3>
+    <?php endif //tests ?>
 
     </div>
 </div>
@@ -421,6 +429,7 @@
             integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
         </script>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="js/tests.js"></script>
 
       </body>
 
