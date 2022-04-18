@@ -293,7 +293,7 @@
                                         <label for="survey_description" class="form-label mt-4">Описание опроса</label>
                                         <textarea required type="text" name="survey_description" id="survey_description"
                                             class="form-control" autocomplete="off" placeholder="Описание опроса"
-                                            maxlength="255"></textarea>
+                                            maxlength="500"></textarea>
                                     </div>
                                     <div>
                                         <img src="../img/test-url-test-create.png" alt="" width="26px" height="26px"
@@ -346,7 +346,7 @@
                                             
                                             <input required type="text" name="question_1" id="question_1"
                                                 class="form-control" autocomplete="off" placeholder="Вопрос #1"
-                                                maxlength="255">
+                                                maxlength="500">
 
                                             <div class="answers">
                                                 <div class="answer-items survey-answer-items">
@@ -406,16 +406,16 @@
                     <?php 
                         if (isset($_POST['btn-save'])) {
                             $errors = array();
-                            if(trim(strlen($_POST['test_name'])) > 255) {
+                            if(trim(mb_strlen($_POST['test_name'])) > 255) {
                                 $errors[] = 'Больше 255 символов нельзя!!!';
                             }
-                            if(trim(strlen($_POST['test_description'])) > 255) {
-                                $errors[] = 'Больше 255 символов нельзя!!!';
+                            if(trim(mb_strlen($_POST['test_description'])) > 500) {
+                                $errors[] = 'Больше 500 символов нельзя!!!';
                             }
-                            if(trim(strlen($_POST['question_' . $questionNum])) > 255) {
-                                $errors[] = 'Больше 255 символов нельзя!!!';
+                            if(trim(mb_strlen($_POST['question_' . $questionNum])) > 500) {
+                                $errors[] = 'Больше 500 символов нельзя!!!';
                             }
-                            if(trim(strlen($_POST['answer_text_' . $questionNum . '_' . $answerNum]) > 255)) {
+                            if(trim(mb_strlen($_POST['answer_text_' . $questionNum . '_' . $answerNum]) > 255)) {
                                 $errors[] = 'Больше 255 символов нельзя!!!';
                             }
                             if(empty($errors)) {

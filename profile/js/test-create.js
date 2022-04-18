@@ -68,7 +68,7 @@ $('.addQuestion').on('click', function() {
     questionBlock.append(`
         <div class="question_${questionNum} mt-4 question-st" data-question="${questionNum}">
             <label for="question_${questionNum}" class="form-label">Вопрос #${questionNum}</label>
-            <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}">
+            <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}" maxlength="500">
             <div class="answers">
                 <div class="answer-items">
                 </div>

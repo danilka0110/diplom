@@ -114,7 +114,7 @@ $('.addQuestion').on('click', function() {
                 <label for="ifcheckbox_${questionNum}" class="form-label">Множественный выбор</label>
             </div>
 
-            <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}">
+            <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}" maxlength="500">
             <div class="answers">
                 <div class="answer-items survey-answer-items">
                 </div>

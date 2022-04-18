@@ -297,7 +297,7 @@
                                         <label for="test_description" class="form-label mt-4">Описание теста</label>
                                         <textarea required type="text" name="test_description" id="test_description"
                                             class="form-control" autocomplete="off" placeholder="Описание теста"
-                                            maxlength="255"></textarea>
+                                            maxlength="500"></textarea>
                                     </div>
                                     <div>
                                         <img src="../img/test-url-test-create.png" alt="" width="26px" height="26px"
@@ -346,7 +346,7 @@
                                             <label for="question_1" class="form-label">Вопрос #1</label>
                                             <input required type="text" name="question_1" id="question_1"
                                                 class="form-control" autocomplete="off" placeholder="Вопрос #1"
-                                                maxlength="255">
+                                                maxlength="500">
                                             <div class="answers">
                                                 <div class="answer-items">
                                                     <div class="row">
@@ -430,16 +430,16 @@
                             if (isset($_POST['btn-save'])) {
 
                                 $errors = array();
-                                if(trim(strlen($_POST['test_name'])) > 255) {
+                                if(trim(mb_strlen($_POST['test_name'])) > 255) {
                                     $errors[] = 'Больше 255 символов нельзя!!!';
                                 }
-                                if(trim(strlen($_POST['test_description'])) > 255) {
-                                    $errors[] = 'Больше 255 символов нельзя!!!';
+                                if(trim(mb_strlen($_POST['test_description'])) > 500) {
+                                    $errors[] = 'Больше 500 символов нельзя!!!';
                                 }
-                                if(trim(strlen($_POST['question_' . $questionNum])) > 255) {
-                                    $errors[] = 'Больше 255 символов нельзя!!!';
+                                if(trim(mb_strlen($_POST['question_' . $questionNum])) > 500) {
+                                    $errors[] = 'Больше 500 символов нельзя!!!';
                                 }
-                                if(trim(strlen($_POST['answer_text_' . $questionNum . '_' . $answerNum]) > 255)) {
+                                if(trim(mb_strlen($_POST['answer_text_' . $questionNum . '_' . $answerNum]) > 255)) {
                                     $errors[] = 'Больше 255 символов нельзя!!!';
                                 }
                                 if(empty($errors)) {
@@ -481,14 +481,14 @@
                                             $answer = R::dispense('answers');
                             
                                             $answer_name = trim($_POST['answer_text_' . $questionNum . '_' . $answerNum]);
-                                            $correct_answer = trim($_POST['answer_score_' . $questionNum . '_' . $answerNum]);
+                                            $score = trim($_POST['answer_score_' . $questionNum . '_' . $answerNum]);
                                             if (!isset($answer)) {
                                                 continue;
                                             }
                                 
                                             $answer->question_id = $questionId;
                                             $answer->answer = $answer_name;
-                                            $answer->correct_answer = $correct_answer; 
+                                            $answer->score = $score; 
                             
                                             R::store($answer);
                                             $answerNum++;

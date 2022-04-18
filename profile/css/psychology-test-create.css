@@ -38,3 +38,15 @@ body {
 	background: linear-gradient(to right, rgba(61, 61, 61, 0), rgb(227, 235, 217) 100%);
 	pointer-events: none;
 }
+
+.results textarea {
+    height: 120px;
+}
+
+.select-score {
+    color:rgb(61, 61, 61);
+}
+
+option {
+    color:rgb(61, 61, 61)
+}

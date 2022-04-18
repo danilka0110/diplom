@@ -36,9 +36,18 @@ $(document).on('click', '.addAnswer', function() {
             </div>
             <div class="col-12 col-md-3 col-lg-2 col-xl-2">
                 <label for="answer_score_${question}_${answer}" class="form-label label-score">Балл</label>
-                <select class="form-select select-score bg-danger first-a-in-q-label-new" name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
-                    <option class="bg-danger" data-color="bg-danger">0</option>
-                    <option class="bg-success" data-color="bg-success">1</option>
+                <select class="form-select select-score first-a-in-q-label-new" name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
                 </select>
             </div>
         </div>`);
@@ -51,9 +60,18 @@ $(document).on('click', '.addAnswer', function() {
             </div>
             <div class="col-12 col-md-3 col-lg-2 col-xl-2">
                 <label for="answer_score_1_1" class="form-label"></label>
-                <select class="form-select select-score bg-danger" name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
-                    <option class="bg-danger" data-color="bg-danger">0</option>
-                    <option class="bg-success" data-color="bg-success">1</option>
+                <select class="form-select select-score" name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
+                    <option>0</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
                 </select>
             </div>
         </div>`);
@@ -69,7 +87,7 @@ $('.addQuestion').on('click', function() {
     questionBlock.append(`
         <div class="question_${questionNum} mt-4 question-st" data-question="${questionNum}">
             <label for="question_${questionNum}" class="form-label">Вопрос #${questionNum}</label>
-            <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}">
+            <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}" maxlength="500">
             <div class="answers">
                 <div class="answer-items">
                 </div>
@@ -157,17 +175,6 @@ $("body").on('click', '.removeQuestion', function() {
         `);
     }
 });
-
-$("body").on('click', 'select', function() {
-
-    $('select').on('change', function() {  console.log("qq");
-        $(this).removeClass('bg-danger');
-        $(this).removeClass('bg-success');
-        $(this).addClass($(this).find('option:selected').data('color'));
-    });
-
-});
-
 
 
 $(document).ready(function () {

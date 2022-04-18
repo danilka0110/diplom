@@ -7,31 +7,57 @@ require_once 'db.php';
 require_once 'includes/functions.php';
 $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
 if (isset($_POST['test'])) {
-    $test = (int)$_POST['test']; // sql injection crash
+    $test_id = (int)$_POST['test']; // sql injection crash
     unset($_POST['test']);
-    $result = get_correct_answers($test);
-    if (!is_array($result)) exit('Ошибка!');
-    // данные теста
-    $test_all_data = get_test_data($test);
-    // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
-    $test_all_data_result = get_test_data_result($test_all_data, $result);
-    if($_POST) {
 
-        $test_for_count_passes = R::findOne('test', 'id = :test_id', [':test_id' => $test]);
-        $count_passes = $test_for_count_passes->count_passes;
-        $count_passes++;
-        $test_for_count_passes->count_passes = $count_passes;
-        R::store($test_for_count_passes);
-
-        if($user) :
-        save($test, $user);
-        save_result($test_all_data_result, $test, $user->id, $date);     
-        else :
-        endif ;
-        echo print_result($test_all_data_result, $test); // вывод результатов
-    }
     
-    else exit('Ошибка!');
+    $test_type = R::getRow("SELECT type
+                                FROM test
+                                    WHERE id = $test_id");
+
+
+
+    if(($test_type['type']) == 'Обычный') {
+        $result = get_correct_answers($test_id);
+        if (!is_array($result)) exit('Ошибка!');
+        // данные теста
+        $test_all_data = get_test_data($test_id);
+        // 1 - массив вопрос/ответы, 2 - правильные ответы, 3 - ответы пользователя ($_POST)
+        $test_all_data_result = get_test_data_result($test_all_data, $result);
+        if($_POST) {
+    
+            $test_for_count_passes = R::findOne('test', 'id = :test_id', [':test_id' => $test_id]);
+            $count_passes = $test_for_count_passes->count_passes;
+            $count_passes++;
+            $test_for_count_passes->count_passes = $count_passes;
+            R::store($test_for_count_passes);
+    
+            if($user) :
+            save($test_id, $user);
+            save_result($test_all_data_result, $test_id, $user->id, $date);     
+            else :
+            endif ;
+            echo print_result($test_all_data_result, $test_id); // вывод результатов
+        } 
+        
+        else 
+            exit('Ошибка! ');
+    }
+
+    else if (($test_type['type']) == 'Психологический') {
+
+        $test_all_data = get_psychology_test_data($test_id);
+
+
+        if($test_all_data) {
+
+            echo print_result_psychology_test($test_all_data, $test_id); // вывод результатов психологического теста
+        } 
+        
+        else 
+            exit('Ошибка!');
+    }
+
     
     die;
 

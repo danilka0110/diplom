@@ -86,7 +86,7 @@ function get_correct_answers($test){
 			ON q.id = a.question_id
 		LEFT JOIN test
 			ON test.id = q.test_id
-				WHERE q.test_id = $test AND a.correct_answer = '1' AND test.enable = '1'");
+				WHERE q.test_id = $test AND a.score = '1' AND test.enable = '1'");
 
 	$data = null;
     foreach($query as $item) {
@@ -399,7 +399,9 @@ function print_result($test_all_data_result, $test_id){
 
 	foreach ($query as $keys => $item) {
 		foreach ($item as $key => $it) {
-			$tests_id_for_recomendation[] = $it;
+			if ($it != $test_id) {
+				$tests_id_for_recomendation[] = $it;
+			}
 		}
 	}
 
@@ -589,6 +591,298 @@ function save($test_id, $user) {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function get_psychology_test_data($test_id){
+	if(!$test_id) return;
+	$query = R::getAll("SELECT q.question, q.test_id, a.id, a.answer, a.question_id
+		FROM questions q
+		LEFT JOIN answers a
+			ON q.id = a.question_id
+		LEFT JOIN test
+			ON test.id = q.test_id
+				WHERE q.test_id = $test_id AND test.enable = '1'");
+	$data = null;
+    foreach($query as $item) {
+        if( !$item['question_id'] ) return false;
+		$data[$item['question_id']][0] = $item['question'];
+		$data[$item['question_id']][$item['id']] = $item['answer'];
+    }
+
+	foreach($_POST as $q => $a){
+		// удалим из POST то что пользователь писал сам через панель разработчика
+		if(!isset($data[$q])){
+			return false;
+		}
+	}
+
+	return $data;
+}
+
+
+function print_result_psychology_test($test_all_data, $test_id) {
+
+
+
+
+	$all_count = count($test_all_data); // кол-во вопросов
+
+	// подсчет результатов
+	$count_score = 0;
+	foreach($test_all_data as $item) {
+		foreach($item as $key => $score) {
+			if ($key != 0) {
+				if (in_array($key, $_POST)) {
+					$count_score += $score;
+				}
+			}
+		}
+	}
+
+	$result_query = R::getRow ("SELECT result
+							FROM results
+								WHERE test_id = $test_id AND $count_score
+										BETWEEN score_min AND score_max");
+
+	foreach ($result_query as $result_one) {
+		$result = $result_one;
+	}
+
+	// вывод результатов
+	$print_res = '<div class="test-data">';
+		$print_res .= '<div class="test-results">';
+			$print_res .= '<div class="text-center mb-4 test_ty">';
+				$print_res .= '<img src="../img/success_passes.png">';
+				$print_res .= '<span>Результат</span>';
+			$print_res .= '</div>';
+
+			$print_res .= '<div class="count-res">';
+
+				$print_res .= "<div>";
+					$print_res .= "<span>Всего вопросов: <b>{$all_count}</b></span>";
+				$print_res .= "</div>";
+
+				$print_res .= "<div>";
+					$print_res .= "<span>Набрано баллов: <b>{$count_score}</b></span>";
+				$print_res .= "</div>";
+
+				$print_res .= "<br>";
+
+				$print_res .= "<div>";
+					$print_res .= "<span><b>Ваш результат: </b>$result</span>";
+				$print_res .= "</div>";
+
+			$print_res .= '</div>';	// .count-res
+
+			// вывод теста...
+			
+		$print_res .= '</div>';
+			
+	$print_res .= '</div>';
+
+
+
+
+
+
+
+
+
+
+
+
+	$test_category = R::findOne('category', 'test_id = :test_id', [':test_id' => $test_id]);
+
+	$query = R::getAll("SELECT test_id
+							FROM category
+								WHERE category = '$test_category->category'");
+
+
+
+	foreach ($query as $keys => $item) {
+		foreach ($item as $key => $it) {
+			if ($it != $test_id) {
+				$tests_id_for_recomendation[] = $it;
+			}
+		}
+	}
+
+	if ($tests_id_for_recomendation):
+
+		foreach($tests_id_for_recomendation as $tests_id_for_recomendation_tests) {
+
+			if ($tests_id_for_recomendation_tests == $test_id) {
+				continue;
+			}
+
+			$tests_data_for_recomendation[] = R::getRow("SELECT id, test_name, img_link
+									FROM test
+										WHERE id = $tests_id_for_recomendation_tests");
+		}
+
+		$print_res .= '<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-inner w-100">
+							<h3 class="text-center">Рекомендуемые тесты</h3>
+							<div class="row mt-4">';
+
+		foreach ($tests_data_for_recomendation as $key => $recomendation_test) :
+
+			$recomendation_test_id = $recomendation_test['id'];
+			$recomendation_test_img_link = $recomendation_test['img_link'];
+			$recomendation_test_test_name = $recomendation_test['test_name'];
+
+			if ($key == 0):
+
+				$print_res .= "<div class='carousel-item active text-center'>
+									<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3'>
+										<div class='card card-body'>
+											<a href='test?test=$recomendation_test_id'><img
+													src='$recomendation_test_img_link' class='popular_test_img' alt='img'></a>
+											<a href='test?test=$recomendation_test_id'
+												style='margin-left: 5px;'>$recomendation_test_test_name</a>
+										</div>
+									</div>
+								</div>";
+
+			else:
+
+				$print_res .= "<div class='carousel-item text-center'>
+									<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3'>
+										<div class='card card-body'>
+											<a href='test?test=$recomendation_test_id'><img
+													src='$recomendation_test_img_link' class='popular_test_img' alt='img'></a>
+											<a href='test?test=$recomendation_test_id'
+												style='margin-left: 5px;''>$recomendation_test_test_name</a>
+										</div>
+									</div>
+								</div>";
+
+			endif;
+
+		endforeach;
+
+				$print_res .= '</div>
+					<div class="text-center">
+						<button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+						data-bs-slide="prev">
+
+						<img src="img/prev.png" alt="" width="34" height="34"></img>
+						</button>
+
+
+						<button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+						data-bs-slide="next">
+
+						<img src="img/next.png" alt="" width="34" height="34">
+						</button>
+					</div>
+				</div>
+			</div>';
+
+
+		$print_res .= '<script src="js/tests.js"></script>';
+
+	else:
+
+
+		$print_res .= '<h3 class="text-center">Рекомендуемые тесты</h3>
+							<div class="text-center" style="font-size:18px"><span>Нет рекомендованных тестов</span></div>';
+
+
+	endif;
+
+
+
+
+
+
+
+
+
+
+
+	return $print_res;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
