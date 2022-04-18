@@ -350,7 +350,7 @@
                                                         $test = R::findOne( 'test', ' id LIKE ? ', [ "$test_id" ] );       
                                                     ?>
 
-                                                    <tr class="sidenav-item sidenav-link <?=$color?>">
+                                                    <tr class="sidenav-item sidenav-link">
 
                                                         <td>
 

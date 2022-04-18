@@ -200,190 +200,296 @@ function print_result($test_all_data_result, $test_id){
 	$percent_incorrect = round(100 - $percent, 2);
 	// вывод результатов
 	$print_res = '<div class="test-data">';
-	$print_res = '<div class="test-results">';
-	$print_res .= '<div class="text-center mb-4 test_ty">';
-		$print_res .= '<img src="../img/success_passes.png">';
-		$print_res .= '<span>Результат</span>';
-	$print_res .= '</div>';
-		$print_res .= '<div class="count-res">';
+		$print_res .= '<div class="test-results">';
+			$print_res .= '<div class="text-center mb-4 test_ty">';
+				$print_res .= '<img src="../img/success_passes.png">';
+				$print_res .= '<span>Результат</span>';
+			$print_res .= '</div>';
 
-		$print_res .= "<div>";
-		
-
-			$print_res .= "<span>Всего вопросов: <b>{$all_count}</b></span>";
+			$print_res .= '<div class="count-res">';
 
 
-		$print_res .= "</div>";
-		$print_res .= "<div>";
-
-			$print_res .= "<span>Из них отвечено верно: <b>{$correct_answer_count}</b></span>";
-
-
-		$print_res .= "</div>";
-		$print_res .= "<div>";
-
-			$print_res .= "<span>Из них отвечено неверно: <b>{$incorrect_answer_count}</b></span>";
+			$print_res .= "<div>";
+				$print_res .= "<span>Всего вопросов: <b>{$all_count}</b></span>";
+			$print_res .= "</div>";
 
 
-		$print_res .= "</div>";
-		$print_res .= "<div>";
-
-			$print_res .= "<span>Процент верных ответов: <b>{$percent}%</b></span>";
-
-		$print_res .= "</div>";
-		$print_res .= "<div>";
-
-			$print_res .= "<span>Процент неверных ответов: <b>{$percent_incorrect}%</b></span>";
-
-		$print_res .= "</div>";
+			$print_res .= "<div>";
+				$print_res .= "<span>Из них отвечено верно: <b>{$correct_answer_count}</b></span>";
+			$print_res .= "</div>";
 
 
-		$print_res .= '</div>';	// .count-res
-		$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-results">Показать результат</a>';
-		$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-stats">Показать статистику</a>';
-		// вывод теста...
-		$print_res .= '<div class="test-q-and-a none mt-4">';
-		foreach($test_all_data_result as $id_question => $item){ // получаем вопрос + ответы
-			$correct_answer = $item['correct_answer'];
-			$incorrect_answer = null;
-			if( isset($item['incorrect_answer']) ){
-				$incorrect_answer = $item['incorrect_answer'];
-				$classQ = 'question-res error';
-			}else{
-				$classQ = 'question-res ok';
+			$print_res .= "<div>";
+				$print_res .= "<span>Из них отвечено неверно: <b>{$incorrect_answer_count}</b></span>";
+			$print_res .= "</div>";
+
+
+			$print_res .= "<div>";
+				$print_res .= "<span>Процент верных ответов: <b>{$percent}%</b></span>";
+			$print_res .= "</div>";
+
+
+			$print_res .= "<div>";
+				$print_res .= "<span>Процент неверных ответов: <b>{$percent_incorrect}%</b></span>";
+			$print_res .= "</div>";
+
+
+			$print_res .= '</div>';	// .count-res
+			$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-results">Показать результат</a>';
+			$print_res .= '<a class="btn btn-primary mt-2" id="btn-show-stats">Показать статистику</a>';
+			// вывод теста...
+			$print_res .= '<div class="test-q-and-a none mt-4">';
+			foreach($test_all_data_result as $id_question => $item){ // получаем вопрос + ответы
+				$correct_answer = $item['correct_answer'];
+				$incorrect_answer = null;
+				if( isset($item['incorrect_answer']) ){
+					$incorrect_answer = $item['incorrect_answer'];
+					$classQ = 'question-res error';
+				}else{
+					$classQ = 'question-res ok';
+				}
+				$print_res .= "<div class='$classQ'>";
+				foreach($item as $id_answer => $answer){ // проходимся по массиву ответов
+					if( $id_answer === 0 ){
+						// вопрос
+						$print_res .= "<p class='q'>$answer</p>";
+					}elseif( is_numeric($id_answer) ){
+						// ответ
+						if( $id_answer == $correct_answer ){
+							// если это верный ответ
+							$class = 'a ok2';
+						}elseif( $id_answer == $incorrect_answer ){
+							// если это неверный ответ
+							$class = 'a error2';
+						}else{
+							$class = 'a';
+						}
+						if ($class == 'a error2') {
+							$print_res .= "<p class='$class'><input type='radio' checked disabled><label style='margin-left: 5px'>$answer</label></p>";
+						} else if ($class == 'a ok2' && $classQ == 'question-res ok') {
+							$print_res .= "<p class='$class'><input type='radio' checked disabled><label style='margin-left: 5px'>$answer</label></p>";
+						} else {
+							$print_res .= "<p class='$class'><input type='radio' disabled><label style='margin-left: 5px'>$answer</label></p>";
+						}
+						
+					}
+				}
+				$print_res .= '</div>'; // .question-res
 			}
-			$print_res .= "<div class='$classQ'>";
-			foreach($item as $id_answer => $answer){ // проходимся по массиву ответов
-				if( $id_answer === 0 ){
-					// вопрос
-					$print_res .= "<p class='q'>$answer</p>";
-				}elseif( is_numeric($id_answer) ){
-					// ответ
-					if( $id_answer == $correct_answer ){
-						// если это верный ответ
-						$class = 'a ok2';
-					}elseif( $id_answer == $incorrect_answer ){
-						// если это неверный ответ
-						$class = 'a error2';
-					}else{
-						$class = 'a';
-					}
-					if ($class == 'a error2') {
-						$print_res .= "<p class='$class'><input type='radio' checked disabled><label style='margin-left: 5px'>$answer</label></p>";
-					} else if ($class == 'a ok2' && $classQ == 'question-res ok') {
-						$print_res .= "<p class='$class'><input type='radio' checked disabled><label style='margin-left: 5px'>$answer</label></p>";
-					} else {
-						$print_res .= "<p class='$class'><input type='radio' disabled><label style='margin-left: 5px'>$answer</label></p>";
-					}
-					
+			$print_res .= '</div>';
+
+			$print_res .= '<div class="stats none mt-4">';
+			$query = R::getAll("SELECT correct_score
+			FROM usersandtests
+				WHERE test_id = '$test_id'");
+			
+			$count_all = 0;
+			foreach($query as $item){
+				$qr = $item;
+				foreach($qr as $item){
+					$correct_score += $item;
+					$count_all++;	
 				}
 			}
-			$print_res .= '</div>'; // .question-res
-		}
-		$print_res .= '</div>';
-
-		$print_res .= '<div class="stats none mt-4">';
-		$query = R::getAll("SELECT correct_score
-		FROM usersandtests
-			WHERE test_id = '$test_id'");
-		
-		$count_all = 0;
-		foreach($query as $item){
-			$qr = $item;
-			foreach($qr as $item){
-				$correct_score += $item;
-				$count_all++;	
-			}
-		}
-		
-			$print_res .= '<div style="width: 150px; height: 150px" id="correct_and_incorrect_answers_graph"><canvas id="graph"></canvas></div>';
-			$avg_value = round(($correct_score / $count_all),2);
-			$print_res .= "<p>Пользователей прошло тест: <b>{$count_all}</b></p>";
-			$print_res .= "<p>Средний результат среди всех пользователей: <b>{$avg_value}</b></p>";
-			$print_res .= '<div style="width: 260px; height: 160px" id="correct_and_incorrect_answers_graph_second"><canvas id="graph-2"></canvas></div>';
-			$print_res .= "<script>
-								const data = {
-									labels: [
-										'Верные ответы',
-										'Неверные ответы'
-									],
-									datasets: [{
-										label: 'My First Dataset',
-										data: [{$correct_answer_count}, {$incorrect_answer_count}],
-										backgroundColor: [
-										'rgb(54, 162, 235)',
-										'rgb(255, 99, 132)'
+			
+				$print_res .= '<div style="width: 150px; height: 150px" id="correct_and_incorrect_answers_graph"><canvas id="graph"></canvas></div>';
+				$avg_value = round(($correct_score / $count_all),2);
+				$print_res .= "<p>Пользователей прошло тест: <b>{$count_all}</b></p>";
+				$print_res .= "<p>Средний результат среди всех пользователей: <b>{$avg_value}</b></p>";
+				$print_res .= '<div style="width: 260px; height: 160px" id="correct_and_incorrect_answers_graph_second"><canvas id="graph-2"></canvas></div>';
+				$print_res .= "<script>
+									const data = {
+										labels: [
+											'Верные ответы',
+											'Неверные ответы'
 										],
-										hoverOffset: 4,
-										rotation: 180
-									}]
-								};
-								
-								
-								
-								const config = {
-									type: 'doughnut',
-									data: data,
-									options: {
-										animations: {
-								
-										}
-									}
-								};
-								
-								const myChart = new Chart(
-									document.getElementById('graph'),
-									config
-								);
-								
-								
-								const data_2 = {
-									labels: [
-									'Мой результат',
-									'Средний результат'
-									],
-									datasets: [{
-										type: 'bar',
-										label: 'Результат',
-										data: [{$correct_answer_count}, {$avg_value}],
-										borderColor: 'rgba(255, 99, 132, 1)',
-										backgroundColor: 'rgba(255, 99, 132, 0.3)'
-									}, {
-										type: 'line',
-										label: 'Линия',
-										data: [{$correct_answer_count}, {$avg_value}],
-										fill: false,
-										borderColor: 'rgb(54, 162, 235)'
-									}]
-								};
-								
-								
-								
-								const config_2 = {
-									type: 'scatter',
-									data: data_2,
-									options: {
-										scales: {
-											y: {
-												beginAtZero: true
+										datasets: [{
+											label: 'My First Dataset',
+											data: [{$correct_answer_count}, {$incorrect_answer_count}],
+											backgroundColor: [
+											'rgb(54, 162, 235)',
+											'rgb(255, 99, 132)'
+											],
+											hoverOffset: 4,
+											rotation: 180
+										}]
+									};
+									
+									
+									
+									const config = {
+										type: 'doughnut',
+										data: data,
+										options: {
+											animations: {
+									
 											}
 										}
-									}
-								};
-								
-								const myChart_2 = new Chart(
-									document.getElementById('graph-2'),
-									config_2
-								);
-								
-							</script>";
+									};
+									
+									const myChart = new Chart(
+										document.getElementById('graph'),
+										config
+									);
+									
+									
+									const data_2 = {
+										labels: [
+										'Мой результат',
+										'Средний результат'
+										],
+										datasets: [{
+											type: 'bar',
+											label: 'Результат',
+											data: [{$correct_answer_count}, {$avg_value}],
+											borderColor: 'rgba(255, 99, 132, 1)',
+											backgroundColor: 'rgba(255, 99, 132, 0.3)'
+										}, {
+											type: 'line',
+											label: 'Линия',
+											data: [{$correct_answer_count}, {$avg_value}],
+											fill: false,
+											borderColor: 'rgb(54, 162, 235)'
+										}]
+									};
+									
+									
+									
+									const config_2 = {
+										type: 'scatter',
+										data: data_2,
+										options: {
+											scales: {
+												y: {
+													beginAtZero: true
+												}
+											}
+										}
+									};
+									
+									const myChart_2 = new Chart(
+										document.getElementById('graph-2'),
+										config_2
+									);
+									
+								</script>";
 
 
-		$print_res .= '</div>';
+			$print_res .= '</div>';
 
 
-	$print_res .= "<div>"; // .test-results
+		$print_res .= "</div>"; // .test-results
 	$print_res .= '</div>'; // .test-data
+
+
+
+	$print_res .= '<hr>';
+
+
+
+
+	$test_category = R::findOne('category', 'test_id = :test_id', [':test_id' => $test_id]);
+
+	$query = R::getAll("SELECT test_id
+							FROM category
+								WHERE category = '$test_category->category'");
+
+
+
+
+	foreach ($query as $keys => $item) {
+		foreach ($item as $key => $it) {
+			$tests_id_for_recomendation[] = $it;
+		}
+	}
+
+	if ($tests_id_for_recomendation):
+
+		foreach($tests_id_for_recomendation as $tests_id_for_recomendation_tests) {
+
+			if ($tests_id_for_recomendation_tests == $test_id) {
+				continue;
+			}
+
+			$tests_data_for_recomendation[] = R::getRow("SELECT id, test_name, img_link
+									FROM test
+										WHERE id = $tests_id_for_recomendation_tests");
+		}
+
+
+
+
+		$print_res .= '<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-inner w-100">
+							<h3 class="text-center">Рекомендуемые тесты</h3>
+							<div class="row mt-4">';
+
+		foreach ($tests_data_for_recomendation as $key => $recomendation_test) :
+
+			$recomendation_test_id = $recomendation_test['id'];
+			$recomendation_test_img_link = $recomendation_test['img_link'];
+			$recomendation_test_test_name = $recomendation_test['test_name'];
+
+			if ($key == 0):
+
+				$print_res .= "<div class='carousel-item active text-center'>
+									<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3'>
+										<div class='card card-body'>
+											<a href='test?test=$recomendation_test_id'><img
+													src='$recomendation_test_img_link' class='popular_test_img' alt='img'></a>
+											<a href='test?test=$recomendation_test_id'
+												style='margin-left: 5px;'>$recomendation_test_test_name</a>
+										</div>
+									</div>
+								</div>";
+
+			else:
+
+				$print_res .= "<div class='carousel-item text-center'>
+									<div class='col-xs-12 col-sm-3 col-md-3 col-lg-3 col-xl-3'>
+										<div class='card card-body'>
+											<a href='test?test=$recomendation_test_id'><img
+													src='$recomendation_test_img_link' class='popular_test_img' alt='img'></a>
+											<a href='test?test=$recomendation_test_id'
+												style='margin-left: 5px;''>$recomendation_test_test_name</a>
+										</div>
+									</div>
+								</div>";
+
+			endif;
+
+		endforeach;
+
+				$print_res .= '</div>
+					<div class="text-center">
+						<button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+						data-bs-slide="prev">
+
+						<img src="img/prev.png" alt="" width="34" height="34"></img>
+						</button>
+
+
+						<button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
+						data-bs-slide="next">
+
+						<img src="img/next.png" alt="" width="34" height="34">
+						</button>
+					</div>
+				</div>
+			</div>';
+
+
+		$print_res .= '<script src="js/tests.js"></script>';
+
+	else:
+
+
+		$print_res .= '<h3 class="text-center">Рекомендуемые тесты</h3>
+							<div class="text-center" style="font-size:18px"><span>Нет рекомендованных тестов</span></div>';
+
+
+	endif;
+
 
 	return $print_res;
 }

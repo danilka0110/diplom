@@ -340,6 +340,10 @@ a {
     border-radius: 30px;
 }
 
+.card-body a:hover {
+    text-decoration: underline;
+}
+
 
 
 

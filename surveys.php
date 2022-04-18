@@ -224,7 +224,7 @@
                                         <p class="card-text test_description"><?=$surveys[$i]['description']?></p>
                                         <div class="text-center">
                                             <a href="survey?survey=<?=$surveys[$i]['id']?>" class="btn btn-primary btn-test">Пройти
-                                                тест</a>
+                                                опрос</a>
                                         </div>
                                     </div>
                                 </div>
@@ -267,7 +267,7 @@
                                             <p class="card-text test_description"><?=$surveys_search[$i]['description']?></p>
                                             <div class="text-center">
                                                 <a href="survey?survey=<?=$surveys_search[$i]['id']?>" class="btn btn-primary btn-test">Пройти
-                                                    тест</a>
+                                                    опрос</a>
                                             </div>
                                         </div>
                                     </div>

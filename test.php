@@ -96,6 +96,7 @@ if (isset($_GET['test'])) {
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tests.css">
     <link rel="stylesheet" href="css/test.css">
+    <link rel="stylesheet" href="css/test-carousel.css">
 </head>
 
 <body>
