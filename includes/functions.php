@@ -119,14 +119,16 @@ function pagination($count_questions, $test_data){
 	for($i = 1; $i <= $count_questions; $i++){
 		$key = array_shift($keys);
 		if( $i == 1 ){
-			$pagination .= '<div class="pag"><a class="pagination-answers nav-active-page first-question" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
+			$pagination .= '<div class="pag first-question" data-question=#question-'.$key.'><a class="pagination-answers nav-active-page first-question" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
+		}elseif ( $i == 2 ){
+			$pagination .= '<div class="pag next" data-question=#question-'.$key.'><a class="pagination-answers" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
 		}elseif ( $i < 10 ){
-			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
+			$pagination .= '<div class="pag" data-question=#question-'.$key.'><a class="pagination-answers" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
 		}else{
-			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">' . $i . '</a></div>';
+			$pagination .= '<div class="pag" data-question=#question-'.$key.'><a class="pagination-answers" href="#question-' . $key . '">' . $i . '</a></div>';
 		}
-
 	}
+
 	$pagination .= '</div>';
 	$key_next = 2;
 	return $pagination;
@@ -199,9 +201,9 @@ function print_result($test_all_data_result, $test_id){
 	// вывод результатов
 	$print_res = '<div class="test-data">';
 	$print_res = '<div class="test-results">';
-	$print_res .= '<div class="text-center mb-4" style="background: #9ad35f; height: 40px;">';
-	$print_res .= '<img src="../img/success_passes.png" style="margin-top: -5px;">';
-	$print_res .= '<span style="margin-left: 1%; font-size: 24px; font-family: Georgia, serif;">Результат</span>';
+	$print_res .= '<div class="text-center mb-4 test_ty">';
+		$print_res .= '<img src="../img/success_passes.png">';
+		$print_res .= '<span>Результат</span>';
 	$print_res .= '</div>';
 		$print_res .= '<div class="count-res">';
 
@@ -389,7 +391,8 @@ function print_result($test_all_data_result, $test_id){
 function get_test_by_author($user) {
 	$query = R::getAll("SELECT t.id, t.test_name, t.description, t.img_link, t.author, t.date, t.count_passes, t.enable
 	FROM test t 
-		WHERE t.author = '$user'");
+		WHERE t.user_id = '$user'
+			ORDER BY id DESC");
 
 	return $query;
 }
@@ -785,58 +788,5 @@ function category_list() {
 	];
 	return $categories;
 }
-
-
-
-
-
-
-
-
-
-
-// function save($test_id, $user) {
-
-// 	$test_name = get_test_name($test_id);
-// 	foreach($test_name as $item) {
-// 		$test_name = $item['test_name'];
-// 	}
-
-// 	$query = R::getAll("SELECT * 
-// 		FROM usertestresult 
-// 			WHERE user_id = $user->id AND test_id = $test_id");
-
-
-// 	if(!empty($query)) {
-
-// 		foreach($query as $item) {
-// 			$users_save_test = R::find('usertestresult', 'user_id = :user_id AND test_id = :test_id', [':user_id' => $user->id, ':test_id' => $test_id]);
-
-// 			$users_save_test->question_id = $item['question_id'];
-// 			$users_save_test->answer_id = $item['answer_id'];
-		
-// 			R::store($users_save_test);
-// 		}
-
-
-
-// 	} else {
-// 		foreach($_POST as $key => $item) {
-// 			$users_save_test = R::dispense('usertestresult');
-	
-// 			$users_save_test->user_id = $user->id;
-// 			$users_save_test->test_id = $test_id;
-// 			$users_save_test->test_name = $test_name;
-// 			$users_save_test->question_id = $key;
-// 			$users_save_test->answer_id = $item;
-		
-// 			R::store($users_save_test);
-// 		}
-// 	}
-
-
-
-// }
-
 
 ?>

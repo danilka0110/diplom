@@ -124,6 +124,15 @@ function get_user_img($user_login){
 	return $data;
 }
 
+function get_survey_by_author($user) {
+	$query = R::getAll("SELECT s.id, s.survey_name, s.description, s.img_link, s.author, s.date, s.count_passes, s.enable
+	FROM survey s
+		WHERE s.user_id = '$user'
+			ORDER BY id DESC");
+
+	return $query;
+}
+
 function get_survey_data($survey_id){
 	if(!$survey_id) return;
 	$query = R::getAll("SELECT q.question, q.survey_id, q.type, a.id, a.answer, a.question_id
@@ -159,14 +168,16 @@ function pagination($count_questions, $survey_data){
 	for($i = 1; $i <= $count_questions; $i++){
 		$key = array_shift($keys);
 		if( $i == 1 ){
-			$pagination .= '<div class="pag"><a class="pagination-answers nav-active-page first-question" href="#question-' . $key . '">0' . $i . '</a></div>';
+			$pagination .= '<div class="pag first-question" data-question=#question-'.$key.'><a class="pagination-answers nav-active-page first-question" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
+		}elseif ( $i == 2 ){
+			$pagination .= '<div class="pag next" data-question=#question-'.$key.'><a class="pagination-answers" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
 		}elseif ( $i < 10 ){
-			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">0' . $i . '</a></div>';
+			$pagination .= '<div class="pag" data-question=#question-'.$key.'><a class="pagination-answers" href="#question-' . $key . '">&nbsp' . $i . '&nbsp</a></div>';
 		}else{
-			$pagination .= '<div class="pag"><a class="pagination-answers" href="#question-' . $key . '">' . $i . '</a></div>';
+			$pagination .= '<div class="pag" data-question=#question-'.$key.'><a class="pagination-answers" href="#question-' . $key . '">' . $i . '</a></div>';
 		}
-
 	}
+
 	$pagination .= '</div>';
 	$key_next = 2;
 	return $pagination;
@@ -289,9 +300,9 @@ function get_test_data($survey_id){
 function print_result($survey_all_data, $survey_id) {
         $print_res = '<div class="test-data">';
         $print_res = '<div class="survey-results">';
-                $print_res .= '<div class="text-center mb-4 survey_bg_ty">';
-                        $print_res .= '<img src="../img/success_passes.png" style="margin-top: -5px;">';
-                        $print_res .= '<span style="margin-left: 1%; font-size: 24px; font-family: Georgia, serif;">Спасибо, что прошли наш опрос!</span>';
+                $print_res .= '<div class="text-center mb-4 survey_ty">';
+                        $print_res .= '<img src="../img/success_passes.png">';
+                        $print_res .= '<span>Спасибо, что прошли наш опрос!</span>';
                 $print_res .= '</div>';
 
 
@@ -372,7 +383,7 @@ function print_result($survey_all_data, $survey_id) {
                         $print_res .= '<hr>';
                         $print_res .= '<div class="row mt-4">';
                                 $print_res .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-12">';
-                                        $print_res .= "<h4>$question</h4>";
+                                        $print_res .= "<b style='font-size: 16px'>$question</b>";
                                         $print_res .= "<div class='center-block survey-graphs' id='correct_and_incorrect_answers_graph'><canvas id='myChart{$i}' width='2' height='1'></canvas></div>";
                                         $print_res .= "<script>
 

@@ -3,129 +3,145 @@
     require "../includes/functions.php";
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
     ob_start();
+?>
+
+
+<?php if($user) : ?>
+
+<?php
+
     date_default_timezone_set('Moscow');
     $date = date('Y-m-d', time());
     $categories = category_list();
 
     if (isset($_POST['btn-save'])) {
-        (header("Location: tests"));
+        header('Location: tests'); 
         ob_end_flush();
     }
 ?>
 
-
-<?php if($user) : ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Тесты</title>
-	<link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="../img/favicon/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="../img/favicon/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="../img/favicon/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="../img/favicon/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="../img/favicon/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192" href="../img/favicon/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="../img/favicon/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
-	<link rel="manifest" href="../img/favicon/manifest.json">
-	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
-	<meta name="theme-color" content="#ffffff">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/test-create.css">
-    <link rel="stylesheet" href="../css/profile.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../img/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/tests.css">
+    <link rel="stylesheet" href="css/test-create.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
+
 <body>
 
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="../index">
-            <img src="../img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top" style="margin-right: 80px; margin-top: -3px;">
-            <span class="brand">Paradigm Tests</span> 
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="../tests">Тесты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../surveys">Опросы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../contacts">Контакты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../about">О нас</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Профиль
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="../profile"><?php echo $user->login?></a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="../account/logout">Выход</a></li>
-                    </ul>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index">
+                <img src="../img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top"
+                    style="margin-right: 80px; margin-top: -3px;">
+                <span class="brand">Paradigm Tests</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="../tests">Тесты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../surveys">Опросы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../contacts">Контакты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../about">О нас</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Профиль
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="../profile"><?php echo $user->login?></a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="../account/logout">Выход</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<div class="nav-profile">
+    <div class="nav-profile">
         <ul id="ul-nav-profile">
             <hr style="color: #fff; margin-top: -15px;">
-            <li>           
+            <li>
                 <a href="index">
-                    <div class="nav-profile-item active"> 
-                        <img src="../img/user-profile-nav.png" alt="user-profile-nav" width=24px height=24px>
-                        <span><?php echo $user->login?></span>
+                    <div class="nav-profile-item">
+                        <?php if($user->img_link == '0'): ?>
+                        <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
+                        <?php else: ?>
+                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
+                        <?php endif; ?>
+                        <span>Профиль</span>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="tests" class="active">
-                    <div class="nav-profile-item">
-                        <img src="../img/tests-profile-nav.png" alt="tests-profile-nav" width=24px height=24px>
-                        <span>Мои тесты</span>
+                    <div class="nav-profile-item active">
+                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                            style="margin-left: 3px">
+                        <span style="margin-left: -3px">Тесты</span>
                     </div>
                 </a>
             </li>
+
             <li>
                 <a href="surveys">
                     <div class="nav-profile-item">
-                        <img src="../img/surveys-profile-nav.png" alt="surveys-profile-nav" width=24px height=24px>
-                        <span>Мои опросы</span>
+                        <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                        <span>Опросы</span>
                     </div>
                 </a>
             </li>
+
             <?php if ($user->role == 1) :?>
             <li>
-
-                <a href="admin">
+                <a href="admin" class="adm">
                     <div class="nav-profile-item">
                         <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                         <span>Админ. панель</span>
@@ -133,221 +149,397 @@
                 </a>
             </li>
             <?php endif ;?>
+            <li>
+                <a href="help">
+                    <div class="nav-profile-item">
+                        <img src="../img/help.png" alt="help" width=24px height=24px>
+                        <span>Помощь</span>
+                    </div>
+                </a>
+            </li>
+            <li class="drop-nav-profile-item">
+                <hr style="color: #fff; margin-bottom: 10px;">
+                <a href="../account/logout">
+                    <div class="nav-profile-item">
+                        <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                        <span>Выход</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
 
 
-<div class="main-profile">
-    <div class="container"> 
-        <div class="row justify-content-center">
-            <div class="col-md-6">
+
+    <div class="main-profile">
+        <div class="row none mobile-nav text-center">
+            <a href="index" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <?php if($user->img_link == '0'): ?>
+                    <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php else: ?>
+                    <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php endif; ?>
+                    <span>Профиль</span>
+                </div>
+            </a>
+            <a href="tests" class="btn btn-outline-primary mt-1 mb-1 active">
+                <div class="nav-profile-item">
+                    <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                    <span style="margin-left: -3px">Тесты</span>
+                </div>
+            </a>
+            <a href="surveys" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                    <span>Опросы</span>
+                </div>
+            </a>
+            <?php if ($user->role == 1) :?>
+            <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                    <span>Админ. панель</span>
+                </div>
+            </a>
+            <?php endif ;?>
+            <a href="help" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/help.png" alt="help" width=24px height=24px>
+                    <span>Помощь</span>
+                </div>
+            </a>
+            <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                    <span>Выход</span>
+                </div>
+            </a>
+        </div>
+        <div class="container">
+
+            <div class="main-body">
+                <nav aria-label="breadcrumb" class="main-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index">Профиль</a></li>
+                        <li class="breadcrumb-item"><a href="tests">Тесты</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Создание теста</li>
+                    </ol>
+                </nav>
+
+
+
+
+
                 <form action="test-create" method="post" id="addTest">
-                    <div class="card mt-4 card-create">
-                        <div class="card-header">
+                    <div class="create-test-head">
+
+                        <div class="test-create-title mb-5">
                             <h2 class="text-center">Создание теста</h2>
                         </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 order-xl-first order-lg-first order-md-first order-sm-last order-last">
 
-                        <div class="card-body">
-                            <div class="head-block">
-                                <div>
-                                    <label for="test_name" class="form-label">Название теста</label>
-                                    <input required type="text" name="test_name" id="test_name" class="form-control" autocomplete="off" placeholder="Название теста" maxlength="64">
-                                </div>
-                                <div>
-                                    <label for="test_name" class="form-label mt-4">Описание теста</label>
-                                    <textarea required type="text" name="test_description" id="test_description" class="form-control" autocomplete="off" placeholder="Описание теста" maxlength="255"></textarea>
-                                </div>
-                                <div>
-                                    <label for="test_name" class="form-label mt-4">Ссылка на картинку</label>
-                                    <input type="text" name="img_link" id="img_link" class="form-control" autocomplete="off" placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg" maxlength="255">
-                                </div>
-                                <div class="card card-test mt-4" style="width: 14rem;">
-                                    <div>
-                                        <img class="test-date-img" src="../img/date.png" alt="date.png" style="width:16px">
-                                        <span class="test-date-for-img"><?=$date?></span>
+                                    <div class="text-center preview">
+                                        <img src="../img/preview.png" alt="" width="26px" height="26px" class="preview-img">
+                                        <span class="text-center">Предпросмотр</span>
                                     </div>
-                                    <img src="http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg" class="card-img-test create-test-img" alt="...">    
-                                    <a class="test-name-for-img create-test-name">Название теста</a>  
-                                    <div class="test-author-for-img mt-1">
-                                        <img src="../img/author.png" alt="author.png" style="width:14px">
-                                        <span><?=$user->login?></span>
-                                    </div> 
-                                    <div class="card-body">
-                                        <p class="card-text create-test-description">Описание теста</p>
-                                        <div class="text-center">
-                                            <a class="btn btn-primary btn-test">Пройти тест</a>
+
+                                    <div class="card card-test mt-2 text-center">
+                                        <img src="http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                            class="card-img-test create-test-img" alt="...">
+                                        <a class="test-name-for-img create-test-name">Название теста</a>
+                                        <div class="test-author-for-img mt-1 text-center">
+
+                                            <?php if($user->img_link): ?>
+
+                                            <img src="<?=$user->img_link?>" alt="author.png"
+                                                style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                            <?php else: ?>
+
+                                            <img src="../img/user-profile-nav.png" alt="author.png"
+                                                style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                            <?php endif; ?>
+
+                                            <span><?=$user->login?></span>
+                                            <img src="../img/count_passes.png" alt="count_passes.png"
+                                                style="margin-left: 2%">
+                                            <span>0</span>
+
+                                        </div>
+
+                                        <div class="card-body">
+                                            <p class="card-text create-test-description test_description">Описание теста</p>
+                                            <div class="text-center">
+                                                <a class="btn btn-primary btn-test">Пройти тест</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
 
+                                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
+                                    <div>
+                                        <img src="../img/test-name-test-create.png" alt="" width="26px" height="26px"
+                                            class="preview-img">
+                                        <label for="test_name" class="form-label">Название теста</label>
+                                        <input required type="text" name="test_name" id="test_name" class="form-control"
+                                            autocomplete="off" placeholder="Название теста" maxlength="64">
+                                    </div>
 
-                                <div class="text-center mt-4 category-block">
-                                    <button type="button" class="btn btn-secondary addCategory">Добавить категорию</button>
-                                    <select name="category" id="1" style="width: 70%;">
-                                        <option>Без категории</option>
-                                        <?php  foreach($categories as $category):?>
-                                            <option><?=$category?></option>
-                                        <?php endforeach;?>
-                                    </select>
+                                    <div>
+                                        <img src="../img/test-description-test-create.png" alt="" width="26px" height="26px"
+                                            class="preview-img">
+                                        <label for="test_description" class="form-label mt-4">Описание теста</label>
+                                        <textarea required type="text" name="test_description" id="test_description"
+                                            class="form-control" autocomplete="off" placeholder="Описание теста"
+                                            maxlength="255"></textarea>
+                                    </div>
+                                    <div>
+                                        <img src="../img/test-url-test-create.png" alt="" width="26px" height="26px"
+                                            class="preview-img">
+                                        <label for="img_link" class="form-label mt-4">Ссылка на картинку</label>
+                                        <input type="text" name="img_link" id="img_link" class="form-control"
+                                            autocomplete="off"
+                                            placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                            maxlength="255">
+                                    </div>
+                                    <div>
+                                        <img src="../img/test-category-test-create.png" alt="" width="26px" height="26px"
+                                            class="preview-img">
+                                        <label for="category" class="form-label mt-4">Выберите категорию</label>
+                                        <div class="select">
+                                            <select class="form-select" name="category" id="category-select">
+                                                <option>Без категории</option>
+                                                <?php  foreach($categories as $category):?>
+                                                <option><?=$category?></option>
+                                                <?php endforeach;?>
+                                            </select>
+                                            <span class="focus"></span>
+                                        </div>
+                                    </div>
                                 </div>
 
+                            </div>
+                    </div>
+
+                    <hr class="hr-head-body">
 
 
-                                
-                            </div>
-                            <div class="mt-4 text-center">
-                                <h4>Добавление вопросов</h4>
-                            </div>
-                            <div class="questions">
-                                <div class="question-items">
-                                    <div class="question_1 mt-4" data-question="1">
-                                        <label for="question_1" class="form-label">Вопрос #1</label>
-                                        <input required type="text" name="question_1" id="question_1" class="form-control" autocomplete="off" placeholder="Вопрос #1" maxlength="255">
-                                        <div class="answers">
-                                            <div class="answer-items">
-                                                <div class="row">
-                                                    <div class="col-12 col-md-9 col-lg-10 col-xl-10">
-                                                        <label for="answer_text_1_1" class="form-label">Ответ</label>
-                                                        <input required type="text" name="answer_text_1_1" id="answer_text_1_1" class="form-control" placeholder = "Ответ #1" autocomplete="off" data-numanswer="1" maxlength="255">
-                                                    </div>
-                                                    <div class="col-12 col-md-3 col-lg-2 col-xl-2">
-                                                        <label for="answer_score_1_1" class="form-label">Балл</label>
-                                                        <select name="answer_score_1_1" id="answer_score_1_1">
-                                                            <option>0</option>
-                                                        <option>1</option>  
-                                                        </select>
+                    <div class="create-test-body">
+                        <div class="test-create-title mt-5">
+                            <h3 class="text-center">Добавление вопросов</h3>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-sm-12 col-lg-10 col-xl-10 offset-lg-1 offset-xl-1">
+
+
+
+                                <div class="questions">
+                                    <div class="question-items">
+                                        <div class="question_1 question-st" data-question="1">
+                                            <label for="question_1" class="form-label">Вопрос #1</label>
+                                            <input required type="text" name="question_1" id="question_1"
+                                                class="form-control" autocomplete="off" placeholder="Вопрос #1"
+                                                maxlength="255">
+                                            <div class="answers">
+                                                <div class="answer-items">
+                                                    <div class="row">
+                                                        <div class="col-12 col-md-10 col-lg-10 col-xl-10 col-xl">
+
+                                                            <label for="answer_text_1_1" class="form-label">Ответы</label>
+                                                            <input required type="text" name="answer_text_1_1"
+                                                                id="answer_text_1_1" class="form-control"
+                                                                placeholder="Ответ #1" autocomplete="off" data-numanswer="1"
+                                                                maxlength="255">
+                                                        </div>
+                                                        <div class="col-12 col-md-2 col-lg-2 col-xl-2">
+                                                            <label for="answer_score_1_1"
+                                                                class="form-label label-score">Балл</label>
+                                                            <br>
+                                                            <select class="form-select select-score bg-danger first-a-in-q-label"
+                                                                name="answer_score_1_1" id="answer_score_1_1">
+                                                                <option class="bg-danger" data-color="bg-danger">0</option>
+                                                                <option class="bg-success" data-color="bg-success">1
+                                                                </option>
+                                                            </select>
+                                                        </div>
                                                     </div>
                                                 </div>
+
+                                                <button type="button" class="btn btn-success border addAnswer"
+                                                    data-question="1" data-answer="1"
+                                                    style="display: inline; margin-top: 15px;">+</button>
+
+                                                <button type="button" class="btn btn-danger border removeAnswer"
+                                                    data-question="1" data-click="0"
+                                                    style="display: inline; margin-top: 15px;">X</button>
+
+                                                <p class="none answer-error" style="color:red" data-question="1">
+                                                    Нечего удалять :)</p>
                                             </div>
-       
-                                            <button type="button" class="btn btn-primary border addAnswer" data-question="1" data-answer="1" style="display: inline; margin-top: 15px;">+</button>
+                                        </div>
 
-                                            <button type="button" class="btn btn-danger border removeAnswer" data-question="1" data-click="0" style="display: inline; margin-top: 15px;">X</button>
+                                    </div>
+                                    <div class="text-center addQ">
+                                        <button type="button" class="btn btn-primary addQuestion" data-question="1">Добавить
+                                            вопрос</button>
+                                    </div>
 
-                                            <p class="none answer-error" style="color:red" data-question="1">Нечего удалять :)</p>
-                                            <hr>
+
+
+
+                                    <div class="text-center mt-4 saveTest">
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Сохранить
+                                        </button>
+                                    </div> 
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Сохранить тест?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Пожалуйста, проверьте все данные. Если вы уверены, что все заполнено верно, нажмите "Сохранить"
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                                                    <button type="submit" class="btn btn-success" name="btn-save" id="btn-save">Сохранить</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="text-center mt-4">
-                                    <button type="button" class="btn btn-primary addQuestion" data-question="1">Добавить вопрос</button>
+                                    
+
+
+
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card mt-4 mb-4 card-create">
-                        <div class="card-body text-center">
-                            <button type="submit" class="btn btn-success" name="btn-save" id="btn-save">Сохранить</button>
-                        </div>
                         <?php 
-                        if (isset($_POST['btn-save'])) {
+                            if (isset($_POST['btn-save'])) {
 
-                            $errors = array();
-                            if(trim(strlen($_POST['test_name'])) > 255) {
-                                $errors[] = 'Больше 255 символов нельзя!!!';
-                            }
-                            if(trim(strlen($_POST['test_description'])) > 255) {
-                                $errors[] = 'Больше 255 символов нельзя!!!';
-                            }
-                            if(trim(strlen($_POST['question_' . $questionNum])) > 255) {
-                                $errors[] = 'Больше 255 символов нельзя!!!';
-                            }
-                            if(trim(strlen($_POST['answer_text_' . $questionNum . '_' . $answerNum]) > 255)) {
-                                $errors[] = 'Больше 255 символов нельзя!!!';
-                            }
-                            if(empty($errors)) {
-                                $test = R::dispense('test');
-                                $test->test_name = trim($_POST['test_name']);
-                                $test->description = trim($_POST['test_description']);
-                                $test->author = $user->login;
-
-                                if ($_POST['img_link'] == '') {
-                                    $test->img_link = 'http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg';
-                                } else {
-                                    $test->img_link = trim($_POST['img_link']);
+                                $errors = array();
+                                if(trim(strlen($_POST['test_name'])) > 255) {
+                                    $errors[] = 'Больше 255 символов нельзя!!!';
                                 }
-                                $test->date = $date; 
-                                R::store($test);
-                                $test_id = $test->id;
-                        
-                                $questionNum = 1;
-                        
-                                while (isset($_POST['question_' . $questionNum])) {
-                                    $question = R::dispense('questions');
-                        
-                                    
-                                    $question_name = trim($_POST['question_' . $questionNum]);
-                                    if (!isset($question)) {
-                                        continue;
+                                if(trim(strlen($_POST['test_description'])) > 255) {
+                                    $errors[] = 'Больше 255 символов нельзя!!!';
+                                }
+                                if(trim(strlen($_POST['question_' . $questionNum])) > 255) {
+                                    $errors[] = 'Больше 255 символов нельзя!!!';
+                                }
+                                if(trim(strlen($_POST['answer_text_' . $questionNum . '_' . $answerNum]) > 255)) {
+                                    $errors[] = 'Больше 255 символов нельзя!!!';
+                                }
+                                if(empty($errors)) {
+                                    $test = R::dispense('test');
+                                    $test->user_id = $user->id;
+                                    $test->test_name = trim($_POST['test_name']);
+                                    $test->description = trim($_POST['test_description']);
+                                    $test->author = $user->login;
+
+                                    if ($_POST['img_link'] == '') {
+                                        $test->img_link = 'http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg';
+                                    } else {
+                                        $test->img_link = trim($_POST['img_link']);
                                     }
+                                    $test->date = $date; 
+                                    R::store($test);
+                                    $test_id = $test->id;
                             
-                                    
-                                    $question->test_id = $test_id;
-                                    $question->question = $question_name;
-                                    R::store($question);
-                                    $questionId = $question->id;
+                                    $questionNum = 1;
                             
-                                    $answerNum = 1;
-                                    while (isset($_POST['answer_text_' . $questionNum . '_' . $answerNum])) {
-                                        $answer = R::dispense('answers');
-                        
-                                        $answer_name = trim($_POST['answer_text_' . $questionNum . '_' . $answerNum]);
-                                        $correct_answer = trim($_POST['answer_score_' . $questionNum . '_' . $answerNum]);
-                                        if (!isset($answer)) {
+                                    while (isset($_POST['question_' . $questionNum])) {
+                                        $question = R::dispense('questions');
+                            
+                                        
+                                        $question_name = trim($_POST['question_' . $questionNum]);
+                                        if (!isset($question)) {
                                             continue;
                                         }
+                                
+                                        
+                                        $question->test_id = $test_id;
+                                        $question->question = $question_name;
+                                        R::store($question);
+                                        $questionId = $question->id;
+                                
+                                        $answerNum = 1;
+                                        while (isset($_POST['answer_text_' . $questionNum . '_' . $answerNum])) {
+                                            $answer = R::dispense('answers');
                             
-                                        $answer->question_id = $questionId;
-                                        $answer->answer = $answer_name;
-                                        $answer->correct_answer = $correct_answer; 
-                        
-                                        R::store($answer);
-                                        $answerNum++;
+                                            $answer_name = trim($_POST['answer_text_' . $questionNum . '_' . $answerNum]);
+                                            $correct_answer = trim($_POST['answer_score_' . $questionNum . '_' . $answerNum]);
+                                            if (!isset($answer)) {
+                                                continue;
+                                            }
+                                
+                                            $answer->question_id = $questionId;
+                                            $answer->answer = $answer_name;
+                                            $answer->correct_answer = $correct_answer; 
+                            
+                                            R::store($answer);
+                                            $answerNum++;
+                                        }
+                                        $questionNum++;
                                     }
-                                    $questionNum++;
-                                }
 
-                                if (isset($_POST['category'])) {
-                                    if ($_POST["category"] == 'Без категории') {
-                                        return false;
-                                    } 
-                                    if (!in_array($_POST["category"], $categories)) {
-                                        return false;
+                                    if (isset($_POST['category'])) {
+                                        if ($_POST["category"] == 'Без категории') {
+                                            return false;
+                                        } 
+                                        if (!in_array($_POST["category"], $categories)) {
+                                            return false;
+                                        }
+                                        
+                                        $last_test = R::findLast('test');
+                                        $test_id = $last_test->id;
+                                        $category = R::dispense('category');
+                                        $category->test_id = $test_id;
+                                        $category->category = trim($_POST["category"]);
+                                        R::store($category);
                                     }
-                                    
-                                    $last_test = R::findLast('test');
-                                    $test_id = $last_test->id;
-                                    $category = R::dispense('category');
-                                    $category->test_id = $test_id;
-                                    $category->category = trim($_POST["category"]);
-                                    R::store($category);
+                                } else {
+                                    echo '<div style="color: red;" class="text-center">'.array_shift($errors).'</div><br>';
+                                    die;
                                 }
-                            } else {
-                                echo '<div style="color: red;" class="text-center">'.array_shift($errors).'</div><br>';
-                                die;
                             }
-                        }
-                    ?>
+                        ?>
                     </div>
                 </form>
+
+
+
+
+
+
             </div>
         </div>
     </div>
-</div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-  </script>
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../js/test-create.js"></script>
+    </script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/test-create.js"></script>
 </body>
 
 </html>
 <?php else :
   header('Location: /'); 
   ob_end_flush();
-?>  
+?>
 <?php endif ; ?>

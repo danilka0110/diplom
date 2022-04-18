@@ -1,0 +1,113 @@
+.card-img-test {
+    width: 12rem;
+    height: 12rem;
+    filter: brightness(50%);
+    border-radius: 10%;
+    object-fit: cover;
+    position: relative;
+    -moz-transition: all 1s ease-out;
+    -o-transition: all 1s ease-out;
+    -webkit-transition: all 1s ease-out;
+}
+
+.card-test {
+    width: 12rem;
+}
+
+
+
+@media screen AND (min-width: 1200px) AND (max-width: 1450px) {
+    .card-img-test {
+        width: 10rem;
+        height: 10rem;
+        filter: brightness(50%);
+        border-radius: 10%;
+        object-fit: cover;
+        position: relative;
+        -moz-transition: all 1s ease-out;
+        -o-transition: all 1s ease-out;
+        -webkit-transition: all 1s ease-out;
+    }
+    .card-test {
+        width: 10rem;
+    }
+}
+
+@media screen AND (max-width: 578px) {
+    .card-img-test {
+        width: 12rem;
+        height: 12rem;
+        filter: brightness(50%);
+        border-radius: 10%;
+        object-fit: cover;
+        position: relative;
+        -moz-transition: all 1s ease-out;
+        -o-transition: all 1s ease-out;
+        -webkit-transition: all 1s ease-out;
+
+    }
+    .card-test {
+        width: 12rem;
+    }
+}
+
+@media screen AND (max-width: 992px) {
+    .test-date-img, .test-date-for-img {
+        float: left;
+    }
+    .test-date-for-img {
+        margin-left: 5px;
+    }
+    .test-date-img {
+        margin-top: 3px;
+    }
+}
+
+.btns-nav-tests-block {
+    padding: 10px;
+    width: 100%;
+}
+
+.btn-show-profile-tests {
+    width: 180px;
+}
+
+@media screen AND (max-width: 767px) {
+    .btn-show-profile-tests {
+        margin-bottom: 5px;
+    }
+}
+
+.test-name-for-img {
+    margin-top: 18px;
+    font-size: 20px;
+}
+
+.my-passes-tests .card {
+    border: none;
+}
+
+.table_test_name {
+    color: rgb(87, 140, 220);
+}
+
+.table_test_name:hover {
+    color: rgb(31, 106, 163);
+    text-decoration: underline;
+}
+
+table { 
+    border-collapse: separate; 
+}
+
+td {
+    border-radius: 5px;
+}
+
+@media screen AND (max-width: 767px) {
+    .select-score {
+        position: absolute;
+        margin-top: -20px;
+        width: 50%;
+    }
+}

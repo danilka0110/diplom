@@ -57,4 +57,52 @@ $(function() {
       });
     
 
+
+      $("body").on('click', '.btn-show-my-tests-in-profile', function() {
+        $('.breadcrumb-item.active').html('Мои тесты');
+        $('.btn-show-profile-tests').removeClass('active');
+        $(this).addClass('active');
+        $('.my-passes-tests').hide();
+        $('.my-tests').show();
+    });
+
+    $("body").on('click', '.btn-show-my-passes-tests-in-profile', function() {
+        $('.breadcrumb-item.active').html('Пройденные тесты');
+        $('.btn-show-profile-tests').removeClass('active');
+        $(this).addClass('active');
+        $('.my-tests').hide();
+        $('.my-passes-tests').show();
+    });
+
+    $("body").on('click', '.btn-test-create', function() {
+        $('.btn-show-profile-tests').removeClass('active');
+    });
+
+
+
+   
+
+    document.querySelector('#search_test').oninput = function() {
+        let val = this.value.trim();
+        let elasticItems = document.querySelectorAll('.elastic');
+        if (val != '') {
+            elasticItems.forEach(function(elem) {
+                if (elem.innerText.toLowerCase().search(val.toLowerCase()) == -1) {
+                    elem.classList.add('none');
+                }
+                else {
+                    elem.classList.remove('none');
+                }
+            });
+        }
+        else {
+            elasticItems.forEach(function(elem) {
+                elem.classList.remove('none');
+            });
+        }
+    }
+
+
+
+
 });

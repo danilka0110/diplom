@@ -162,7 +162,7 @@ if (isset($_GET['survey'])) {
         </div>
     </nav>
     <div class="main">
-        <div class="container-fluid">
+        <div class="container">
             <div class="wrap">
 
 
@@ -176,20 +176,23 @@ if (isset($_GET['survey'])) {
                             <div class="text-center">
                                 <img src="<?=$survey_img_link?>" alt="img" width="160px" height="160px" class="test-img">
                                 <p style="font-size: 32px" class="test-head-test-name mt-4"><?=$survey_name?></p>
-                                <button class="btn btn-primary mt-4" id="test-start">Начать опрос</button>
+                                <button class="btn btn-primary mt-4 survey-start" id="test-start">Начать опрос</button>
                             </div>
 
+
                             <div class="test-description mt-5">
-                                <p>Описание теста: <?=$survey_description?></p>
-                                <p>Всего вопросов: <?=$count_questions?></p>
-                                <p>Автор: <?=$survey_author?></p>
+                                <i class="desc-title">Описание опроса: </i><span class="desc-text"><?=$survey_description?></span>
+                                <hr>
+                                <i class="desc-title">Всего вопросов: </i><span class="desc-text"><?=$count_questions?></span>
+                                <hr>
+                                <i class="desc-title">Автор: </i><span class="desc-text"><?=$survey_author?></span>
                             </div>
 
                         </div>
 
 
 
-                    <div class="test-show none">
+                    <div class="test-show none survey-decoration">
                         <?=$pagination?>
                         <span class="none" id="survey-id"><?=$survey_id?></span>
                         <div class="test-data">
@@ -232,24 +235,30 @@ if (isset($_GET['survey'])) {
                                     <?php endif; // id_answer?>
 
                                 <?php endforeach; //$item ?>
-
-
-
-
-
                                 
                             </div>
                             <?php endforeach; //$test_data ?>
                         </div>
 
+
+
+
+
+                        <p class="next-error none" style="color: red; font-size: 16px;">Вопросов больше нет</p>
+
                         <p class="none result-error" style="color:red; font-size: 16px;">Вы ответили не на все вопросы</p>
-                        <!-- <p class="none next-error" style="color:red">Вопросов больше нет</p> -->
+
                         <div class="buttons text-center">
-                            <button type="submit" class="center btn-finish btn btn-success" id="btn">Закончить
-                                опрос
+                            <button type="submit" class="center btn-finish btn btn-success none" id="btn">Закончить тест
                                 <span class="spinner-border spinner-border-sm none" role="status" aria-hidden="true"></span>
                             </button>
                         </div>
+
+                        <button class="center btn-next btn btn-primary" id="btn-next">Далее</button>
+
+
+
+
                     <?php else: header('Location: surveys'); ob_end_flush(); // isset($test_data) ?>
                     <?php endif; // isset($test_data) ?>
                     </div>

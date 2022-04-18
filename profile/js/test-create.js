@@ -30,14 +30,14 @@ $(document).on('click', '.addAnswer', function() {
         answerBlock.append(`
         <div class="row">
             <div class="col-12 col-md-9 col-lg-10 col-xl-10">
-                <label for="answer_text_1_1" class="form-label">Ответ</label>
+                <label for="answer_text_${question}_${answer}" class="form-label">Ответы</label>
                 <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control" placeholder = "Ответ #${answer}" autocomplete="off" data-numanswer="${answer}">
             </div>
             <div class="col-12 col-md-3 col-lg-2 col-xl-2">
-                <label for="answer_score_1_1" class="form-label">Балл</label>
-                <select name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
-                    <option>0</option>
-                    <option>1</option>
+                <label for="answer_score_${question}_${answer}" class="form-label label-score">Балл</label>
+                <select class="form-select select-score bg-danger first-a-in-q-label-new" name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
+                    <option class="bg-danger" data-color="bg-danger">0</option>
+                    <option class="bg-success" data-color="bg-success">1</option>
                 </select>
             </div>
         </div>`);
@@ -50,9 +50,9 @@ $(document).on('click', '.addAnswer', function() {
             </div>
             <div class="col-12 col-md-3 col-lg-2 col-xl-2">
                 <label for="answer_score_1_1" class="form-label"></label>
-                <select name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
-                    <option>0</option>
-                    <option>1</option>
+                <select class="form-select select-score bg-danger" name="answer_score_${question}_${answer}" id="answer_score_${question}_${answer}">
+                    <option class="bg-danger" data-color="bg-danger">0</option>
+                    <option class="bg-success" data-color="bg-success">1</option>
                 </select>
             </div>
         </div>`);
@@ -66,22 +66,22 @@ $('.addQuestion').on('click', function() {
     questionNum++;
     let questionBlock = $('.question-items');
     questionBlock.append(`
-        <div class="question_${questionNum} mt-4" data-question="${questionNum}">
+        <div class="question_${questionNum} mt-4 question-st" data-question="${questionNum}">
             <label for="question_${questionNum}" class="form-label">Вопрос #${questionNum}</label>
             <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}">
             <div class="answers">
                 <div class="answer-items">
                 </div>
 
-                <button type="button" class="btn btn-primary border addAnswer" data-question="${questionNum}" data-answer="0" style="display: inline; margin-top: 15px;">+</button>
+                <button type="button" class="btn btn-success border addAnswer" data-question="${questionNum}" data-answer="0" style="display: inline; margin-top: 15px;">+</button>
 
                 <button type="button" class="btn btn-danger border removeAnswer" data-question="${questionNum}" data-click="0" style="display: inline; margin-top: 15px;">X</button>
 
                 <p class="none answer-error" style="color:red" data-question="${questionNum}">Нечего удалять :)</p>
-            </div>
-            <div class="text-center mt-4">
-                <button type="button" class="btn btn-danger border removeQuestion text-center" data-question="${questionNum}">Удалить вопрос</button>
             </div><hr>
+            <div class="text-center mt-2">
+                <button type="button" class="btn btn-danger border removeQuestion text-center" data-question="${questionNum}">Удалить вопрос</button>
+            </div>
         </div>`);
         
         ($(this).data('question', questionNum));
@@ -111,22 +111,35 @@ $("body").on('click', '.removeQuestion', function() {
     if($(this).data('question') == qnLastQueston) {
         $('.question_' + qnLastQueston).remove();
         questionNum--;
-    } else {
-
     }
 
-    let questionBlock = $('.question-items');
+    let qnLastQuestonNow = $("[class^='question_']:last");
+
+
     let qnNow = questionNum+1;
     $(".removeQuestion[data-question=" + qnNow + "]").remove();
 
     if($('*').is("[class^='question_']")) {
-        questionBlock.append(`
-        <div class="text-center mt-4">
-            <button type="button" class="btn btn-danger border removeQuestion text-center" data-question="${questionNum}">Удалить вопрос</button>
+        qnLastQuestonNow.append(`
+        <div class="text-center">
+            <button type="button" class="btn btn-danger border removeQuestion text-center mb-3" data-question="${questionNum}">Удалить вопрос</button>
         </div>
         `);
     }
 });
+
+$("body").on('click', 'select', function() {
+
+    $('select').on('change', function() {  console.log("qq");
+        $(this).removeClass('bg-danger');
+        $(this).removeClass('bg-success');
+        $(this).addClass($(this).find('option:selected').data('color'));
+    });
+
+});
+
+
+
 $(document).ready(function () {
     $("#img_link").change(function () {
         $(".create-test-img").removeAttr('src');
@@ -148,3 +161,5 @@ $(document).ready(function () {
         $(".create-test-description").html(test_description);
     });
 });
+
+

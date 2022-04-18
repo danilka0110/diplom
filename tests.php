@@ -71,6 +71,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tests.css">
     <link rel="stylesheet" href="css/tests-carousel.css">
+    
 </head>
 
 <body>
@@ -218,7 +219,7 @@
                         <div class="test-author-for-img mt-1 text-center">
                             <?php $user_img = get_user_img($tests[$i]['author']); ?>
                             <?php if($user_img): ?>
-                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
                             <?php else: ?>
                                 <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
                             <?php endif; ?>
@@ -270,7 +271,7 @@
                             <div class="test-author-for-img mt-1 text-center">
                                 <?php $user_img = get_user_img($tests_search[$i]['author']); ?>
                                 <?php if($user_img): ?>
-                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
                                 <?php else: ?>
                                 <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
                                 <?php endif; ?>
@@ -311,7 +312,7 @@
                                         <div class="test-author-for-img mt-1 text-center">
                                             <?php $user_img = get_user_img($category_tests[$i]['author']); ?>
                                             <?php if($user_img): ?>
-                                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
                                             <?php else: ?>
                                             <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
                                             <?php endif; ?>

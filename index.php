@@ -34,16 +34,14 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-
-
 <div class="index-img">
   <nav class="navbar navbar-expand-lg navbar-dark index-navbar">
       <div class="container-fluid">
           <a class="navbar-brand" href="/">
           <?php if($user) : ?>
-              <img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-top: -5px">
+              <img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-top: -5px;">
           <?php else : ?> 
-              <img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-right: 12px; margin-top: -5px">
+              <img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-right: 12px; margin-top: -5px;">
           <?php endif ; ?>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -72,20 +70,20 @@
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                           data-bs-toggle="dropdown" aria-expanded="false">
                           <?php if($user->img_link == '0'): ?>
-                              <img src="../img/user-profile-nav.png" alt="" width="34" height="34" class="navbar-profile-img" style="border-radius: 50%">
+                              <img src="../img/user-profile-nav.png" alt="" width="34" height="34" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
                           <?php else: ?>
-                              <img src="<?=$user->img_link?>" alt="" width="34" height="34" class="navbar-profile-img" style="border-radius: 50%">
+                              <img src="<?=$user->img_link?>" alt="" width="35" height="35" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
                           <?php endif; ?>  
-                          <span style="margin-left: 2px;">Профиль</span>
+                          <span style="margin-left: 1px;">Профиль</span>
                       </a>
                       <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdown">
                           <li>
 
                             <a class="dropdown-item" href="profile">
                               <?php if($user->img_link == '0'): ?>
-                                  <img src="../img/user-profile-nav.png" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%">
+                                  <img src="../img/user-profile-nav.png" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
                               <?php else: ?>
-                                  <img src="<?=$user->img_link?>" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%">
+                                  <img src="<?=$user->img_link?>" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
                               <?php endif; ?>  
                               <span style="margin-left: 2px;"><?php echo $user->login?></span>
                             </a>

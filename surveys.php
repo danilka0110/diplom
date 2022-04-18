@@ -22,7 +22,7 @@
     $str = $_GET['page'];
     $page = formatstr($str);
     if($page === false) header('Location: surveys');
-    $count = 8;
+    $count = 16;
     $page_count = (count($surveys)) / $count;
     if ($page > $page_count || $page < 0) header('Location: surveys');
     if(isset($_POST['search'])) {
@@ -33,7 +33,7 @@
         $page_count_search = (count($tests_search)) / $count;
         
       } else {
-        header('Location: tests');
+        header('Location: surveys');
       }
     }
 
@@ -143,7 +143,7 @@
             <div class="container-fluid popular-tests-container text-center">
                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner w-100">
-                        <h3>Популярные тесты</h3>
+                        <h3>Популярные опросы</h3>
                         <div class="row mt-4">
                             <?php foreach ($popular_surveys as $key => $popular_survey) :?>
                                 <?php if ($key == 0): ?>
@@ -211,7 +211,7 @@
                                     <div class="test-author-for-img mt-1 text-center">
                                         <?php $user_img = get_user_img($surveys[$i]['author']); ?>
                                         <?php if($user_img): ?>
-                                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
                                         <?php else: ?>
                                             <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
                                         <?php endif; ?>
@@ -254,7 +254,7 @@
                                         <div class="test-author-for-img mt-1 text-center">
                                             <?php $user_img = get_user_img($surveys_search[$i]['author']); ?>
                                             <?php if($user_img): ?>
-                                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                                <img src="<?=$user_img?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
                                             <?php else: ?>
                                                 <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
                                             <?php endif; ?>
@@ -291,7 +291,7 @@
                             <div class="test-author-for-img mt-1 text-center">
                                 <?php $user_img = get_user_img($category_surveys[$i]['author']); ?>
                                 <?php if($user_img): ?>
-                                    <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
+                                    <img src="<?=$user_img?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
                                 <?php else: ?>
                                     <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
                                 <?php endif; ?>

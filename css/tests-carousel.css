@@ -47,6 +47,7 @@
     object-fit: cover;
     margin-left: 0;
     filter: brightness(70%);
+    border-radius: 25px;
   }
   .carousel-item .card-body {
     width: 100%;

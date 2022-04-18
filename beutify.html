@@ -1,40 +1,22 @@
 <?php 
-    require "db.php";
-    require_once 'includes/functions.php';
+    require "../db.php";
+    require "../includes/functions.php";
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
+?>
+
+
+<?php if($user) : ?>
+
+<?php
+
     ob_start();
-    $tests = get_tests();
-    $popular_tests = get_popular_tests();
+    date_default_timezone_set('Moscow');
+    $date = date('Y-m-d', time());
     $categories = category_list();
-    if(isset($_GET['category'])) {
-        if ($_GET['category'] != NULL) {
-          $category_data = $_GET['category'];
-          
-          if (!in_array("$category_data", $categories)) {
-            header('Location: tests');
-        } 
-            $category_tests = get_tests_for_category($category_data);
-        } else {
-            header('Location: tests');
-        }
-      }
-    //pagination
-    $str = $_GET['page'];
-    $page = formatstr($str);
-    if($page === false) header('Location: tests');
-    $count = 16;
-    $page_count = (count($tests)) / $count;
-    if ($page > $page_count || $page < 0) header('Location: tests');
-    if(isset($_POST['search'])) {
-      if ($_POST['search'] != NULL) {
-        $search_data = $_POST['search'];
-        
-        $tests_search = get_tests_for_search($search_data);
-        $page_count_search = (count($tests_search)) / $count;
-        
-      } else {
-        header('Location: tests');
-      }
+
+    if (isset($_POST['btn-save'])) {
+        (header("Location: tests"));
+        ob_end_flush();
     }
 
 ?>
@@ -47,46 +29,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Тесты</title>
-    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/img/favicon/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="../img/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../img/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="../img/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="../img/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="../img/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../img/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="../img/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon/favicon-16x16.png">
+    <link rel="manifest" href="../img/favicon/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/tests.css">
-    <link rel="stylesheet" href="css/tests-carousel.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/tests.css">
+    <link rel="stylesheet" href="css/test-create.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index">
-                <?php if($user) : ?>
-                <img src="img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top"
+            <a class="navbar-brand" href="../index">
+                <img src="../img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top"
                     style="margin-right: 80px; margin-top: -3px;">
                 <span class="brand">Paradigm Tests</span>
-                <?php else : ?>
-                <img src="img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top"
-                    style="margin-right: 16px; margin-top: -3px;">
-                <span class="brand-else">Paradigm Tests </span>
-                <?php endif ; ?>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -96,19 +73,18 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="tests">Тесты</a>
+                        <a class="nav-link" aria-current="page" href="../tests">Тесты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="surveys">Опросы</a>
+                        <a class="nav-link" href="../surveys">Опросы</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contacts">Контакты</a>
+                        <a class="nav-link" href="../contacts">Контакты</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about">О нас</a>
+                        <a class="nav-link" href="../about">О нас</a>
                     </li>
                 </ul>
-                <?php if($user) : ?>
                 <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -116,361 +92,349 @@
                             Профиль
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="profile"><?php echo $user->login?></a></li>
+                            <li><a class="dropdown-item" href="../profile"><?php echo $user->login?></a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="account/logout">Выход</a></li>
+                            <li><a class="dropdown-item" href="../account/logout">Выход</a></li>
                         </ul>
                     </li>
                 </ul>
-                <?php else : ?>
-                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="account/login">Вход</a>
-                    </li>
-                </ul>
-                <?php endif ; ?>
             </div>
         </div>
     </nav>
 
-
-    <div class="main">
-        <?php if ($tests): ?>
-
-
-        <div class="container-fluid popular-tests-container text-center">
-            <?if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
-            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner w-100">
-                    <h3>Популярные тесты</h3>
-                    <div class="row mt-4">
-                        <?php foreach ($popular_tests as $key => $popular_test) :?>
-                        <?php if ($key == 0): ?>
-                        <div class="carousel-item active text-center">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                <div class="card card-body">
-                                    <a href="test?test=<?=$popular_test['id']?>"><img
-                                            src="<?=$popular_test['img_link']?>" class="popular_test_img" alt="img"></a>
-                                    <a href="test?test=<?=$popular_test['id']?>"
-                                        style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
-                                </div>
-                            </div>
-                        </div>
+    <div class="nav-profile">
+        <ul id="ul-nav-profile">
+            <hr style="color: #fff; margin-top: -15px;">
+            <li>
+                <a href="index">
+                    <div class="nav-profile-item">
+                        <?php if($user->img_link == '0'): ?>
+                        <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
                         <?php else: ?>
-                        <div class="carousel-item text-center">
-                            <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                <div class="card card-body">
-                                    <a href="test?test=<?=$popular_test['id']?>"><img
-                                            src="<?=$popular_test['img_link']?>" class="popular_test_img" alt="img"></a>
-                                    <a href="test?test=<?=$popular_test['id']?>"
-                                        style="margin-left: 5px;"><?=$popular_test['test_name']?></a>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
                         <?php endif; ?>
-                        <?php endforeach ;?>
+                        <span>Профиль</span>
                     </div>
-                    <button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
-                        data-bs-slide="prev">
-                        <img src="img/prev.png" alt="" width="34" height="34"></img>
-                    </button>
-                    <button class="carousel-control-btn" type="button" data-bs-target="#myCarousel"
-                        data-bs-slide="next">
-                        <img src="img/next.png" alt="" width="34" height="34">
-                    </button>
-                </div>
-                <?php else :?>
-                <?php endif ;?>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <div class="container-fluid tests-container">
-            <div class="row">
-                <?php if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>
-
-                <div class="container-fluid tests-container text-center">
-
-                    <?php foreach($categories as $category) :?>
-                    <a href="tests?category=<?=$category?>"><button class="btn btn-outline-primary mt-2 btn-category"
-                            id="<?=$category?>"><?=$category?></button></a>
-                    <?php endforeach?>
-                </div>
-                <form method="POST">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Поиск" aria-label="Поиск"
-                            aria-describedby="button-addon2" name="search">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
+                </a>
+            </li>
+            <li>
+                <a href="tests" class="active">
+                    <div class="nav-profile-item active">
+                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                            style="margin-left: 3px">
+                        <span style="margin-left: -3px">Тесты</span>
                     </div>
-                </form>
-                <?php for ($i = $page*$count; $i < (($page+1)*$count); $i++):?>
-                <?php if ($tests[$i]['id'] != NULL) :?>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                    <div class="card card-test" style="width: 15rem; min-height: 24rem;">
-                        <a href="test?test=<?=$tests[$i]['id']?>"><img src="<?=$tests[$i]['img_link']?>"
-                                class="card-img-test" alt="..."></a>
+                </a>
+            </li>
 
-                        <a href="test?test=<?=$tests[$i]['id']?>"
-                            class="test-name-for-img"><?=$tests[$i]['test_name']?></a>
-
-                        <div class="test-author-for-img mt-1 text-center">
-                            <?php $user_img = get_user_img($tests[$i]['author']); ?>
-                            <?php if($user_img): ?>
-                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
-                            <?php else: ?>
-                            <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
-                            <?php endif; ?>
-                            <span><?=$tests[$i]['author']?></span>
-                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                            <span><?=$tests[$i]['count_passes']?></span>
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text test_description"><?=$tests[$i]['description']?></p>
-                            <div class="text-center">
-                                <a href="test?test=<?=$tests[$i]['id']?>" class="btn btn-primary btn-test">Пройти
-                                    тест</a>
-                            </div>
-                        </div>
-
-
+            <li>
+                <a href="surveys">
+                    <div class="nav-profile-item">
+                        <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                        <span>Опросы</span>
                     </div>
-                    <hr>
-                </div>
-                <?php endif ;?>
-                <?php endfor ;?>
-                <div class="page-list" align="center">
-                    <?php for ($p = 0; $p < $page_count; $p++) :?>
-                    <?php if ($p == $_GET['page']):?>
-                    <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary active"
-                            id="<?=$p?>"><?=$p+1?></button></a>
-                    <?php else:?>
-                    <a href="tests?page=<?=$p?>"><button class="btn btn-outline-primary page_btn"
-                            id="<?=$p?>"><?=$p+1?></button></a>
-                    <?php endif;?>
-                    <?php endfor ;?>
-                </div>
-                <?php elseif ($_POST['search'] != NULL && $_GET['category'] == NULL) :?>
-                <h3 class="text-center">Вы искали: <?=$search_data?></h3>
-                <?php if ($tests_search) :?>
-                <?php for ($i = 0; $i < count($tests_search); $i++):?>
-                <?php if ($tests_search[$i]['id'] != NULL) :?>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                    <div class="card card-test" style="width: 14rem;">
-                        <a href="test?test=<?=$tests_search[$i]['id']?>"><img src="<?=$tests_search[$i]['img_link']?>"
-                                class="card-img-test" alt="..."></a>
+                </a>
+            </li>
 
-                        <a href="test?test=<?=$tests_search[$i]['id']?>"
-                            class="test-name-for-img"><?=$tests_search[$i]['test_name']?></a>
-
-
-
-                        <div class="test-author-for-img mt-1 text-center">
-                            <?php $user_img = get_user_img($tests_search[$i]['author']); ?>
-                            <?php if($user_img): ?>
-                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
-                            <?php else: ?>
-                            <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
-                            <?php endif; ?>
-                            <span><?=$tests_search[$i]['author']?></span>
-                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                            <span><?=$tests_search[$i]['count_passes']?></span>
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text test_description"><?=$tests_search[$i]['description']?></p>
-                            <div class="text-center">
-                                <a href="test?test=<?=$tests_search[$i]['id']?>" class="btn btn-primary btn-test">Пройти
-                                    тест</a>
-                            </div>
-                        </div>
-
-
+            <?php if ($user->role == 1) :?>
+            <li>
+                <a href="admin" class="adm">
+                    <div class="nav-profile-item">
+                        <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                        <span>Админ. панель</span>
                     </div>
-                </div>
-                <?php endif ;?>
-                <?php endfor ;?>
-                <?php else :?>
-                <h3 class="text-center">Ничего не найдено</h3>
-                <?php endif ;?>
-                <?php else :?>
-                <h3 class="text-center mb-4"><?=$category_data?></h3>
-                <?php if ($category_tests) :?>
-                <?php for ($i = 0; $i < count($category_tests); $i++):?>
-                <?php if ($category_tests[$i]['id'] != NULL) :?>
-                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
-                    <div class="card card-test" style="width: 14rem;">
-                        <a href="test?test=<?=$category_tests[$i]['test_id']?>"><img
-                                src="<?=$category_tests[$i]['img_link']?>" class="card-img-test" alt="..."></a>
-
-                        <a href="test?test=<?=$category_tests[$i]['test_id']?>"
-                            class="test-name-for-img"><?=$category_tests[$i]['test_name']?></a>
-
-
-
-                        <div class="test-author-for-img mt-1 text-center">
-                            <?php $user_img = get_user_img($category_tests[$i]['author']); ?>
-                            <?php if($user_img): ?>
-                            <img src="<?=$user_img?>" alt="author.png" style="width:18px; border-radius: 10%;">
-                            <?php else: ?>
-                            <img src="img/user-profile-nav.png" alt="author.png" style="width:18px">
-                            <?php endif; ?>
-                            <span><?=$category_tests[$i]['author']?></span>
-                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                            <span><?=$category_tests[$i]['count_passes']?></span>
-                        </div>
-
-                        <div class="card-body">
-                            <p class="card-text test_description"><?=$category_tests[$i]['description']?></p>
-                            <div class="text-center">
-                                <a href="test?test=<?=$category_tests[$i]['id']?>"
-                                    class="btn btn-primary btn-test">Пройти
-                                    тест</a>
-                            </div>
-                        </div>
+                </a>
+            </li>
+            <?php endif ;?>
+            <li>
+                <a href="help">
+                    <div class="nav-profile-item">
+                        <img src="../img/help.png" alt="help" width=24px height=24px>
+                        <span>Помощь</span>
                     </div>
-                </div>
-                <?php endif ;?>
-                <?php endfor ;?>
-                <?php else :?>
-                <h4 class="text-center">Тестов с данной категории пока нет</h4>
-                <?php endif ;?>
-
-
-
-                <?php unset($_GET['category']); endif ;?>
-
-            </div>
-            <?php  else: //tests ?>
-            <h3>Нет тестов</h3>
-            <?php endif //tests ?>
-
-        </div>
+                </a>
+            </li>
+            <li class="drop-nav-profile-item">
+                <hr style="color: #fff; margin-bottom: 10px;">
+                <a href="../account/logout">
+                    <div class="nav-profile-item">
+                        <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                        <span>Выход</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
     </div>
 
 
 
-    <footer class="bg-dark text-center text-white">
-        <div class="container p-4">
-            <section class="mb-4">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                    distinctio earum repellat quaerat voluptatibus placeat nam,
-                    commodi optio pariatur est quia magnam eum harum corrupti dicta,
-                    aliquam sequi voluptate quas.
-                </p>
-            </section>
-
-            <section class="">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
+    <div class="main-profile">
+        <div class="row none mobile-nav text-center">
+            <a href="index" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <?php if($user->img_link == '0'): ?>
+                    <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php else: ?>
+                    <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php endif; ?>
+                    <span>Профиль</span>
                 </div>
-            </section>
+            </a>
+            <a href="tests" class="btn btn-outline-primary mt-1 mb-1 active">
+                <div class="nav-profile-item">
+                    <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                    <span style="margin-left: -3px">Тесты</span>
+                </div>
+            </a>
+            <a href="surveys" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                    <span>Опросы</span>
+                </div>
+            </a>
+            <?php if ($user->role == 1) :?>
+            <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                    <span>Админ. панель</span>
+                </div>
+            </a>
+            <?php endif ;?>
+            <a href="help" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/help.png" alt="help" width=24px height=24px>
+                    <span>Помощь</span>
+                </div>
+            </a>
+            <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                    <span>Выход</span>
+                </div>
+            </a>
+        </div>
+        <div class="container">
 
+            <div class="main-body">
+                <nav aria-label="breadcrumb" class="main-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index">Профиль</a></li>
+                        <li class="breadcrumb-item"><a href="tests">Тесты</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Создание теста</li>
+                    </ol>
+                </nav>
+
+
+
+
+
+
+
+                <div class="create-test-head">
+
+                    <div class="test-create-title mb-5">
+                        <h2 class="text-center">Создание теста</h2>
+                    </div>
+                    <form action="test-create" method="post" id="addTest">
+                        <div class="row">
+                            <div
+                                class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 order-xl-first order-lg-first order-md-first order-sm-last order-last">
+
+                                <div class="text-center preview">
+                                    <img src="../img/preview.png" alt="" width="26px" height="26px" class="preview-img">
+                                    <span class="text-center">Предпросмотр</span>
+                                </div>
+
+                                <div class="card card-test mt-2 text-center">
+                                    <img src="http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                        class="card-img-test create-test-img" alt="...">
+                                    <a class="test-name-for-img create-test-name">Название теста</a>
+                                    <div class="test-author-for-img mt-1 text-center">
+
+                                        <?php if($user->img_link): ?>
+
+                                        <img src="<?=$user->img_link?>" alt="author.png"
+                                            style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                        <?php else: ?>
+
+                                        <img src="../img/user-profile-nav.png" alt="author.png"
+                                            style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                        <?php endif; ?>
+
+                                        <span><?=$user->login?></span>
+                                        <img src="../img/count_passes.png" alt="count_passes.png"
+                                            style="margin-left: 2%">
+                                        <span>0</span>
+
+                                    </div>
+
+                                    <div class="card-body">
+                                        <p class="card-text create-test-description test_description">Описание теста</p>
+                                        <div class="text-center">
+                                            <a class="btn btn-primary btn-test">Пройти тест</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-xl-9">
+                                <div>
+                                    <img src="../img/test-name-test-create.png" alt="" width="26px" height="26px"
+                                        class="preview-img">
+                                    <label for="test_name" class="form-label">Название теста</label>
+                                    <input required type="text" name="test_name" id="test_name" class="form-control"
+                                        autocomplete="off" placeholder="Название теста" maxlength="64">
+                                </div>
+
+                                <div>
+                                    <img src="../img/test-description-test-create.png" alt="" width="26px" height="26px"
+                                        class="preview-img">
+                                    <label for="test_name" class="form-label mt-4">Описание теста</label>
+                                    <textarea required type="text" name="test_description" id="test_description"
+                                        class="form-control" autocomplete="off" placeholder="Описание теста"
+                                        maxlength="255"></textarea>
+                                </div>
+                                <div>
+                                    <img src="../img/test-url-test-create.png" alt="" width="26px" height="26px"
+                                        class="preview-img">
+                                    <label for="test_name" class="form-label mt-4">Ссылка на картинку</label>
+                                    <input type="text" name="img_link" id="img_link" class="form-control"
+                                        autocomplete="off"
+                                        placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                        maxlength="255">
+                                </div>
+                                <div>
+                                    <img src="../img/test-category-test-create.png" alt="" width="26px" height="26px"
+                                        class="preview-img">
+                                    <label for="test_name" class="form-label mt-4">Выберите категорию</label>
+                                    <div class="select">
+                                        <select class="form-select" name="category" id="category-select">
+                                            <option>Без категории</option>
+                                            <?php  foreach($categories as $category):?>
+                                            <option><?=$category?></option>
+                                            <?php endforeach;?>
+                                        </select>
+                                        <span class="focus"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+
+                <hr>
+
+
+
+
+
+
+                <div class="create-test-body">
+                    <div class="test-create-title mt-5 mb-4">
+                        <h3 class="text-center">Добавление вопросов</h3>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-sm-12 col-lg-10 col-xl-10 offset-lg-1 offset-xl-1">
+
+
+
+                            <div class="questions">
+                                <div class="question-items">
+                                    <div class="question_1 mt-4 question-st" data-question="1">
+                                        <label for="question_1" class="form-label">Вопрос #1</label>
+                                        <input required type="text" name="question_1" id="question_1"
+                                            class="form-control" autocomplete="off" placeholder="Вопрос #1"
+                                            maxlength="255">
+                                        <div class="answers">
+                                            <div class="answer-items">
+                                                <div class="row">
+                                                    <div class="col-12 col-md-10 col-lg-10 col-xl-10 col-xl">
+
+                                                        <label for="answer_text_1_1" class="form-label">Ответы</label>
+                                                        <input required type="text" name="answer_text_1_1"
+                                                            id="answer_text_1_1" class="form-control"
+                                                            placeholder="Ответ #1" autocomplete="off" data-numanswer="1"
+                                                            maxlength="255">
+                                                    </div>
+                                                    <div class="col-12 col-md-2 col-lg-2 col-xl-2">
+                                                        <label for="answer_score_1_1"
+                                                            class="form-label label-score">Балл</label>
+                                                        <br>
+                                                        <select class="form-select select-score bg-danger"
+                                                            name="answer_score_1_1" id="answer_score_1_1">
+                                                            <option class="bg-danger" data-color="bg-danger">0</option>
+                                                            <option class="bg-success" data-color="bg-success">1
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button type="button" class="btn btn-success border addAnswer"
+                                                data-question="1" data-answer="1"
+                                                style="display: inline; margin-top: 15px;">+</button>
+
+                                            <button type="button" class="btn btn-danger border removeAnswer"
+                                                data-question="1" data-click="0"
+                                                style="display: inline; margin-top: 15px;">X</button>
+
+                                            <p class="none answer-error" style="color:red" data-question="1">
+                                                Нечего удалять :)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4 addQ">
+                                    <button type="button" class="btn btn-primary addQuestion" data-question="1">Добавить
+                                        вопрос</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
         </div>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2022 Copyright:
-            <a class="text-white" href="#">Paradigm Tests</a>
-        </div>
-    </footer>
+    </div>
+
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="js/tests.js"></script>
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/test-create.js"></script>
 </body>
 
 </html>
+<?php else :
+  header('Location: /'); 
+  ob_end_flush();
+?>
+<?php endif ; ?>

@@ -18,3 +18,27 @@ body {
     background: #556191;
     border: 2px solid white;
 }
+
+@media screen and (max-width: 576px) {
+    #test-start {
+        width: 80%;
+        height: 47px;
+        font-size: 20px;
+        background: #43528f;
+        border: none
+    }
+    
+    #test-start:hover {
+        background: #556191;
+        border: 2px solid white;
+    }
+
+    .test-decoration {
+        background:#fcf4fa 50%;
+    }
+
+    .test-show {
+        padding: 10px 15px;
+    }
+
+}

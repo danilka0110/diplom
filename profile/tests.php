@@ -1,14 +1,21 @@
-<?php 
+<?php
     require "../db.php";
     require "../includes/functions.php";
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
     ob_start();
-    $tests = get_test_by_author($user->login);
-
 ?>
 
 
 <?php if($user) : ?>
+
+<?php 
+    $tests = get_test_by_author($user->id);
+
+    $tests_user = R::getAll("SELECT test_id, test_name, correct_score, all_count, date
+    FROM usersandtests
+        WHERE user_id = $user->id");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,11 +41,12 @@
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="msapplication-TileImage" content="../img/favicon/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/test-create.css">
-    <link rel="stylesheet" href="../css/profile.css">
+	<link rel="stylesheet" href="../css/tests.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/tests-profile.css">
 </head>
 <body>
 
@@ -89,37 +97,43 @@
     </div>
 </nav>
 
-<div class="nav-profile">
+    <div class="nav-profile">
         <ul id="ul-nav-profile">
             <hr style="color: #fff; margin-top: -15px;">
-            <li>           
+            <li>
                 <a href="index">
-                    <div class="nav-profile-item active"> 
-                        <img src="../img/user-profile-nav.png" alt="user-profile-nav" width=24px height=24px>
-                        <span><?php echo $user->login?></span>
+                    <div class="nav-profile-item">
+                        <?php if($user->img_link == '0'): ?>
+                            <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                        <?php else: ?>
+                            <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                        <?php endif; ?>  
+                        <span>Профиль</span>
                     </div>
                 </a>
             </li>
             <li>
                 <a href="tests" class="active">
-                    <div class="nav-profile-item">
-                        <img src="../img/tests-profile-nav.png" alt="tests-profile-nav" width=24px height=24px>
-                        <span>Мои тесты</span>
+                    <div class="nav-profile-item active">
+                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                            style="margin-left: 3px">
+                        <span style="margin-left: -3px">Тесты</span>
                     </div>
                 </a>
             </li>
+
             <li>
                 <a href="surveys">
                     <div class="nav-profile-item">
-                        <img src="../img/surveys-profile-nav.png" alt="surveys-profile-nav" width=24px height=24px>
-                        <span>Мои опросы</span>
+                        <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                        <span>Опросы</span>
                     </div>
                 </a>
             </li>
+
             <?php if ($user->role == 1) :?>
             <li>
-
-                <a href="admin">
+                <a href="admin" class="adm">
                     <div class="nav-profile-item">
                         <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                         <span>Админ. панель</span>
@@ -127,39 +141,133 @@
                 </a>
             </li>
             <?php endif ;?>
+            <li>
+                <a href="help">
+                    <div class="nav-profile-item">
+                        <img src="../img/help.png" alt="help" width=24px height=24px>
+                        <span>Помощь</span>
+                    </div>
+                </a>
+            </li>
+            <li class="drop-nav-profile-item">
+                <hr style="color: #fff; margin-bottom: 10px;">
+                <a href="../account/logout">
+                    <div class="nav-profile-item">
+                        <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                        <span>Выход</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
 
 
+
 <div class="main-profile">
+    <div class="row none mobile-nav text-center">
+        <a href="index" class="btn btn-outline-primary mt-1 mb-1">
+            <div class="nav-profile-item">
+                <?php if($user->img_link == '0'): ?>
+                    <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                <?php else: ?>
+                    <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                <?php endif; ?>  
+                <span>Профиль</span>
+            </div>
+        </a>          
+        <a href="tests" class="btn btn-outline-primary mt-1 mb-1 active">
+            <div class="nav-profile-item">
+                <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                    style="margin-left: 3px">
+                <span style="margin-left: -3px">Тесты</span>
+            </div>
+        </a>                         
+        <a href="surveys" class="btn btn-outline-primary mt-1 mb-1">
+            <div class="nav-profile-item">
+                <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                <span>Опросы</span>
+            </div>
+        </a>                               
+        <?php if ($user->role == 1) :?>
+            <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                    <span>Админ. панель</span>
+                </div>
+            </a>
+        <?php endif ;?>  
+        <a href="help" class="btn btn-outline-primary mt-1 mb-1">
+            <div class="nav-profile-item">
+                <img src="../img/help.png" alt="help" width=24px height=24px>
+                <span>Помощь</span>
+            </div>
+        </a>
+        <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
+            <div class="nav-profile-item">
+                <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                <span>Выход</span>
+            </div>
+        </a>
+    </div>
+    
     <div class="container"> 
-        <div class="text-center mt-4">
-            <a href="test-create" type="button" class="btn btn-primary">Создать тест</a>
-        </div>
+        <div class="main-body">
+            <nav aria-label="breadcrumb" class="main-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index">Профиль</a></li>
+                    <li class="breadcrumb-item"><a href="tests">Тесты</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Мои тесты</li>
+                </ol>
+            </nav>
 
+            <div class="btns-nav-tests-block text-center">
 
+                    <button type="button" class="btn btn-outline-primary btn-show-profile-tests btn-show-my-tests-in-profile active"><span>Мои тесты</span></button>
+                  
+                    <button type="button" class="btn btn-outline-primary btn-show-profile-tests btn-show-my-passes-tests-in-profile"><span>Пройденные тесты</span></button>
+ 
+                    <a href="test-create" type="button" class="btn btn-outline-primary btn-show-profile-tests btn-test-create"><span>Создать тест</span></a>
 
-        <?php if ($tests): ?>
-        <div class="row mt-4">
-              <?php foreach($tests as $test):?>
+            </div>
 
+            <div class="my-tests">
 
-                  <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 sidenav-item sidenav-link">
+                <div class="input-group mb-3 mt-3">
+                    <input type="text" class="form-control" placeholder="Поиск" id="search_test">
+                </div>
+
+                <?php if ($tests): ?>
+                <div class="row mt-4">
+                    <?php foreach($tests as $test):?>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 sidenav-item sidenav-link elastic">
 
                                 <?php if($test['enable'] == 0) : ?>
-                                    <div class="card card-test" style="width: 14rem;">
+                                    <div class="card card-test">
                                         <div>
                                             <img class="test-date-img" src="../img/date.png" alt="date.png" style="width:16px">
                                             <span class="test-date-for-img"><?=$test['date']?></span>
                                         </div>
                                         <img src="<?=$test['img_link']?>" class="card-img-test card-img-test-0" alt="...">   
-                                        <a href="test?test=<?=$test['id']?>" class="test-name-for-img"><?=$test['test_name']?></a>
-                                        <div class="test-author-for-img mt-1">
-                                            <img src="../img/author.png" alt="author.png" style="width:14px">
+                                        <a href="" class="test-name-for-img"><?=$test['test_name']?></a>
+                                        <div class="test-author-for-img mt-1 text-center">
+
+                                            <?php if($user->img_link): ?>
+
+                                                <img src="<?=$user->img_link?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                            <?php else: ?>
+
+                                                <img src="../img/user-profile-nav.png" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                            <?php endif; ?>
+
                                             <span><?=$test['author']?></span>
+                                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
+                                            <span><?=$test['count_passes']?></span>
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text"><?=$test['description']?></p>
+                                            <p class="card-text test_description"><?=$test['description']?></p>
                                             <span>Статус:</span>
                                             <span style="color:red"> в разработке</span>
                                             <div class="text-center">
@@ -169,93 +277,143 @@
                                     </div>
 
 
-
-
                                 <?php elseif($test['enable'] == 1) : ?> 
-                                    <div class="card card-test" style="width: 14rem;">
+                                    <div class="card card-test">
                                         <div>
                                             <img class="test-date-img" src="../img/date.png" alt="date.png" style="width:16px">
                                             <span class="test-date-for-img"><?=$test['date']?></span>
                                         </div>
                                         <a href="../test?test=<?=$test['id']?>"><img src="<?=$test['img_link']?>" class="card-img-test card-img-test-1" alt="..."> </a>  
                                         <a href="../test?test=<?=$test['id']?>" class="test-name-for-img"><?=$test['test_name']?></a>
-                                        <div class="test-author-for-img mt-1">
-                                            <img src="../img/author.png" alt="author.png" style="width:14px">
+                                        <div class="test-author-for-img mt-1 text-center">
+
+                                            <?php if($user->img_link): ?>
+
+                                                <img src="<?=$user->img_link?>" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                            <?php else: ?>
+
+                                                <img src="../img/user-profile-nav.png" alt="author.png" style="width:18px; height: 18px; object-fit: cover; border-radius: 50%;">
+
+                                            <?php endif; ?>
+
                                             <span><?=$test['author']?></span>
                                             <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
                                             <span><?=$test['count_passes']?></span>
                                         </div>
                                         <div class="card-body">
-                                            <p class="card-text"><?=$test['description']?></p>
+                                            <p class="card-text test_description"><?=$test['description']?></p>
                                             <span>Статус:</span>
                                             <span style="color:green"> открыт</span>
                                             <div class="text-center">
-                                                 <a href="../test?test=<?=$test['id']?>" class="btn btn-primary btn-test">Пройти тест</a>
+                                                    <a href="../test?test=<?=$test['id']?>" class="btn btn-primary btn-test">Пройти тест</a>
                                             </div>
                                         </div>
                                     </div>
 
-
-
-
-
-
-                                <?php else : ?> 
-                                    <div class="card card-test" style="width: 14rem;">
-                                        <div>
-                                            <img class="test-date-img" src="../img/date.png" alt="date.png" style="width:16px">
-                                            <span class="test-date-for-img"><?=$test['date']?></span>
-                                        </div>
-                                        <img src="<?=$test['img_link']?>" class="card-img-test" alt="...">   
-                                        <a href="test?test=<?=$test['id']?>" class="test-name-for-img"><?=$test['test_name']?></a>
-                                        <div class="test-author-for-img mt-1">
-                                            <img src="../img/author.png" alt="author.png" style="width:14px">
-                                            <span><?=$test['author']?></span>
-                                            <img src="../img/count_passes.png" alt="count_passes.png" style="margin-left: 2%">
-                                            <span><?=$test['count_passes']?></span>
-                                        </div>
-                                        <div class="card-body">
-                                            <p class="card-text"><?=$test['description']?></p>
-                                            <span>Статус:</span>
-                                            <span style="color:red"> непонятный</span>
-                                            <div class="text-center">
-                                                <a href="test?test=<?=$test['id']?>" class="btn btn-primary btn-test">Пройти тест</a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 <?php endif ; ?>
 
+                            </div>
 
-
-                      
-
-
-
-
-
-
+                    <?php endforeach ?>
                     </div>
-              <?php endforeach ?>
+                </div>
+                <?php  else: //tests ?>
+                    <h3 class="mt-2" style="text-align: center">Нет тестов</h3>
+                <?php endif //tests ?>
             </div>
+
+
+
+            <div class="my-passes-tests none">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 offset-xl-2">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div id="search-input-sidenav">
+                                    <div class="test_data">
+                                        <h4 class="text-center">Пройденные тесты:</h4>
+
+                                        <table id="dtBasicExample" class="table mt-3 table-striped table-bordered table-secondary" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class='table-dark' scope="col" class="th-sm">Название теста</th>
+                                                    <th class='table-dark' scope="col" class="th-sm">Дата прохождения</th>
+                                                    <th class='table-dark' scope="col" class="th-sm">%</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($tests_user as $test_one):?>
+
+                                                    <?php 
+                                                        $test_id = $test_one['test_id']; 
+                                                        $test = R::findOne( 'test', ' id LIKE ? ', [ "$test_id" ] );       
+                                                    ?>
+
+                                                    <tr class="sidenav-item sidenav-link <?=$color?>">
+
+                                                        <td>
+
+                                                            <img src="<?=$test->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+
+                                                            <a href="test-result?test=<?=$test_one['test_id']?>" class="table_test_name"><?=$test_one['test_name']?></a>
+
+                                                        </td>
+
+                                                        <td>
+                                                             <img src="../img/date.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                            <?=$test_one['date']?>
+                                                        </td>
+
+                                                        <td>
+
+                                                            <?php $percent = round( ($test_one['correct_score'] / $test_one['all_count'] * 100 ), 2);?>
+
+                                                            <?=$percent?>%
+
+                                                            <?php if($percent >= 75): ?>
+                                                                <img src="../img/good-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                            <?php elseif($percent < 75 && $percent >=50): ?>
+                                                                <img src="../img/okay-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                            <?php elseif($percent < 50): ?>
+                                                                <img src="../img/bad-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                            <?php endif; ?>
+
+
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                    
+                                                <?php endforeach;?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-    <?php  else: //tests ?>
-        <h3>Нет тестов</h3>
-    <?php endif //tests ?>
-
-
-
-
-
     </div>
 </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-  </script>
+    </script>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="../js/test-create.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
+  </script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> 
+  <script src="../libs/jquery.dataTables.min.js">
+  </script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js">
+  </script>  
+  <script src="js/profile-tests.js"></script>
 </body>
 
 </html>

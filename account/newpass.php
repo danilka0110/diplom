@@ -109,7 +109,7 @@
   <div class="content">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 mb-4 order-xl-first order-lg-first order-md-first order-sm-last order-last">
           <img src="../img/log.svg" alt="img" class="img-fluid">
         </div>
         <div class="col-md-6 contents">

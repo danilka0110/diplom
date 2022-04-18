@@ -47,7 +47,7 @@ body {
 }
 
 .test-decoration {
-    background: linear-gradient(135deg, #fcf4fa 50%, #f1edd3 50%);
+    background: linear-gradient(135deg, #fcf4fa 50%, #f5f1da 50%);
     color: rgb(2, 0, 44);
     padding: 30px 50px;
     font-family: 'Lato', sans-serif;
@@ -58,6 +58,32 @@ body {
     font-family: 'Lato', sans-serif;
     font-size: 20px;
 }
+
+.survey-decoration {
+    background: linear-gradient(135deg, #fcf4fa 30%, #f5f1da 70%);
+    color: rgb(2, 0, 44);
+    padding: 30px 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+
+
+    border-left: 6px solid #e04386;
+    font-family: 'Lato', sans-serif;
+    font-size: 20px;
+}
+
+.btn-finish {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}   
+
+.btn-next {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 90px;
+}   
 
 @media screen and (max-width: 576px) {
     #test-start {
@@ -75,6 +101,10 @@ body {
 
     .test-decoration {
         background:#fcf4fa 50%;
+    }
+
+    .test-show {
+        padding: 10px 15px;
     }
 
 }
@@ -151,10 +181,10 @@ body {
         margin: 12px;
     }
     .pagination-block {
-    margin: 20px;
-    margin-left: -4px;
-    text-align: center;
-}
+        margin: 20px;
+        margin-left: -4px;
+        text-align: center;
+    }
 }
 
 .pag a {
@@ -187,4 +217,14 @@ body {
 
 .test-results {
     font-size: 16px;
+}
+
+.desc-title {
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+.desc-text {
+    font-size: 18px;
 }

@@ -16,6 +16,14 @@ if ($('.question').length != 1) {
         $('.btn-success').hide();
         $('.pag > a.first-question').removeClass('first-question');
 
+        $('.next-error').hide();
+        $('.btn-next').show();
+
+        $('.pag').removeClass('next');
+
+        ($(this).closest('.pag').next().addClass('next'))
+
+
         $('.pag a.nav-active-page').removeClass('next-question');
         $('.pag a.next-question').addClass('nav-active-page');
         let last_question = $(".pag > a:last").attr('href');
@@ -28,9 +36,15 @@ if ($('.question').length != 1) {
         var link = $(this).attr('href');
         var prevActive = $('.pag > a.nav-active-page').attr('href');
 
-          $('input:radio[id^="answer-"]').change(function() {
+
+
+
+            $('[id^="question-"]').find('[id^="answer-"]').change(function() {
               $('.pag > a.nav-active-page').addClass('nav-prev-page');
-          });
+            });
+
+
+
 
         $('.pag > a.nav-active-page').removeClass('nav-active-page');
 
@@ -41,11 +55,66 @@ if ($('.question').length != 1) {
         });
 
         if ($(this).attr('href') == last_question) {
+            $('.btn-next').hide();
             $('.btn-success').show();
         }
 
         return false;
     });
+
+
+
+
+
+
+
+
+
+    $('.btn-next').on('click', function() {
+        
+        $('.next-error').hide();
+        let last_question = $(".pag > a:last").attr('href');
+
+        var link = $('.pag > a.nav-active-page').attr('href'); // сейчас - 1
+        var next = $('.pag.next > a').attr('href') // следующий - 2
+
+        if (next) {
+            $(link).fadeOut(0, function() {
+                +$(next).fadeIn(0);
+
+
+            $('.pag.next').next().addClass('temp');
+            $('.pag > a.nav-active-page').removeClass('nav-active-page');
+            $('.pag.next > a').addClass('nav-active-page');
+            $('.pag.next').removeClass('next');
+            $('.pag.temp').addClass('next');
+            $('.pag.next').removeClass('temp');
+    
+            $('[id^="question-"]').find('[id^="answer-"]').change(function() {
+                $('.pag > a.nav-active-page').addClass('nav-prev-page');
+            });
+            
+    
+            if (next == last_question) {
+                $('.btn-next').hide();
+                $('.btn-finish').show();
+            } else {
+                $('.btn-next').show();
+            }
+        });
+        } else {
+            $('.next-error').fadeOut(150, function() {
+                $('.next-error').fadeIn(150);
+            });
+        }
+
+});
+
+
+
+
+
+
 
 
 
@@ -135,6 +204,8 @@ if ($('.question').length != 1) {
                 type: 'POST',
                 data: res,
                 success: function(html) {
+                    $('.btn-finish').hide();
+                    $('.test-show').removeClass('survey-decoration');
                     $('.test-show').html(html);
                 },
                 error:function() {

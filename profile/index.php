@@ -8,7 +8,7 @@
 <?php if($user) : ?>
 
 <?php 
-    $my_tests = get_test_by_author($user->login);
+    $my_tests = get_test_by_author($user->id);
     $count_my_tests = 0;
     foreach ($my_tests as $item) {
         if($item['enable'] == 1) {
@@ -18,7 +18,7 @@
 
     $my_surveys = R::getAll("SELECT s.id, s.survey_name, s.description, s.img_link, s.author, s.date, s.count_passes, s.enable
     FROM survey s
-        WHERE s.author = '$user->login'");
+        WHERE s.user_id = '$user->id'");
         
     $count_my_surveys = 0;
     foreach ($my_surveys as $item) {
@@ -26,11 +26,6 @@
             $count_my_surveys += 1;
         }
     }
-
-    $tests_user = R::getAll("SELECT test_id, test_name, correct_score, all_count, date
-        FROM usersandtests
-            WHERE user_id = $user->id");
-
 
 ?>
 
@@ -63,8 +58,8 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/tests.css">
-    <link rel="stylesheet" href="../css/profile.css">
-    <link rel="stylesheet" href="../css/index-profile.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/index-profile.css">
 </head>
 
 <body>
@@ -122,10 +117,12 @@
                 <a class="active" href="index">
                     <div class="nav-profile-item active">
                         <?php if($user->img_link == '0'): ?>
-                            <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%">
+                        <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
                         <?php else: ?>
-                            <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%">
-                        <?php endif; ?>  
+                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
+                        <?php endif; ?>
                         <span>Профиль</span>
                     </div>
                 </a>
@@ -180,6 +177,54 @@
     </div>
 
     <div class="main-profile">
+        <div class="row none mobile-nav text-center">
+            <a href="index" class="btn btn-outline-primary mt-1 mb-1 active">
+                <div class="nav-profile-item">
+                    <?php if($user->img_link == '0'): ?>
+                    <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php else: ?>
+                    <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php endif; ?>
+                    <span>Профиль</span>
+                </div>
+            </a>
+            <a href="tests" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                    <span style="margin-left: -3px">Тесты</span>
+                </div>
+            </a>
+            <a href="surveys" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                    <span>Опросы</span>
+                </div>
+            </a>
+            <?php if ($user->role == 1) :?>
+            <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                    <span>Админ. панель</span>
+                </div>
+            </a>
+            <?php endif ;?>
+            <a href="help" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/help.png" alt="help" width=24px height=24px>
+                    <span>Помощь</span>
+                </div>
+            </a>
+            <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                    <span>Выход</span>
+                </div>
+            </a>
+        </div>
+
+
         <div class="container">
             <div class="main-body">
                 <nav aria-label="breadcrumb" class="main-breadcrumb">
@@ -195,14 +240,108 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
 
-                                    <?php if($user->img_link == '0'): ?>
-                                        <img src="../img/user-profile-nav.png" alt="" width="150" height="150" class="navbar-profile-img" style="border-radius: 50%">
-                                    <?php else: ?>
-                                        <img src="<?=$user->img_link?>" alt="" width="150" height="150" class="navbar-profile-img" style="border-radius: 50%">
-                                    <?php endif; ?>  
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                        style="border-radius: 50%;">
+                                        <div class="profile-img">
+                                            <?php if($user->img_link == '0'): ?>
+                                            <img src="../img/user-profile-nav.png" alt="" width="150" height="150"
+                                                style="border-radius: 50%; object-fit: cover;">
+                                            <img src="../img/addphoto.png" alt="" width="38" height="35"
+                                                class="addphoto">
+                                            <?php else: ?>
+                                            <img src="<?=$user->img_link?>" alt="" width="150" height="150"
+                                                style="border-radius: 50%; object-fit: cover;">
+                                            <img src="../img/addphoto.png" alt="" width="38" height="35"
+                                                class="addphoto">
+                                            <?php endif; ?>
+                                        </div>
+                                    </button>
+
+
+
+                                    <div class="modal fade" id="exampleModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Введите ссылку на
+                                                        картинку</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+
+
+                                                <div class="modal-body">
+                                                    <form action="" method="post" id="changeDataModal">
+                                                        <div
+                                                            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-secondary">
+                                                            <div class="input-group input-group-sm flex-nowrap">
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                                                    id="img_link" name="img_link" maxlength="255">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Закрыть</button>
+                                                            <button type="submit" class="btn btn-primary"
+                                                                name="btn-save-modal" id="btn-save-modal">Сохранить
+                                                                изменения</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <?php
+                                        if (isset($_POST['btn-save-modal'])) {
+                                            $errors = array();
+                                            if (trim(strlen($_POST['img_link']) > 255)) {
+                                                $errors[] = 'Больше 255 в ссылке на изображение не допускается';
+                                            }
+
+                                            if (empty($errors)) {
+
+                                                if ($_POST['img_link'] == '') {
+                                                    $user->img_link = '0';
+                                                } else {
+                                                    $user->img_link = trim($_POST['img_link']);
+                                                }
+                                                R::store($user);
+                                                header("Location: index");
+                                                ob_end_flush();
+                                            }
+                                                else {
+                                                    echo '<span style="color: red;" class="text-center">'.array_shift($errors).'</span><br>';
+                                                    header("Location: index");
+                                                    ob_end_flush();
+                                            }
+                                        }
+                                    ?>
+
+                                    </div>
 
                                     <div class="mt-3" style="width: 250px">
+
+                                        <?php if($user->surname && $user->firstname && $user->patronymic): ?>
+
+                                        <h4><?=$user->surname?> <?=$user->firstname?> <?=$user->patronymic?></h4>
+
+                                        <?php elseif($user->surname && $user->firstname): ?>
+
+                                        <h4><?=$user->surname?> <?=$user->firstname?></h4>
+
+                                        <?php else: ?>
+
                                         <h4><?=$user->login?></h4>
+
+                                        <?php endif; ?>
+
                                         <div class="text-secondary">
                                             <?=$user->email?>
                                         </div>
@@ -226,22 +365,26 @@
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-                        <form action="" method="post" id="changeData">
-                            <div class="card mb-3">
-                                <div class="card-body">
+                        <div class="card mb-3">
+                            <div class="card-body">
+
+                                <form action="" method="post" id="changeData">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-2 my-auto">
                                             <h6 class="mb-0">Фамилия:</h6>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
                                             <?php if($user->surname):?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Фамилия" id="surname" name="surname" value="<?=$user->surname?>" maxlength="32">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control" placeholder="Фамилия"
+                                                    id="surname" name="surname" value="<?=$user->surname?>"
+                                                    maxlength="32">
+                                            </div>
                                             <?php else:?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Фамилия" id="surname" name="surname" maxlength="32">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control" placeholder="Фамилия"
+                                                    id="surname" name="surname" maxlength="32">
+                                            </div>
                                             <?php endif;?>
                                         </div>
                                     </div>
@@ -252,13 +395,15 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
                                             <?php if($user->firstname):?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Имя" id="firstname" name="firstname" value="<?=$user->firstname?>" maxlength="32">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control" placeholder="Имя" id="firstname"
+                                                    name="firstname" value="<?=$user->firstname?>" maxlength="32">
+                                            </div>
                                             <?php else:?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Имя" id="firstname" name="firstname" maxlength="32">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control" placeholder="Имя" id="firstname"
+                                                    name="firstname" maxlength="32">
+                                            </div>
                                             <?php endif;?>
                                         </div>
                                     </div>
@@ -269,13 +414,15 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
                                             <?php if($user->patronymic):?>
-                                                <div class="input-group input-group-sm flex-nowrap" maxlength="32">
-                                                    <input type="text" class="form-control" placeholder="Отвество" id="patronymic" name="patronymic" value="<?=$user->patronymic?>">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap" maxlength="32">
+                                                <input type="text" class="form-control" placeholder="Отчество"
+                                                    id="patronymic" name="patronymic" value="<?=$user->patronymic?>">
+                                            </div>
                                             <?php else:?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Отвество" id="patronymic" name="patronymic" maxlength="32">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control" placeholder="Отчество"
+                                                    id="patronymic" name="patronymic" maxlength="32">
+                                            </div>
                                             <?php endif;?>
                                         </div>
                                     </div>
@@ -286,24 +433,30 @@
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10 text-secondary">
                                             <?php if($user->img_link):?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg" id="img_link" name="img_link" value="<?=$user->img_link?>" maxlength="255">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                                    id="img_link" name="img_link" value="<?=$user->img_link?>"
+                                                    maxlength="255">
+                                            </div>
                                             <?php else:?>
-                                                <div class="input-group input-group-sm flex-nowrap">
-                                                    <input type="text" class="form-control" placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg" id="img_link" name="img_link" maxlength="255">
-                                                </div>
+                                            <div class="input-group input-group-sm flex-nowrap">
+                                                <input type="text" class="form-control"
+                                                    placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                                    id="img_link" name="img_link" maxlength="255">
+                                            </div>
                                             <?php endif;?>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-success" name="btn-save" id="btn-save">Сохранить</button>
+                                            <button type="submit" class="btn btn-success" name="btn-save"
+                                                id="btn-save">Сохранить</button>
                                         </div>
                                     </div>
-                                </div>
                             </div>
+                        </div>
                             <?php 
                                 if (isset($_POST['btn-save'])) {
 
@@ -320,13 +473,18 @@
                                     if (trim(strlen($_POST['img_link']) > 255)) {
                                         $errors[] = 'Больше 255 в ссылке на изображение не допускается';
                                     }
-                                    if (trim($_POST['surname'] == $user->surname)
-                                    && (trim($_POST['firstname'] == $user->firstname))
-                                    && (trim($_POST['patronymic'] == $user->patronymic))
-                                    && (trim($_POST['img_link'] == $user->img_link))) {
+
+                                    if ((trim($_POST['surname'] === $user->surname)
+                                    && (trim($_POST['firstname'] === $user->firstname))
+                                    && (trim($_POST['patronymic'] === $user->patronymic))
+                                    && (trim($_POST['img_link'] === $user->img_link))))
+
+                                    {
                                         $errors[] = 'Вы должны изменить данные!';
                                     }
+
                                     if (empty($errors)) {
+
                                         $user->surname = trim($_POST['surname']);
                                         $user->firstname = trim($_POST['firstname']);
                                         $user->patronymic = trim($_POST['patronymic']);
@@ -343,62 +501,14 @@
                                         else {
                                             echo '<div style="color: red;" class="text-center">'.array_shift($errors).'</div><br>';
                                     }
-                                }
+                                } 
                             ?>
                         </form>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-10 offset-xl-1 mb-3">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div id="search-input-sidenav">
-                                    <div class="test_data">
-                                        <h4 class="text-center">Пройденные тесты:</h4>
-                                        <table id="dtBasicExample" class="table mt-3 table-striped table-bordered table-secondary" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th class='table-dark' scope="col" class="th-sm">Название теста</th>
-                                                    <th class='table-dark' scope="col" class="th-sm">Дата прохождения</th>
-                                                    <th class='table-dark' scope="col" class="th-sm">%</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php foreach ($tests_user as $test_one):?>
-                                                    <tr class="sidenav-item sidenav-link">
-                                                        <td><a href="test-result?test=<?=$test_one['test_id']?>"><?=$test_one['test_name']?>
-                                                        </td>
-                                                        <td><?=$test_one['date']?></td>
-                                                        <td><?=round( ($test_one['correct_score'] / $test_one['all_count'] * 100 ), 2)?>%
-                                                        </td>
-                                                        
-                                                    </tr>
-                                                    <?php endforeach;?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -408,12 +518,8 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
     </script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-    <script src="../libs/jquery.dataTables.min.js">
-    </script>
     <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js">
     </script>
-    <script src="../js/profile.js"></script>
 
 </body>
 

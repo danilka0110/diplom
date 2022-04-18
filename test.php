@@ -183,9 +183,11 @@ if (isset($_GET['test'])) {
                             </div>
 
                             <div class="test-description mt-5">
-                                <p>Описание теста: <?=$test_description?></p>
-                                <p>Всего вопросов: <?=$count_questions?></p>
-                                <p>Автор: <?=$test_author?></p>
+                                <i class="desc-title">Описание теста: </i><span class="desc-text"><?=$test_description?></span>
+                                <hr>
+                                <i class="desc-title">Всего вопросов: </i><span class="desc-text"><?=$count_questions?></span>
+                                <hr>
+                                <i class="desc-title">Автор: </i><span class="desc-text"><?=$test_author?></span>
                             </div>
 
                         </div>
@@ -216,22 +218,28 @@ if (isset($_GET['test'])) {
                                     <?php endif; // id_answer?>
 
                                     <?php endforeach; //$item ?>
-
-
                                 
                                 </div>
                                 <?php endforeach; //$test_data ?>
                             </div>
 
+
+
+                            
+
+                                
+
+                        <p class="next-error none" style="color: red; font-size: 16px;">Вопросов больше нет</p>
+
                         <p class="none result-error" style="color:red; font-size: 16px;">Вы ответили не на все вопросы</p>
 
                         <div class="buttons text-center">
-                            <button type="submit" class="center btn-finish btn btn-success" id="btn">Закончить
-                                тест
+                            <button type="submit" class="center btn-finish btn btn-success none" id="btn">Закончить тест
                                 <span class="spinner-border spinner-border-sm none" role="status" aria-hidden="true"></span>
                             </button>
-
                         </div>
+
+                        <button class="center btn-next btn btn-primary" id="btn-next">Далее</button>
 
                     <?php else: header('Location: tests'); ob_end_flush(); // isset($test_data) ?>
 

@@ -53,23 +53,19 @@ $(document).on('click', '.addAnswer', function() {
         if (answer == 1) {
             answerBlock.append(`
             <div class="row">
-                <label for="answer_text_1_${question}_${answer}" class="form-label">Варианты ответов:</label><br>
-                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
-                <input type="radio" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
-    
-            </div>
-            <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
-                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
-            </div>
+                <label for="answer_text_${question}_${answer}" class="form-label from-survey-answer-label">Варианты ответов:</label><br>    
+                    <input type="radio" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" disabled>
+                    <label for="answer_radio_${question}_${answer}" class="form-label label-for-input first-input-radio-in-answers"></label>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12"> 
+                    <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+                </div>
             </div>`);
         } else {
             answerBlock.append(`
-            <div class="row">
-                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
-                    <input type="radio" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
-    
-                </div>
-                <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
+            <div class="row">    
+                    <input type="radio" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" disabled>
+                    <label for="answer_radio_${question}_${answer}" class="form-label label-for-input"></label>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12"> 
                     <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
                 </div>
             </div>`);
@@ -80,23 +76,19 @@ $(document).on('click', '.addAnswer', function() {
         if (answer == 1) {
             answerBlock.append(`
             <div class="row">
-                <label for="answer_text_1_${question}_${answer}" class="form-label">Варианты ответов:</label><br>
-                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
-                <input type="checkbox" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
-    
-            </div>
-            <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
-                <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
-            </div>
+                    <label for="answer_text_1_${question}_${answer}" class="form-label from-survey-answer-label">Варианты ответов:</label><br>    
+                    <input type="checkbox" name="answer_checkbox_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" disabled>
+                    <label for="answer_checkbox_${question}_${answer}" class="form-label label-for-input first-input-checkbox-in-answers"></label>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12"> 
+                    <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
+                </div>
             </div>`);
         } else {
             answerBlock.append(`
-            <div class="row">
-                <div class="col-1 col-md-1 col-lg-1 col-xl-1">       
-                    <input type="checkbox" name="answer_radio_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" style="margin-left: 30px" disabled>
-    
-                </div>
-                <div class="col-11 col-md-11 col-lg-11 col-xl-11"> 
+            <div class="row">  
+                    <input type="checkbox" name="anscheckbox_${question}_${answer}" id="answer_radio_${question}_${answer}" class="mt-3" disabled>
+                    <label for="answer_checkbox_${question}_${answer}" class="form-label label-for-input"></label>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12"> 
                     <input required type="text" name="answer_text_${question}_${answer}" id="answer_text_${question}_${answer}" class="form-control mt-2" placeholder = "Вариант #${answer}" autocomplete="off" data-numanswer="${answer}">
                 </div>
             </div>`);
@@ -114,28 +106,28 @@ $('.addQuestion').on('click', function() {
     questionNum++;
     let questionBlock = $('.question-items');
     questionBlock.append(`
-        <div class="question_${questionNum} mt-4" data-question="${questionNum}">
+        <div class="question_${questionNum} mt-4 question-st" data-question="${questionNum}">
             <label for="question_${questionNum}" class="form-label">Вопрос #${questionNum}</label>
 
             <div>
-                <input type="checkbox" name="ifcheckbox_${questionNum}" id="ifcheckbox_${questionNum}" data-question="${questionNum}">
+                <input type="checkbox" name="ifcheckbox_${questionNum}" id="ifcheckbox_${questionNum}" data-question="${questionNum}" class="checkbox-for-question">
                 <label for="ifcheckbox_${questionNum}" class="form-label">Множественный выбор</label>
             </div>
 
             <input required type="text" name="question_${questionNum}" id="question_${questionNum}" class="form-control" autocomplete="off" placeholder="Вопрос #${questionNum}">
             <div class="answers">
-                <div class="answer-items">
+                <div class="answer-items survey-answer-items">
                 </div>
 
-                <button type="button" class="btn btn-primary border addAnswer" data-question="${questionNum}" data-answer="0" style="display: inline; margin-top: 15px;">+</button>
+                <button type="button" class="btn btn-success border addAnswer" data-question="${questionNum}" data-answer="0" style="display: inline; margin-top: 15px;">+</button>
 
                 <button type="button" class="btn btn-danger border removeAnswer" data-question="${questionNum}" data-click="0" style="display: inline; margin-top: 15px;">X</button>
 
                 <p class="none answer-error" style="color:red" data-question="${questionNum}">Нечего удалять :)</p>
-            </div>
+            </div><hr>
             <div class="text-center mt-4">
                 <button type="button" class="btn btn-danger border removeQuestion text-center" data-question="${questionNum}">Удалить вопрос</button>
-            </div><hr>
+            </div>
         </div>`);
         
         ($(this).data('question', questionNum));
