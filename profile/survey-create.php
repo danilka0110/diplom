@@ -50,6 +50,7 @@
 	<link rel="stylesheet" href="../css/tests.css">
 	<link rel="stylesheet" href="css/test-create.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/survey-create.css">
 </head>
 <body>
 

@@ -78,32 +78,47 @@ textarea {
 } 
 
 .question-st {
-    background: rgb(164, 199, 226);
+    background: rgb(204, 216, 233);
     padding: 25px;
     border-radius: 20px;
     margin-bottom: 55px;
+    border: 1px solid #b3c2e5;
 }
 
 .addQ {
     margin-top: -35px;
-    background: rgb(164, 199, 226);
+    background: rgb(204, 216, 233);
     border-radius: 20px;
     width: 50%;
     height: 80px;
     padding: 20px;
     margin-left: auto;
     margin-right: auto;
+    border: 1px solid #b3c2e5;
+}
+
+.addQuestion {
+    background: #b3c2e5;
+    color: #000;
+    border: none;
 }
 
 .saveTest {
     margin-top: -35px;
-    background: rgb(171, 212, 149);
+    background: rgb(205, 230, 190);
+    border: 1px solid rgb(171, 212, 149);
     border-radius: 20px;
-    width: 75%;
+    width: 100%;
     height: 80px;
     padding: 20px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.saveTest button{
+    background: rgb(171, 212, 149);
+    color: #000;
+    border: none
 }
 
 .select-score {
@@ -116,10 +131,6 @@ textarea {
 
 @media screen AND (max-width: 575px) {
     .addQ {
-        width: 100%;
-    }
-    
-    .saveTest {
         width: 100%;
     }
 } 

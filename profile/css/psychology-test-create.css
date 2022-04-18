@@ -1,0 +1,40 @@
+body {
+    background: rgb(227, 235, 217);
+}
+
+.addResult {
+    background: #b3c2e5;
+    color: #000;
+    border: none;
+}
+
+.test-create-title-result {
+    width: 60%;
+}
+
+@media screen AND (max-width: 767px) {
+    .test-create-title-result {
+        width: 100%;
+    }
+}
+
+.test_description {
+    text-align: left;
+    color: rgb(61, 61, 61);
+    font-size: 14px;
+    height: 2.5rem;
+    overflow: hidden;
+	position: relative;
+}
+
+.test_description:after {
+	content: "";
+	text-align: right;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 70%;
+	height: 1.2em;
+	background: linear-gradient(to right, rgba(61, 61, 61, 0), rgb(227, 235, 217) 100%);
+	pointer-events: none;
+}

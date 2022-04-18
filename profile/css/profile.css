@@ -191,3 +191,7 @@
 .main-breadcrumb a:hover {
     text-decoration:underline;
 }
+
+.modal-header {
+    background: rgb(181, 186, 225);
+}

@@ -226,7 +226,39 @@
                   
                     <button type="button" class="btn btn-outline-primary btn-show-profile-tests btn-show-my-passes-tests-in-profile"><span>Пройденные тесты</span></button>
  
-                    <a href="test-create" type="button" class="btn btn-outline-primary btn-show-profile-tests btn-test-create"><span>Создать тест</span></a>
+                    <button type="button" class="btn btn-outline-primary btn-show-profile-tests btn-test-create" data-bs-toggle="modal" data-bs-target="#test-create-modal"><span>Создать тест</span></button>
+          
+                    <div class="modal fade" id="test-create-modal" tabindex="-1" aria-labelledby="test-create-label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="test-create-label">Выберите тип теста</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <a href="test-create"><b>Обычный тест</b>
+                                    <p><i>Ответы пользователя сопоставляются с правильными ответами и выводится статистика прохождений другими пользователями и результат в виде правильных (неправильных ответов)</i></p>
+                                    </a>   
+                                                            
+                                    <a href="psychology-test-create"><b>Психологический тест</b>
+                                    <p><i>Баллы теста суммируются и по прохождению теста выводится Ваш результат</i></p>
+                                    </a>  
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
 
             </div>
 

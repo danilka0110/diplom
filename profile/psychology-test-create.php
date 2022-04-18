@@ -51,6 +51,7 @@
     <link rel="stylesheet" href="../css/tests.css">
     <link rel="stylesheet" href="css/test-create.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/psychology-test-create.css">
 </head>
 
 <body>
@@ -225,7 +226,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index">Профиль</a></li>
                         <li class="breadcrumb-item"><a href="tests">Тесты</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Создание теста</li>
+                        <li class="breadcrumb-item active" aria-current="page">Создание психологического теста</li>
                     </ol>
                 </nav>
 
@@ -233,11 +234,11 @@
 
 
 
-                <form action="test-create" method="post" id="addTest">
+                <form action="psychology-test-create" method="post" id="addTest">
                     <div class="create-test-head">
 
                         <div class="test-create-title mb-5">
-                            <h2 class="text-center">Создание теста</h2>
+                            <h2 class="text-center">Создание психологического теста</h2>
                         </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-3 order-xl-first order-lg-first order-md-first order-sm-last order-last">
@@ -248,7 +249,7 @@
                                     </div>
 
                                     <div class="card card-test mt-2 text-center">
-                                        <img src="http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                        <img src="https://cdn.fishki.net/upload/post/2019/10/18/3117683/6cbe91e221812e10a14cdb787a11bb98.jpg"
                                             class="card-img-test create-test-img" alt="...">
                                         <a class="test-name-for-img create-test-name">Название теста</a>
                                         <div class="test-author-for-img mt-1 text-center">
@@ -305,7 +306,7 @@
                                         <label for="img_link" class="form-label mt-4">Ссылка на картинку</label>
                                         <input type="text" name="img_link" id="img_link" class="form-control"
                                             autocomplete="off"
-                                            placeholder="Пример: http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg"
+                                            placeholder="Пример: https://cdn.fishki.net/upload/post/2019/10/18/3117683/6cbe91e221812e10a14cdb787a11bb98.jpg"
                                             maxlength="255">
                                     </div>
                                     <div>
@@ -351,7 +352,7 @@
                                                 <div class="answer-items">
                                                     <div class="row">
                                                         <div class="col-12 col-md-10 col-lg-10 col-xl-10 col-xl">
-
+                                                    
                                                             <label for="answer_text_1_1" class="form-label">Ответы</label>
                                                             <input required type="text" name="answer_text_1_1"
                                                                 id="answer_text_1_1" class="form-control"
@@ -393,6 +394,48 @@
 
 
 
+                                    <div class="test-create-title test-create-title-result mt-5">
+                                        <h3 class="text-center">Добавление результатов</h3>
+                                    </div>
+
+
+                                    <div class="results">
+                                        <div class="result-items">
+                                            <div class="question-st">
+                                                <div class="">
+                                                    <label for="result_1" class="form-label">Результат #1</label>
+                                                    <textarea name="result_1" id="result_1" class="form-control" placeholder="Результат #1"></textarea>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6 mt-2">
+                                                        <label for="result_score_min_1" class="form-label result-labels">Балл (от)</label>
+                                                        <input type="text" name="result_score_min_1" id="result_score_min_1" class="form-control" placeholder="Балл (от)">
+                                                    </div>
+                                                    <div class="col-6 col-md-6 col-lg-6 col-xl-6 mt-2">
+                                                        <label for="result_score_max_1" class="form-label result-labels">Балл (до)</label>
+                                                        <input type="text" name="result_score_max_1" id="result_score_max_1" class="form-control" placeholder="Балл (до)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center addQ">
+                                            <button type="button" class="btn btn-primary addResult" >Добавить результат</button>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                    
+
 
                                     <div class="text-center mt-4 saveTest">
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -415,17 +458,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    
-
-
-
-
-
+                                    </div>                           
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                         <?php 
                             if (isset($_POST['btn-save'])) {
 
@@ -446,12 +485,12 @@
                                     $test = R::dispense('test');
                                     $test->user_id = $user->id;
                                     $test->test_name = trim($_POST['test_name']);
-                                    $test->type = 'Обычный';
+                                    $test->type = 'Психологический';
                                     $test->description = trim($_POST['test_description']);
                                     $test->author = $user->login;
 
                                     if ($_POST['img_link'] == '') {
-                                        $test->img_link = 'http://tic-tomsk.ru/wp-content/uploads/2020/11/scale_1200.jpg';
+                                        $test->img_link = 'https://cdn.fishki.net/upload/post/2019/10/18/3117683/6cbe91e221812e10a14cdb787a11bb98.jpg';
                                     } else {
                                         $test->img_link = trim($_POST['img_link']);
                                     }
@@ -535,7 +574,7 @@
     </script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/test-create.js"></script>
+    <script src="js/psychology-test-create.js"></script>
 </body>
 
 </html>

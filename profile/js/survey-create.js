@@ -125,7 +125,7 @@ $('.addQuestion').on('click', function() {
 
                 <p class="none answer-error" style="color:red" data-question="${questionNum}">Нечего удалять :)</p>
             </div><hr>
-            <div class="text-center mt-4">
+            <div class="text-center mt-2">
                 <button type="button" class="btn btn-danger border removeQuestion text-center" data-question="${questionNum}">Удалить вопрос</button>
             </div>
         </div>`);
@@ -194,23 +194,22 @@ $("body").on('click', '.removeQuestion', function() {
     if($(this).data('question') == qnLastQueston) {
         $('.question_' + qnLastQueston).remove();
         questionNum--;
-    } else {
-
     }
 
-    let questionBlock = $('.question-items');
+    let qnLastQuestonNow = $("[class^='question_']:last");
+
+
     let qnNow = questionNum+1;
     $(".removeQuestion[data-question=" + qnNow + "]").remove();
 
     if($('*').is("[class^='question_']")) {
-        questionBlock.append(`
-        <div class="text-center mt-4">
-            <button type="button" class="btn btn-danger border removeQuestion text-center" data-question="${questionNum}">Удалить вопрос</button>
+        qnLastQuestonNow.append(`
+        <div class="text-center">
+            <button type="button" class="btn btn-danger border removeQuestion text-center mb-3" data-question="${questionNum}">Удалить вопрос</button>
         </div>
         `);
     }
 });
-
 
 
 $(document).ready(function () {

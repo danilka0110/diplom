@@ -240,7 +240,7 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
 
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#avatar-modal"
                                         style="border-radius: 50%;">
                                         <div class="profile-img">
                                             <?php if($user->img_link == '0'): ?>
@@ -259,15 +259,14 @@
 
 
 
-                                    <div class="modal fade" id="exampleModal" tabindex="-1"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="avatar-modal" tabindex="-1" aria-labelledby="avatar-label" aria-hidden="true">
 
 
 
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Введите ссылку на
+                                                    <h5 class="modal-title" id="avatar-label">Введите ссылку на
                                                         картинку</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
