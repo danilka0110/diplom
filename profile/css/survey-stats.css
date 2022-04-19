@@ -1,5 +1,4 @@
 .first-stats-block-row {
-    height: 180px;
     margin-top: 25px;
     background: #ecf0f2;
     border-radius: 20px;
@@ -75,6 +74,73 @@
 @media screen AND (min-width: 991px) AND (max-width: 1050px) {
     .stat-date img {
         margin-top: -20px;
+        margin-left: 0;
+    }
+}
+
+
+
+
+
+.survey-graphs {
+    width: 500px;
+    height: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    border-radius: 20px;
+}
+
+.survey-stats-table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.statistic-graph {
+    margin-bottom: 50px;
+}
+
+@media screen AND (max-width: 1249px){
+    .survey-graphs {
+        width: 400px;
+        height: 200px;
+    }
+}
+
+@media screen AND (max-width: 991px){
+    .survey-graphs {
+        width: 500px;
+        height: 250px;
+    }
+}
+
+@media screen AND (max-width: 767px){
+    .survey-graphs {
+        width: 500px;
+        height: 250px;
+    }
+}
+
+@media screen AND (max-width: 576px){
+    .survey-graphs {
+        width: 400px;
+        height: 200px;
+    }
+}
+
+@media screen AND (max-width: 450px){
+    .survey-graphs {
+        width: 300px;
+        height: 150px;
+    }
+}
+
+@media screen AND (max-width: 350px){
+    .survey-graphs {
+        width: 200px;
+        height: 100px;
+    }
+    .survey-stats-table {
         margin-left: 0;
     }
 }

@@ -37,63 +37,97 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="index">
-        <?php if($user) : ?>
-            <img src="img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top" style="margin-right: 80px; margin-top: -3px;">
-            <span class="brand">Paradigm Tests</span> 
-        <?php else : ?> 
-            <img src="img/icon.png" alt="favicon" width="34" height="34" class="d-inline-block align-text-top" style="margin-right: 16px; margin-top: -3px;">
-            <span class="brand-else">Paradigm Tests </span>
-        <?php endif ; ?>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="tests">Тесты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="surveys">Опросы</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="contacts">Контакты</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about">О нас</a>
-                </li>
-            </ul>
-            <?php if($user) : ?>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Профиль
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="profile"><?php echo $user->login?></a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="account/logout">Выход</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <?php else : ?>  
-                <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="account/login">Вход</a>
-                    </li>
-                </ul>
-            <?php endif ; ?>
-        </div>
-    </div>
-</nav>
+  <nav class="navbar navbar-expand-lg navbar-dark index-navbar bg-dark">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+          <?php if($user) : ?>
+              <img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-top: -5px;">
+          <?php else : ?> 
+              <img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-right: 12px; margin-top: -5px;">
+          <?php endif ; ?>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="tests">
+                        <img src="img/tests.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">Тесты</span>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="surveys">
+                        <img src="img/surveys.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">Опросы</span>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active active-nav-page" href="contacts">
+                        <img src="img/contacts.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">Контакты</span>
+                      </a>
+                  </li>
+                  <li class="nav-item" style="margin-right: 28px">
+                      <a class="nav-link" href="about">
+                        <img src="img/about.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">О нас</span>
+                      </a>
+                  </li>
+              </ul>
+              <?php if($user) : ?>
+              <ul class="navbar-nav ml-auto mb-2 mb-lg-0 navbar-profile navbar-profile-dropdown">
+                  <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                          <?php if($user->img_link == '0'): ?>
+                              <img src="../img/user-profile-nav.png" alt="" width="34" height="34" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
+                          <?php else: ?>
+                              <img src="<?=$user->img_link?>" alt="" width="35" height="35" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
+                          <?php endif; ?>  
+                          <span style="margin-left: 1px;">Профиль</span>
+                      </a>
+                      <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li>
+
+                            <a class="dropdown-item" href="profile">
+                              <?php if($user->img_link == '0'): ?>
+                                  <img src="../img/user-profile-nav.png" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
+                              <?php else: ?>
+                                  <img src="<?=$user->img_link?>" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
+                              <?php endif; ?>  
+                              <span style="margin-left: 2px;"><?php echo $user->login?></span>
+                            </a>
+
+                          </li>
+                          <li>
+                              <hr class="dropdown-divider">
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="account/logout">
+                              <img src="img/logout.png" alt="" width=24px height=24px>
+                              <span style="margin-left: 2px;">Выход</span>
+                            </a>
+                          </li>
+                      </ul>
+                  </li>
+              </ul>
+              <?php else : ?>  
+                  <ul class="navbar-nav mr-auto mb-2 mb-lg-0 navbar-profile">
+                      <li class="nav-item">
+                          <a class="nav-link btn btn-outline-secondary" href="account/login">Вход</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link btn btn-outline-secondary" href="account/reg">Регистрация</a>
+                      </li>
+                  </ul>
+              <?php endif ; ?>
+          </div>
+      </div>
+  </nav>
 
 
 

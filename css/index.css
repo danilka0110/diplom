@@ -195,7 +195,16 @@
 
 
 
+@media screen AND (max-width: 1220px) AND (min-width: 992px) {
+    .index-navbar .navbar-brand {
+        margin-left: 0;
+    }
 
+    .index-navbar .navbar-profile {
+        margin: 0;
+    }
+
+}
 
 
 

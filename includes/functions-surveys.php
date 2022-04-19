@@ -362,7 +362,6 @@ function print_result($survey_all_data, $survey_id) {
                         foreach ($key as $id_answer => $answer) {
                                 if ($id_answer === 0) {
                                         $question = $answer; 
-
                                 }
 
                                 else {
@@ -389,8 +388,8 @@ function print_result($survey_all_data, $survey_id) {
 
                                         var labels = $labels;
                                         var data = $data;
-                                        const ctx = document.getElementById('myChart{$i}').getContext('2d');
-                                        const myChart = new Chart(ctx, {
+                                        const ctx{$i} = document.getElementById('myChart{$i}').getContext('2d');
+                                        const myChart{$i} = new Chart(ctx{$i}, {
                                         type: 'bar',
                                         data: {
                                                 labels: labels,
@@ -476,7 +475,13 @@ function print_result($survey_all_data, $survey_id) {
 
                                                                                         
 
-                                                                                        $percent = round((($data / $count_all_data) * 100), 2);
+                                                                                        if ($data) {
+                                                                                                $percent = round((($data / $count_all_data) * 100), 2);
+                                                                                        }
+
+                                                                                        else {
+                                                                                                $percent = 0;
+                                                                                        }
 
                                                                                         // if (in_array(($data == 0), $labels_and_data)) {
                                                                                         //         if($data != 0) {
@@ -485,7 +490,9 @@ function print_result($survey_all_data, $survey_id) {
                                                                                         // }
 
                                                                                         $print_res .= "<td>$data</td>";
-                                                                                        $print_res .= "<td>$percent%</td>";
+
+                                                                                        $print_res .= "<td>$percent%</td>";   
+
                                                                                 $print_res .= "</tr>";
                                                                         endforeach;
                                                                 $print_res .= "</tbody>";
@@ -516,6 +523,175 @@ function print_result($survey_all_data, $survey_id) {
 
 
 
+function print_graps_for_profile_stats($survey_id) {
+
+
+        $survey_all_data = get_survey_data($survey_id);
+
+        $print_res .= '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>';
+
+
+
+        $i = 1;
+
+
+
+        $print_res .= '<hr>';
+        $print_res .= '<div class="row mt-4">';
+                foreach ($survey_all_data as $question_id => $key):
+
+                        foreach ($key as $id_answer => $answer) {
+                                if ($id_answer === 0) {
+                                        $question = $answer; 
+
+                                }
+
+                                else if ($id_answer == 'type') {
+                                        continue;
+                                }
+
+                                else {
+                                        $answer_name_labels_data[] = $answer; 
+                                        $users_answers_data[] = R::count('usersurveydata', ' answer_id = ? ', [ $id_answer ]); 
+                                }        
+                                
+                        }
+
+
+
+                        $labels = json_encode($answer_name_labels_data); 
+                        $data = json_encode($users_answers_data); 
+
+                        
+                                $print_res .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 mt-12 statistic-graph text-center">';
+                                $print_res .= "<b class='graph-question' style='font-size: 16px'>$question</b>";
+                                $print_res .= "<div class='center-block survey-graphs' id='correct_and_incorrect_answers_graph' ><canvas id='myChart{$i}' width='400' height='200'></canvas></div>";
+                                $print_res .= "<script>
+
+                                var labels = $labels;
+                                var data = $data;
+                                const ctx{$i} = document.getElementById('myChart{$i}').getContext('2d');
+                                const myChart{$i} = new Chart(ctx{$i}, {
+                                type: 'bar',
+                                data: {
+                                        labels: labels,
+                                        datasets: [{
+                                        label: 'Ответы других пользователей:',
+                                        data: data,
+                                        backgroundColor: [
+                                                'rgba(255, 99, 132, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(255, 206, 86, 0.3)',
+                                                'rgba(75, 192, 192, 0.3)',
+                                                'rgba(153, 102, 255, 0.3)',
+                                                'rgba(255, 159, 64, 0.3)',
+                                                'rgba(255, 99, 132, 0.3)',
+                                                'rgba(54, 162, 235, 0.3)',
+                                                'rgba(255, 206, 86, 0.3)',
+                                                'rgba(75, 192, 192, 0.3)'
+                                        ],
+                                        borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)',
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)'
+                                        ],
+                                        borderWidth: 1
+                                        }]
+                                },
+                                options: {
+                                        scales: {
+                                                                                  
+                                                y: {
+                                                        beginAtZero: true,
+                                                }, 
+
+                                        }
+                                }
+                                });
+                                </script>";
+
+                                $print_res .= "<div><a class='btn btn-primary mt-4' id='stats' data-stats='$i'>Показать полную статистику</a></div>";
+
+                                        $labels = json_decode($labels);
+                                        $data = json_decode($data);
+                                        $count_all_data = 0;
+
+                                        foreach ($data as $num) {
+                                                $count_all_data += $num;
+                                        }
+
+                                        $labels_and_data = array();
+                                        
+                                        for ($iter = 0; $iter < count($labels); $iter++) {
+                                                $labels_and_data[$labels[$iter]] = $data[$iter];    
+                                        }
+
+                                                $print_res .= "<div class = 'stats_block_{$i} none mt-4 survey-stats-table' data-stats='$i'>";
+
+                                                        $print_res .= "<table class='table table-striped table-hover table-bordered'>";
+                                                                $print_res .= "<thead>";
+                                                                        $print_res .= "<tr>";
+                                                                                $print_res .= "<th class='table-dark' scope='col'>Вариант ответа</th>";   
+                                                                                $print_res .= "<th class='table-dark' scope='col'>Кол-во ответов</th>";  
+                                                                                $print_res .= "<th class='table-dark' scope='col'>Процент</th>";  
+                                                                        $print_res .= "</tr>";  
+                                                                $print_res .= "</thead>";
+                                                                $print_res .= "<tbody>";
+                                                                        foreach ($labels_and_data as $label => $data):
+                                                                                $print_res .= "<tr>";
+
+                                                                                        $print_res .= "<td>$label</td>";
+
+                                                                                
+
+                                                                                        if ($data) {
+                                                                                                $percent = round((($data / $count_all_data) * 100), 2);
+                                                                                        }
+
+                                                                                        else {
+                                                                                                $percent = 0;
+                                                                                        }
+
+                                                                                        // if (in_array(($data == 0), $labels_and_data)) {
+                                                                                        //         if($data != 0) {
+                                                                                        //                 $percent = 100;
+                                                                                        //         }
+                                                                                        // }
+
+                                                                                        $print_res .= "<td>$data</td>";
+
+                                                                                        $print_res .= "<td>$percent%</td>";   
+
+                                                                                $print_res .= "</tr>";
+                                                                        endforeach;
+                                                                $print_res .= "</tbody>";
+                                                        $print_res .= "</table>";
+
+
+                                                $print_res .= "</div>";
+
+
+
+                                $print_res .= '</div>';
+                        $user_responded_answer = [];
+                        $answer_name_labels_data = [];
+                        $users_answers_data = [];
+                        $i++;
+                endforeach;
+        $print_res .= '</div>';
+
+                return $print_res;
+
+
+
+}
 
 
 

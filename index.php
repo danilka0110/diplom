@@ -51,18 +51,30 @@
               <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="tests">Тесты</a>
+                      <a class="nav-link" aria-current="page" href="tests">
+                        <img src="img/tests.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">Тесты</span>
+                      </a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="surveys">Опросы</a>
+                      <a class="nav-link" href="surveys">
+                        <img src="img/surveys.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">Опросы</span>
+                      </a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="contacts">Контакты</a>
+                      <a class="nav-link" href="contacts">
+                        <img src="img/contacts.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">Контакты</span>
+                      </a>
                   </li>
                   <li class="nav-item" style="margin-right: 28px">
-                      <a class="nav-link" href="about">О нас</a>
+                      <a class="nav-link" href="about">
+                        <img src="img/about.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                        <span style="margin-left: -3px;">О нас</span>
+                      </a>
                   </li>
               </ul>
               <?php if($user) : ?>
@@ -105,10 +117,10 @@
               <?php else : ?>  
                   <ul class="navbar-nav mr-auto mb-2 mb-lg-0 navbar-profile">
                       <li class="nav-item">
-                          <a class="nav-link btn btn-outline-secondary" href="account/login">Вход</a>
+                          <a class="nav-link btn btn-outline-secondary log" href="account/login">Вход</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link btn btn-outline-secondary" href="account/reg">Регистрация</a>
+                          <a class="nav-link btn btn-outline-secondary reg" href="account/reg">Регистрация</a>
                       </li>
                   </ul>
               <?php endif ; ?>

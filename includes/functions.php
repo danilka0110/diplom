@@ -782,11 +782,11 @@ function print_result_psychology_test($test_all_data, $test_id) {
 				$class = 'a';
 
 				if (in_array($id_answer, $_POST)) {
-					$print_res .= "<p class='$class'><input type='radio' checked disabled><label style='margin-left: 5px'>$answer</label></p>";
+					$print_res .= "<p class='$class' style='margin-top:-20px; margin-bottom: 5px'><input type='radio' checked disabled><label style='margin-left: 5px;'>$answer</label></p>";
 				} 
 
 				else {
-					$print_res .= "<p class='$class'><input type='radio' disabled><label style='margin-left: 5px'>$answer</label></p>";
+					$print_res .= "<p class='$class' style='margin-top:-20px; margin-bottom: 5px'><input type='radio' disabled><label style='margin-left: 5px;'>$answer</label></p>";
 				}	
 			}
 		}

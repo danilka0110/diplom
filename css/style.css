@@ -54,9 +54,20 @@ body {
     left: auto;
 }
 
+.navbar-dark .navbar-nav .nav-link {
+    border-radius: 10px;
+}
+
 .navbar-dark .navbar-nav .nav-link:hover {
     background: #0079bf69;
     color: #fff;
+    border-radius: 10px;
+}
+
+.active-nav-page {
+    color: #fff;
+    border-radius: 10px;
+    border-bottom: 2px solid #0079bf69;
 }
 
 .brand {
@@ -71,8 +82,20 @@ body {
     margin-left: -5px;
 }
 
+.navbar-brand {
+    margin-right: 15px;
+}
 
+@media screen AND (max-width:992px) {
+    .index-navbar .nav-link:not(.btn-outline-secondary) {
+        width: 110px;
+    }
 
+    .navbar-profile .btn-outline-secondary {
+        width: 170px;
+        margin-bottom: 5px;
+    }
+}
 
 
 

@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <bgsound src="img/qq.mp3" loop="1" volume="-1000" balance="0" />
-</head>
-<body>
-	
-<audio src="img/qq.wav" autoplay="autoplay">
-Тег audio не поддерживается вашим браузером. Необходимо обновить браузер!
-</audio>
 
-</body>
-</html>
+
+
+        <a href="https://front.codes/" class="logo" target="_blank">
+		<img src="https://assets.codepen.io/1462889/fcy.png" alt="">
+	</a>
+
+  	<input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon"/>
+  	<label for="menu-icon"></label>
+  	<nav class="nav"> 		
+  		<ul class="pt-5">
+  			<li><a href="#">Work</a></li>
+  			<li><a href="#">Studio</a></li>
+  			<li><a href="#">News</a></li>
+  			<li><a href="#">Contact</a></li>
+  		</ul>
+  	</nav>
+
+  	<div class="section-center">
+  		<h1 class="mb-0">Pure CSS Menu</h1>
+  	</div>
