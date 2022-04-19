@@ -113,7 +113,7 @@
                             $errors[] = 'Введите логин!';
                         }
 
-                        if(strlen($data['login']) < 4 || strlen($data['login']) > 20) {
+                        if(mb_strlen($data['login']) < 4 || mb_strlen($data['login']) > 20) {
                             $errors[] = 'Введите логин от 4 до 20 сивмолов!';
                         }
 
@@ -130,7 +130,7 @@
                             $errors[] = 'Введите пароль!';
                         }
                 
-                        if(strlen($data['password']) < 6 || strlen($data['login']) > 32) {
+                        if(mb_strlen($data['password']) < 6 || mb_strlen($data['login']) > 32) {
                             $errors[] = 'Введите пароль от 6 до 32 сивмолов!';
                         }
 
@@ -159,7 +159,10 @@
                             R::store($user);
                             header('Location: /'); 
                             ob_end_flush();
-                        } else
+                        }                        
+                        
+                        else
+
                         {
                             echo '<div style="color: red;">'.array_shift($errors).'</div><br>';
                         }
@@ -172,7 +175,7 @@
                                 type="checkbox"
                                 value=""
                                 id="form2Example3cg"/>
-                            <label class="form-check-label">
+                            <label for="form2Example3cg" class="form-check-label">
                                 Я соглашаюсь с <a href="#!" class="text-body"><u>правилами пользования</u></a> сайта
                             </label>
                         </div>

@@ -360,7 +360,7 @@
             <div class="my-passes-tests none">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 offset-xl-2">
-                        <div class="card h-100">
+                        <div class="card h-100 card-table">
                             <div class="card-body">
                                 <div id="search-input-sidenav">
                                     <div class="test_data">

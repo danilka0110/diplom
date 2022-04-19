@@ -34,6 +34,7 @@
 	<link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+
 <div class="index-img">
   <nav class="navbar navbar-expand-lg navbar-dark index-navbar">
       <div class="container-fluid">
@@ -128,7 +129,6 @@
 </div>
 
 <div class="main" id="main">
-
 <div id="first-block">
   <div class="container">
     <div class="row first-block">

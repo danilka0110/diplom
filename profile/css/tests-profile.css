@@ -128,3 +128,7 @@ td {
 #test-create-modal a:hover{
     text-decoration: underline;
 }
+
+.card-table {
+    background: none;
+}

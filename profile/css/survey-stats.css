@@ -1,0 +1,80 @@
+.first-stats-block-row {
+    height: 180px;
+    margin-top: 25px;
+    background: #ecf0f2;
+    border-radius: 20px;
+}
+
+.first-stats-block {
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center;
+}
+
+.first-stats-block .card {
+    border-radius: 20px;
+    height: 150px;
+}
+
+.first-stats-block .stat{
+    font-size: 54px;
+    font-weight: 600;
+    color: rgb(56, 61, 67);
+}
+
+.first-stats-block .card-body{
+    padding: 0;
+}
+
+.first-stats-block .card-title{
+    color: rgb(85, 85, 85);
+    font-size: 18px;
+}
+
+.first-stats-block img{
+    margin-top: -30px;
+    margin-left: -30px;
+}
+
+.stat-date img {
+    margin-top: -20px;
+    margin-left: -10px;
+}
+
+.stat-date-span {
+    font-size: 32px;
+    font-weight: 600;
+    color: rgb(56, 61, 67);
+}
+
+.stat-date-title {
+    margin-bottom: 25px;
+}
+
+@media screen AND (max-width: 991px) {
+    .first-stats-block img{
+        margin-left: 20px;
+    }
+
+    .stat-date img {
+        margin-top: -20px;
+        margin-left: 20px;
+    }
+}
+
+@media screen AND (min-width: 768px) AND (max-width: 991px) {
+    .stat-date-span {
+        font-size: 24px;
+    }
+    
+    .stat-date-title {
+        margin-bottom: 55px;
+    }
+}
+
+@media screen AND (min-width: 991px) AND (max-width: 1050px) {
+    .stat-date img {
+        margin-top: -20px;
+        margin-left: 0;
+    }
+}

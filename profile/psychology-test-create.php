@@ -402,7 +402,7 @@
 
 
 
-                                    <div class="test-create-title test-create-title-result mt-5">
+                                    <div class="test-create-title test-create-title mt-5">
                                         <h3 class="text-center">Добавление результатов</h3>
                                     </div>
 

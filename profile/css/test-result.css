@@ -1,0 +1,48 @@
+body {
+    background: rgb(90, 89, 120);
+}
+
+.test-show {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen AND (max-width: 991px) {
+    .test-show {
+        width: 90%;
+        text-align: left;
+    }
+}
+
+@media screen AND (max-width: 767px) {
+    .test-show {
+        width: 100%;
+    }
+}
+
+.test-show {
+    color: rgb(0, 0, 0);
+    background: #fcf4fa;
+    margin-top: 5%;
+    margin-bottom: 15%;
+    padding: 20px 35px;
+    background: linear-gradient(180deg, #dae5ed, #e1f4f0, #f4ecee);    
+    border-left: 6px solid #e04386;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+}
+
+.breadcrumb-item a{
+    color: #fff;
+}
+
+.breadcrumb-item.active{
+    color: rgb(169, 169, 169);
+}
+
+@media screen AND (max-width: 365px){
+    .test-show {
+        padding: 15px;
+    }
+}

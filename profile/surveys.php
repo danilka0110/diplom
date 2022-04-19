@@ -303,7 +303,7 @@
                                             <span>Статус:</span>
                                             <span style="color:green"> открыт</span>
                                             <div class="text-center">
-                                                    <a href="" class="btn btn-primary btn-test">Статистика</a>
+                                                    <a href="survey-stats?survey=<?=$survey['id']?>" class="btn btn-primary btn-test">Статистика</a>
                                             </div>
                                         </div>
                                     </div>

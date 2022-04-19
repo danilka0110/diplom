@@ -2,12 +2,6 @@ body {
     background: rgb(227, 235, 217);
 }
 
-.addResult {
-    background: #b3c2e5;
-    color: #000;
-    border: none;
-}
-
 .test-create-title-result {
     width: 60%;
 }
@@ -49,4 +43,10 @@ body {
 
 option {
     color:rgb(61, 61, 61)
+}
+
+.addResult {
+    background: #b3c2e5;
+    color: #000;
+    border: none;
 }

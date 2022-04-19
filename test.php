@@ -50,7 +50,7 @@ if (isset($_POST['test'])) {
 
 
         if($test_all_data) {
-
+            savePsychologyTest($test_all_data, $test_id, $user->id, $date);
             echo print_result_psychology_test($test_all_data, $test_id); // вывод результатов психологического теста
         } 
         

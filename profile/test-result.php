@@ -43,8 +43,8 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/tests.css">
-    <link rel="stylesheet" href="../css/profile.css">
-    <link rel="stylesheet" href="../css/test-result.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/test-result.css">
 </head>
 
 <body>
@@ -99,17 +99,20 @@
         <ul id="ul-nav-profile">
             <hr style="color: #fff; margin-top: -15px;">
             <li>
-                <a class="active" href="index">
-                    <div class="nav-profile-item active">
-                        <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
-                            style="border-radius: 50%">
+                <a href="index">
+                    <div class="nav-profile-item">
+                        <?php if($user->img_link == '0'): ?>
+                            <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                        <?php else: ?>
+                            <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                        <?php endif; ?>  
                         <span>Профиль</span>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="tests">
-                    <div class="nav-profile-item">
+                <a href="tests" class="active">
+                    <div class="nav-profile-item active">
                         <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
                             style="margin-left: 3px">
                         <span style="margin-left: -3px">Тесты</span>
@@ -157,35 +160,99 @@
     </div>
 
     <div class="main-profile">
-        <div class="container">
-        <nav aria-label="breadcrumb" class="main-breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index">Профиль</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Результат</li>
-            </ol>
-        </nav>
-            <div class="wrap">
-            <?php if($test_data) :?>
-                <div class="result">
-                    <?php 
-                        $query_choice = R::getAll("SELECT question_id, answer_id
-                            FROM usertestresult
-                                WHERE test_id = $test_id AND user_id = $user->id");
-                        // print_Arr($test_user_choice);
-                        $user_choice = null;
-                        foreach ($query_choice as $item) {
-                            $user_choice[$item['question_id']] = $item['answer_id'];
-                        }
-                        $result = get_correct_answers($test_id);
-                        $test_all_data_result_user = get_test_data_result_for_user_profile($test_data, $result, $user_choice);
-                        echo print_result_for_user_profile($test_all_data_result_user, $test_id);
-                    ?>
+        <div class="row none mobile-nav text-center">
+            <a href="index" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <?php if($user->img_link == '0'): ?>
+                        <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                    <?php else: ?>
+                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                    <?php endif; ?>  
+                    <span>Профиль</span>
                 </div>
-            <?php else : ?>
-                <p>Выберите тест</p>
-            <?php endif; ?>
+            </a>          
+            <a href="tests" class="btn btn-outline-primary mt-1 mb-1 active">
+                <div class="nav-profile-item">
+                    <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                        style="margin-left: 3px">
+                    <span style="margin-left: -3px">Тесты</span>
+                </div>
+            </a>                         
+            <a href="surveys" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                    <span>Опросы</span>
+                </div>
+            </a>                               
+            <?php if ($user->role == 1) :?>
+                <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+                    <div class="nav-profile-item">
+                        <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
+                        <span>Админ. панель</span>
+                    </div>
+                </a>
+            <?php endif ;?>  
+            <a href="help" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/help.png" alt="help" width=24px height=24px>
+                    <span>Помощь</span>
+                </div>
+            </a>
+            <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/logout.png" alt="logout" width=24px height=24px>
+                    <span>Выход</span>
+                </div>
+            </a>
+        </div>
+
+
+
+        <div class="container">
+            <div class="main-body">
+                <nav aria-label="breadcrumb" class="main-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index">Профиль</a></li>
+                        <li class="breadcrumb-item"><a href="tests">Тесты</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Тест № <?=$test_id?></li>
+                    </ol>
+                </nav>
+
+                <div class="test-show test-decoration">
+                    <?php if($test_data) :?>
+                        <div class="result">
+                            <?php 
+                                $query_choice = R::getAll("SELECT question_id, answer_id
+                                    FROM usertestresult
+                                        WHERE test_id = $test_id AND user_id = $user->id");
+                                
+                                if($query_choice) {
+                                    $user_choice = null;
+                                    foreach ($query_choice as $item) {
+                                        $user_choice[$item['question_id']] = $item['answer_id'];
+                                    }
+                                    $result = get_correct_answers($test_id);
+                                    $test_all_data_result_user = get_test_data_result_for_user_profile($test_data, $result, $user_choice);
+                                    echo print_result_for_user_profile($test_all_data_result_user, $test_id);
+                                }
+
+                                else {
+                                    header('Location: tests');
+                                    ob_end_flush();
+                                }
+
+                            ?>
+                        </div>
+                    <?php else : ?>
+                        <p>Выберите тест</p>
+                    <?php endif; ?>
+                </div>
+
             </div>
         </div>
+
+
+        
     </div>
 
 
@@ -207,12 +274,7 @@
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">
     </script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-    <script src="../libs/jquery.dataTables.min.js">
-    </script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js">
-    </script>
-    <script src="../js/profile.js"></script>
+    <script src="../js/test.js"></script>
 
 </body>
 

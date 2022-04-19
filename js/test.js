@@ -210,4 +210,33 @@ if ($('.question').length != 1) {
             $(this).html("Показать статистику");
         }
     });
+
+
+
+
+    $("body").on('click', '#btn-show-answers', function() {
+        if ($(this).html() == 'Показать мои ответы') {
+            $('#btn-show-stats-psychology').html("Показать статистику");
+            $('.stats').hide();
+            $('.test-q-and-a').show();
+            $(this).html("Скрыть мои ответы");
+        } else {
+            $('.test-q-and-a').hide();
+            $(this).html("Показать мои ответы");
+        }
+    });
+
+
+    $("body").on('click', '#btn-show-stats-psychology', function() {
+        if ($(this).html() == 'Показать статистику') {
+            $('#btn-show-answers').html("Показать мои ответы");
+            $('.test-q-and-a').hide();
+            $('.stats').show();
+            $(this).html("Скрыть статистику");
+        } else {
+            $('.stats').hide();
+            $(this).html("Показать статистику");
+        }
+    });
+
 });
