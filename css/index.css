@@ -1,3 +1,7 @@
+.main {
+    background: repeating-linear-gradient(-45deg,rgba(147,26,222,0.83) 0%,rgba(28,206,234,0.82) 100%);
+}
+
 .index-img {
     background-image: url(../img/index-1.jpg);
     height: 100vh;
@@ -192,7 +196,9 @@
 
 
 
-
+.card {
+    border: none;
+}
 
 
 @media screen AND (max-width: 1220px) AND (min-width: 992px) {
@@ -207,12 +213,41 @@
 }
 
 
+.stats-block {
+    height: 150px;
+    background: #488f89;
+}
+
+.no-gutters {
+    --bs-gutter-x: 0rem;
+}
+
+.cols {
+    margin-top: 5px;
+}
+
+.stats-block-title {
+    color: #fff;
+    font-size: 22px;
+}
+
+.stats-block img {
+    margin-top: -12px;
+}
+
+.stats-block-stat {
+    font-size: 68px;
+    color: rgb(217, 209, 209);
+    font-weight: 600;
+    margin-top: -10px;
+}
 
 
-
-
-
-
+@media screen AND (max-width: 768px) AND (min-width: 0px) {
+    .stats-block {
+        height: 440px;
+    }
+}
 
 /* АНИМАЦИИ */
 

@@ -1,0 +1,26 @@
+.first-stats-block .card{
+    border-radius: 20px;
+    background: #1b2c3e;
+    color: #fff;
+}
+
+.first-stats-block .stat{
+    font-size: 54px;
+    font-weight: 600;
+    color: rgb(200, 213, 230);
+}
+
+.first-stats-block img{
+    margin-top: -25px;
+}
+
+.first-stats-block .card:hover{
+    margin-top: -3px;
+}
+
+@media screen AND (max-width: 991px) {
+    .first-stats-block .card-title, .first-stats-block .card-body{
+        text-align: center;
+        float: center;
+    }
+}

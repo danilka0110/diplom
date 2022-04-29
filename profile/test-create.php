@@ -171,7 +171,7 @@
 
             <?php if ($user->role == 1) :?>
             <li>
-                <a href="admin" class="adm">
+                <a href="../admin/" class="adm">
                     <div class="nav-profile-item">
                         <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                         <span>Админ. панель</span>
@@ -179,14 +179,6 @@
                 </a>
             </li>
             <?php endif ;?>
-            <li>
-                <a href="help">
-                    <div class="nav-profile-item">
-                        <img src="../img/help.png" alt="help" width=24px height=24px>
-                        <span>Помощь</span>
-                    </div>
-                </a>
-            </li>
             <li class="drop-nav-profile-item">
                 <hr style="color: #fff; margin-bottom: 10px;">
                 <a href="../account/logout">
@@ -228,19 +220,13 @@
                 </div>
             </a>
             <?php if ($user->role == 1) :?>
-            <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+            <a href="../admin/" class="btn btn-outline-primary mt-1 mb-1">
                 <div class="nav-profile-item">
                     <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                     <span>Админ. панель</span>
                 </div>
             </a>
             <?php endif ;?>
-            <a href="help" class="btn btn-outline-primary mt-1 mb-1">
-                <div class="nav-profile-item">
-                    <img src="../img/help.png" alt="help" width=24px height=24px>
-                    <span>Помощь</span>
-                </div>
-            </a>
             <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
                 <div class="nav-profile-item">
                     <img src="../img/logout.png" alt="logout" width=24px height=24px>

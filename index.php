@@ -1,6 +1,22 @@
 <?php 
     require "db.php";
     $user = R::findOne('users', 'id = ?', array($_SESSION['logged_user']->id));
+
+    $count_tests_query = R::getRow("SELECT COUNT(id) as count_tests
+                              FROM test
+                                WHERE enable='1'");
+    $count_tests = $count_tests_query['count_tests'];
+
+    $count_surveys_query = R::getRow("SELECT COUNT(id) as count_surveys
+    FROM survey
+      WHERE enable='1'");
+    $count_surveys = $count_surveys_query['count_surveys'];
+
+    $count_users_query = R::getRow("SELECT COUNT(id) as count_users
+    FROM users");
+    $count_users = $count_users_query['count_users'];
+
+
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +26,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Paradigm Tests</title>
+	<title>Paradigm Test</title>
 	<link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
@@ -141,71 +157,102 @@
 </div>
 
 <div class="main" id="main">
-<div id="first-block">
-  <div class="container">
-    <div class="row first-block">
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 justify-content-start anim-items">
-        <div class="card text-center first-card-index anim-show-first-block-first-card">
-          <img src="img/tests.png" alt="tests" class="img-card-index">
-          <h5 class="card-title mt-4">Тесты</h5>
-          <div class="card-body">
-            <p class="card-text">На нашем сайте вы можете протестироваться по интересующей Вас теме</p>
-            <a href="tests" class="btn btn-primary first-block-btn-card">К тестам</a>
+  <div id="first-block" class="mt-5">
+    <div class="container">
+      <div class="row first-block">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 justify-content-start anim-items mt-2 mb-2">
+          <div class="card text-center first-card-index anim-show-first-block-first-card">
+            <img src="img/tests.png" alt="tests" class="img-card-index">
+            <h5 class="card-title mt-4">Тесты</h5>
+            <div class="card-body">
+              <p class="card-text">На нашем сайте вы можете протестироваться по интересующей Вас теме</p>
+              <a href="tests" class="btn btn-primary first-block-btn-card">К тестам</a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 justify-content-center anim-items">
-        <div class="card text-center first-card-main-index anim-show-first-block-second-card">
-          <img src="img/icon.png" alt="tests" class="img-card-main-index">
-          <h5 class="card-title mt-4">Paradigm Test</h5>
-          <div class="card-body">
-            <p class="card-text">Paradigm test - система, предназначенная для проведения тестирования и опросов. </p>
-            <a href="#second-block" class="btn btn-primary first-block-btn-card-main">Дальше</a>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 justify-content-center anim-items mt-2 mb-2">
+          <div class="card text-center first-card-main-index anim-show-first-block-second-card">
+            <img src="img/icon.png" alt="tests" class="img-card-main-index">
+            <h5 class="card-title mt-4">Paradigm Test</h5>
+            <div class="card-body">
+              <p class="card-text">Paradigm test - система, предназначенная для проведения тестирования и опросов. </p>
+              <a href="#second-block" class="btn btn-primary first-block-btn-card-main">Дальше</a>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 justify-content-end anim-items">
-        <div class="card text-center first-card-index anim-show-first-block-third-card">
-          <img src="img/surveys.png" alt="tests" class="img-card-index">
-          <h5 class="card-title mt-4">Опросы</h5>
-          <div class="card-body">
-            <p class="card-text">Вы сможете пройти опрос и получить статистику, для просмотра ответов других пользоватей</p>
-            <a href="surveys" class="btn btn-primary first-block-btn-card">К опросам</a>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 justify-content-end anim-items mt-2 mb-2">
+          <div class="card text-center first-card-index anim-show-first-block-third-card">
+            <img src="img/surveys.png" alt="tests" class="img-card-index">
+            <h5 class="card-title mt-4">Опросы</h5>
+            <div class="card-body">
+              <p class="card-text">Вы сможете пройти опрос и получить статистику, для просмотра ответов других пользоватей</p>
+              <a href="surveys" class="btn btn-primary first-block-btn-card">К опросам</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="stats-block mt-5">
+    <div class="row text-center no-gutters">
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 cols anim-items">
+        <div class="mt-2 anim-show-second-block">
+          <img src="img/tests.png" alt="" width="38px" height="38px">
+          <span class="stats-block-title">Тестов:</span>
+        </div>
+        <div class="anim-show-second-block">
+          <span class="stats-block-stat"><?=$count_tests?></span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 cols anim-items">
+        <div class="mt-2 anim-show-second-block">
+          <img src="img/surveys.png" alt="" width="38px" height="38px">
+          <span class="stats-block-title">Опросов:</span>
+        </div>
+        <div class="anim-show-second-block">
+          <span class="stats-block-stat"><?=$count_surveys?></span>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 cols anim-items">
+        <div class="mt-2 anim-show-second-block">
+          <img src="img/adm-users.png" alt="" width="38px" height="38px">
+          <span class="stats-block-title">Пользователей:</span>
+        </div>
+        <div class="anim-show-second-block">
+          <span class="stats-block-stat"><?=$count_users?></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="mt-5 mb-5" id="second-block">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 justify-content-center anim-items block-test-constructor mt-2 mb-2">
+          <div class="card text-center first-card-index anim-show-second-block second-cards">
+            <img src="img/tests.png" alt="tests" class="img-card-index">
+            <h5 class="card-title mt-4">Создавайте тесты</h5>
+            <div class="card-body">
+              <p class="card-text">Вы может создавать тесты по различным категориям. Нужно всего лишь зарегистрировать аккаунт!</p>
+              <a href="profile/test-create" class="btn btn-primary second-block-btn-card-1 mt-2">Создать тест</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 justify-content-center anim-items block-survey-constructor mt-2 mb-2">
+          <div class="card text-center first-card-index anim-show-second-block second-cards">
+            <img src="img/surveys.png" alt="tests" class="img-card-index">
+            <h5 class="card-title mt-4">Создавайте опросы</h5>
+            <div class="card-body">
+              <p class="card-text">Хотите создать опрос и просматривать статистику по нему? Тогда регистрируйся на сайте и создавай!</p>
+              <a href="profile/survey-create" class="btn btn-primary second-block-btn-card-2 mt-2">Создать опрос</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
-
-
-<section class="" id="second-block">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 justify-content-center anim-items block-test-constructor">
-        <div class="card text-center first-card-index anim-show-second-block second-cards">
-          <img src="img/tests.png" alt="tests" class="img-card-index">
-          <h5 class="card-title mt-4">Создавайте тесты</h5>
-          <div class="card-body">
-            <p class="card-text">Вы может создавать тесты по различным категориям. Нужно всего лишь зарегистрировать аккаунт!</p>
-            <a href="profile/test-create" class="btn btn-primary second-block-btn-card-1 mt-2">Создать тест</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 justify-content-center anim-items block-survey-constructor">
-        <div class="card text-center first-card-index anim-show-second-block second-cards">
-          <img src="img/surveys.png" alt="tests" class="img-card-index">
-          <h5 class="card-title mt-4">Создавайте опросы</h5>
-          <div class="card-body">
-            <p class="card-text">Хотите создать опрос и просматривать статистику по нему? Тогда регистрируйся на сайте и создавай!</p>
-            <a href="profile/survey-create" class="btn btn-primary second-block-btn-card-2 mt-2">Создать опрос</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 <footer class="bg-dark text-center text-white">
   <div class="container p-4">

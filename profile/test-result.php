@@ -162,7 +162,7 @@
 
             <?php if ($user->role == 1) :?>
             <li>
-                <a href="admin" class="adm">
+                <a href="../admin/" class="adm">
                     <div class="nav-profile-item">
                         <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                         <span>Админ. панель</span>
@@ -170,14 +170,6 @@
                 </a>
             </li>
             <?php endif ;?>
-            <li>
-                <a href="help">
-                    <div class="nav-profile-item">
-                        <img src="../img/help.png" alt="help" width=24px height=24px>
-                        <span>Помощь</span>
-                    </div>
-                </a>
-            </li>
             <li class="drop-nav-profile-item">
                 <hr style="color: #fff; margin-bottom: 10px;">
                 <a href="../account/logout">
@@ -216,19 +208,13 @@
                 </div>
             </a>                               
             <?php if ($user->role == 1) :?>
-                <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+                <a href="../admin/" class="btn btn-outline-primary mt-1 mb-1">
                     <div class="nav-profile-item">
                         <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                         <span>Админ. панель</span>
                     </div>
                 </a>
             <?php endif ;?>  
-            <a href="help" class="btn btn-outline-primary mt-1 mb-1">
-                <div class="nav-profile-item">
-                    <img src="../img/help.png" alt="help" width=24px height=24px>
-                    <span>Помощь</span>
-                </div>
-            </a>
             <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
                 <div class="nav-profile-item">
                     <img src="../img/logout.png" alt="logout" width=24px height=24px>
@@ -253,24 +239,36 @@
                     <?php if($test_data) :?>
                         <div class="result">
                             <?php 
+
+                                $check_on_psychology = R::getRow("SELECT type
+                                FROM test
+                                    WHERE id = $test_id");
+
                                 $query_choice = R::getAll("SELECT question_id, answer_id
-                                    FROM usertestresult
-                                        WHERE test_id = $test_id AND user_id = $user->id");
-                                
+                                FROM usertestresult
+                                    WHERE test_id = $test_id AND user_id = $user->id");
+
                                 if($query_choice) {
                                     $user_choice = null;
                                     foreach ($query_choice as $item) {
                                         $user_choice[$item['question_id']] = $item['answer_id'];
                                     }
+                                }
+                                else {
+                                    header('Location: tests');
+                                    ob_end_flush();
+                                }
+                                if ($check_on_psychology['type'] == 'Обычный') {
+
                                     $result = get_correct_answers($test_id);
                                     $test_all_data_result_user = get_test_data_result_for_user_profile($test_data, $result, $user_choice);
                                     echo print_result_for_user_profile($test_all_data_result_user, $test_id);
                                 }
 
-                                else {
-                                    header('Location: tests');
-                                    ob_end_flush();
+                                else { 
+                                    echo print_result_psychology_test($test_data, $test_id, $user_choice); // вывод результатов психологического теста
                                 }
+                                
 
                             ?>
                         </div>

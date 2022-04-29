@@ -1,0 +1,78 @@
+.card-test {
+    background: none;
+}
+
+.test_description {
+    text-align: left;
+    color: rgb(61, 61, 61);
+    font-size: 14px;
+    height: 2.5rem;
+    overflow: hidden;
+	position: relative;
+}
+
+.test_description:after {
+	content: "";
+	text-align: right;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 70%;
+	height: 1.2em;
+	background: linear-gradient(to right, rgba(61, 61, 61, 0), rgb(208, 220, 222) 100%);
+	pointer-events: none;
+}
+
+.question-show.a {
+    margin-top: -32px;
+}
+
+.q {
+    margin-bottom: 30px;
+}
+
+.test-head {
+    color: #000;
+}
+
+.desc-title {
+    color: rgb(130, 130, 130);
+}
+
+.test-head img {
+    filter: brightness(70%);
+}
+
+.test-show {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    margin-bottom: 50px;
+}
+
+.btn-success {
+    margin-bottom: 10px;
+}
+
+.btn-secondary {
+    margin-bottom: 10px;
+}
+
+.btn-danger {
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 991px){
+    .test-show {
+        text-align: left;
+    }
+}
+
+.modal {
+    color:rgb(61, 61, 61);
+}
+
+.nav-profile a {
+    font-size: 16px;
+}

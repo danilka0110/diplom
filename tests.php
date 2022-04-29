@@ -217,9 +217,6 @@
             <?php else :?>
             <?php endif ;?>
             
-
-
-
         <div class="container-fluid tests-container">
             <div class="row">
                 <?php if ($_POST['search'] == NULL && $_GET['category'] == NULL) :?>

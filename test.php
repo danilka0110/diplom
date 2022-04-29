@@ -50,8 +50,15 @@ if (isset($_POST['test'])) {
 
 
         if($test_all_data) {
+            $test_for_count_passes = R::findOne('test', 'id = :test_id', [':test_id' => $test_id]);
+            $count_passes = $test_for_count_passes->count_passes;
+            $count_passes++;
+            $test_for_count_passes->count_passes = $count_passes;
+            R::store($test_for_count_passes);
+            save($test_id, $user);
             savePsychologyTest($test_all_data, $test_id, $user->id, $date);
-            echo print_result_psychology_test($test_all_data, $test_id); // вывод результатов психологического теста
+            $choises = $_POST;
+            echo print_result_psychology_test($test_all_data, $test_id, $choises); // вывод результатов психологического теста
         } 
         
         else 
@@ -90,6 +97,7 @@ if (isset($_GET['test'])) {
         $pagination = pagination($count_questions, $test_data);
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -123,6 +131,7 @@ if (isset($_GET['test'])) {
     <link rel="stylesheet" href="css/tests.css">
     <link rel="stylesheet" href="css/test.css">
     <link rel="stylesheet" href="css/test-carousel.css">
+    <link rel="stylesheet" href="css/comments.css">
 </head>
 
 <body>
@@ -228,30 +237,23 @@ if (isset($_GET['test'])) {
                <?php if ($tests): ?>
                 <div class="content">
                     <?php if(isset($test_data)) : ?>
-
-
-
                         
-                        <div class="test-head">
-                            <div class="text-center">
-                                <img src="<?=$test_img_link?>" alt="img" width="160px" height="160px" class="test-img">
-                                <p style="font-size: 32px" class="test-head-test-name mt-4"><?=$test_name?></p>
-                                <button class="btn btn-primary mt-4" id="test-start">Начать тест</button>
-                            </div>
-
-                            <div class="test-description mt-5">
-                                <i class="desc-title">Описание теста: </i><span class="desc-text"><?=$test_description?></span>
-                                <hr>
-                                <i class="desc-title">Всего вопросов: </i><span class="desc-text"><?=$count_questions?></span>
-                                <hr>
-                                <i class="desc-title">Автор: </i><span class="desc-text"><?=$test_author?></span>
-                            </div>
-
+                    <div class="test-head">
+                        <div class="text-center">
+                            <img src="<?=$test_img_link?>" alt="img" width="160px" height="160px" class="test-img">
+                            <p style="font-size: 32px" class="test-head-test-name mt-4"><?=$test_name?></p>
+                            <button class="btn btn-primary mt-4" id="test-start">Начать тест</button>
                         </div>
 
-
-
-
+                        <div class="test-description mt-5">
+                            <i class="desc-title">Описание теста: </i><span class="desc-text"><?=$test_description?></span>
+                            <hr>
+                            <i class="desc-title">Всего вопросов: </i><span class="desc-text"><?=$count_questions?></span>
+                            <hr>
+                            <i class="desc-title">Автор: </i><span class="desc-text"><?=$test_author?></span>
+                            <hr>
+                        </div>
+                    </div>
 
                     <div class="test-show none test-decoration">
                     <?=$pagination?>

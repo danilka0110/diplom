@@ -706,7 +706,7 @@ function savePsychologyTest($test_all_data, $test_id, $user, $date) {
 
 
 
-function print_result_psychology_test($test_all_data, $test_id) {
+function print_result_psychology_test($test_all_data, $test_id, $choices) {
 
 	$all_count = count($test_all_data); // кол-во вопросов
 
@@ -715,7 +715,7 @@ function print_result_psychology_test($test_all_data, $test_id) {
 	foreach($test_all_data as $item) {
 		foreach($item as $key => $score) {
 			if ($key != 0) {
-				if (in_array($key, $_POST)) {
+				if (in_array($key, $choices)) {
 					$count_score += $score;
 				}
 			}
@@ -781,7 +781,7 @@ function print_result_psychology_test($test_all_data, $test_id) {
 
 				$class = 'a';
 
-				if (in_array($id_answer, $_POST)) {
+				if (in_array($id_answer, $choices)) {
 					$print_res .= "<p class='$class' style='margin-top:-20px; margin-bottom: 5px'><input type='radio' checked disabled><label style='margin-left: 5px;'>$answer</label></p>";
 				} 
 
@@ -823,7 +823,7 @@ function print_result_psychology_test($test_all_data, $test_id) {
 			$print_res .= "<p>Пользователей прошло тест: <b>{$count_users}</b></p>";
 			$print_res .= "<p>Средний результат среди всех пользователей: <b>{$avg_value}</b></p>";
 
-			$print_res .= '<div style="width: 250px; height: 250px" id="correct_and_incorrect_answers_graph"><canvas id="graph"></canvas></div>';
+			$print_res .= '<div style="width: 250px; height: 125px" id="correct_and_incorrect_answers_graph"><canvas id="graph"></canvas></div>';
 
 			$print_res .= "<script>													
 								const data = {
@@ -874,6 +874,9 @@ function print_result_psychology_test($test_all_data, $test_id) {
 
 
 
+	if($_POST) {
+		
+	$print_res .= '<hr>';
 
 	$test_category = R::findOne('category', 'test_id = :test_id', [':test_id' => $test_id]);
 
@@ -974,16 +977,7 @@ function print_result_psychology_test($test_all_data, $test_id) {
 
 
 	endif;
-
-
-
-
-
-
-
-
-
-
+	}
 
 	return $print_res;
 

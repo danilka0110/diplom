@@ -6,7 +6,50 @@
 ?>
 
 
-<?php if($user) : ?>
+<?php if($user->role == 1) : ?>
+
+<?php 
+    $all_users = R::getAll("SELECT id, login, img_link
+                                    FROM users");
+
+
+    
+
+if (isset($_POST['btn-delete'])) {
+    $user_id_for_delete = trim($_POST['ID_user']);
+    $find_user = R::findOne('users', 'id = ?',[$user_id_for_delete]);
+    if ($find_user) {
+        R::trash($find_user);
+    }
+    else {
+        echo("<script>alert('Пользователь не найден!')</script>");
+    }
+    header('Location: users');
+    ob_end_flush();
+}
+
+if (isset($_POST['btn-change'])) {
+    $user_id_for_change = trim($_POST['ID_user']);
+    $user_img_link_for_change = trim($_POST['img_link']);
+    if(mb_strlen($user_img_link_for_change) > 255) {
+        return false;
+    }
+    else {
+        $find_user = R::findOne('users', 'id = ?',[$user_id_for_change]);
+        if ($find_user) {
+            $find_user->img_link = $user_img_link_for_change;
+            R::store($find_user);
+        }
+        else {
+            echo("<script>alert('Пользователь не найден!')</script>");
+        }
+    }
+    header('Location: users');
+    ob_end_flush();
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +57,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Помощь</title>
+	<title>Админ. панель</title>
 	<link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
@@ -35,14 +78,16 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
 		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../css/style.css">
-	<link rel="stylesheet" href="../css/test-create.css">
-    <link rel="stylesheet" href="../css/profile.css">
+	<link rel="stylesheet" href="../profile/css/test-create.css">
+    <link rel="stylesheet" href="../profile/css/profile.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/users.css">
 </head>
 <body>
 
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark index-navbar fixed-top bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark index-navbar fixed-top">
       <div class="container-fluid">
           <a class="navbar-brand" href="/">
               <img src="../img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-top: -5px;">
@@ -93,7 +138,7 @@
                       <ul class="dropdown-menu nav-dropdown-menu" aria-labelledby="navbarDropdown">
                           <li>
 
-                            <a class="dropdown-item" href="index">
+                            <a class="dropdown-item" href="../profile/">
                               <?php if($user->img_link == '0'): ?>
                                   <img src="../img/user-profile-nav.png" alt="" width="24" height="24" class="navbar-profile-img" style="border-radius: 50%; object-fit: cover;">
                               <?php else: ?>
@@ -119,51 +164,110 @@
       </div>
   </nav>
 
-<div class="nav-profile">
+    <div class="nav-profile">
         <ul id="ul-nav-profile">
             <hr style="color: #fff; margin-top: -8.5px;">
-            <li>           
+            <li>
                 <a href="index">
-                    <div class="nav-profile-item active"> 
-                        <img src="../img/user-profile-nav.png" alt="user-profile-nav" width=24px height=24px>
-                        <span><?php echo $user->login?></span>
+                    <div class="nav-profile-item">
+                        <?php if($user->img_link == '0'): ?>
+                        <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
+                        <?php else: ?>
+                        <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
+                        <?php endif; ?>
+                        <span>Админ. профиль</span>
                     </div>
                 </a>
             </li>
             <li>
-                <a href="tests">
+                <a href="users">
                     <div class="nav-profile-item">
-                        <img src="../img/tests-profile-nav.png" alt="tests-profile-nav" width=24px height=24px>
-                        <span>Мои тесты</span>
+                        <img src="../img/adm-users.png" alt="" width=24px height=24px class="navbar-profile-img"
+                            style="border-radius: 50%; object-fit: cover">
+                        <span>Пользователи</span>
                     </div>
                 </a>
             </li>
+            <li>
+                <a href="tests" class="active">
+                    <div class="nav-profile-item active">
+                        <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px
+                            style="margin-left: 3px">
+                        <span style="margin-left: -3px">Тесты</span>
+                    </div>
+                </a>
+            </li>
+
             <li>
                 <a href="surveys">
                     <div class="nav-profile-item">
-                        <img src="../img/surveys-profile-nav.png" alt="surveys-profile-nav" width=24px height=24px>
-                        <span>Мои опросы</span>
+                        <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                        <span>Опросы</span>
                     </div>
                 </a>
             </li>
-            <?php if ($user->role == 1) :?>
-            <li>
-
-                <a href="admin" class="active">
-                    <div class="nav-profile-item">
-                        <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
-                        <span>Админ. панель</span>
-                    </div>
-                </a>
-            </li>
-            <?php endif ;?>
         </ul>
     </div>
 
+    <div class="main-profile">
+        <div class="row none mobile-nav text-center">
+            <a href="index" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <?php if($user->img_link == '0'): ?>
+                    <img src="../img/user-profile-nav.png" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php else: ?>
+                    <img src="<?=$user->img_link?>" alt="" width=24px height=24px class="navbar-profile-img"
+                        style="border-radius: 50%; object-fit: cover">
+                    <?php endif; ?>
+                    <span>Админ. профиль</span>
+                </div>
+            </a>
+            <a href="users" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/adm-users.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                    <span style="margin-left: -3px">Пользователи</span>
+                </div>
+            </a>
+            <a href="tests" class="btn btn-outline-primary mt-1 mb-1 active">
+                <div class="nav-profile-item">
+                    <img src="../img/tests.png" alt="tests-profile-nav" width=24px height=24px style="margin-left: 3px">
+                    <span style="margin-left: -3px">Тесты</span>
+                </div>
+            </a>
+            <a href="surveys" class="btn btn-outline-primary mt-1 mb-1">
+                <div class="nav-profile-item">
+                    <img src="../img/surveys.png" alt="surveys-profile-nav" width=24px height=24px>
+                    <span>Опросы</span>
+                </div>
+            </a>
+        </div>
 
-<div class="main-profile">
-    ПОМОЩЬ
-</div>
+
+        <div class="container">
+            <div class="main-body">
+                <nav aria-label="breadcrumb" class="main-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Админ. профиль</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Пользователи</li>
+                    </ol>
+                </nav>
+    
+                                
+                
+
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
 
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
@@ -171,6 +275,12 @@
   </script>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css"> 
+  <script src="../libs/jquery.dataTables.min.js">
+  </script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js">
+  </script>  
+  <script src="js/users.js"></script>
 </body>
 
 </html>

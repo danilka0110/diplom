@@ -228,3 +228,7 @@ body {
 .desc-text {
     font-size: 18px;
 }
+
+.test-head img {
+    filter: brightness(70%);
+}

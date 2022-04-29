@@ -1,0 +1,128 @@
+.main {
+    background: repeating-linear-gradient(-45deg,rgba(147,26,222,0.83) 0%,rgba(28,206,234,0.82) 100%);
+}
+
+.about-content {
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.card {
+    padding: 15px;
+    border-radius: 20px;
+    height: 500px;
+}
+
+.card-img-about {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-text {
+    text-align: left;
+}
+
+.card-second {
+    height: 350px;
+    margin-top: 36%;
+}
+
+@media screen AND (max-width: 1400px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 550px;
+    }
+    .card-second {
+        height: 421px;
+        margin-top: 36%;
+    }
+}
+
+
+@media screen AND (max-width: 1200px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 610px;
+    }
+    .card-second {
+        height: 503px;
+        margin-top: 36%;
+    }
+}
+
+@media screen AND (max-width: 991px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 350px;
+    }
+    .card-second {
+        height: 350px;
+        margin-top: 0;
+    }
+    .card {
+        margin-top: 20px;
+    }
+}
+
+@media screen AND (max-width: 767px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 400px;
+    }
+    .card-second {
+        height: 400px;
+        margin-top: 0;
+    }
+    .card {
+        margin-top: 20px;
+    }
+}
+
+@media screen AND (max-width: 576px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 400px;
+    }
+    .card-second {
+        height: 400px;
+        margin-top: 0;
+    }
+    .card {
+        margin-top: 20px;
+    }
+}
+
+@media screen AND (max-width: 510px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 550px;
+    }
+    .card-second {
+        height: 550px;
+        margin-top: 0;
+    }
+    .card {
+        margin-top: 20px;
+    }
+}
+
+@media screen AND (max-width: 400px) {
+    .card {
+        padding: 15px;
+        border-radius: 20px;
+        height: 650px;
+    }
+    .card-second {
+        height: 680px;
+        margin-top: 0;
+    }
+    .card {
+        margin-top: 20px;
+    }
+}

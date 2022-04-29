@@ -1,0 +1,43 @@
+.card-table {
+    background: none;
+    border: none;
+}
+
+.table-users {
+    background: #d0dcde;
+}
+
+.card-table {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media screen AND (max-width: 991px) {
+    .card-table {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.btn-change {
+    width: 30%;
+}
+
+.btn-delete {
+    width: 30%;
+    float: right;
+}
+
+@media screen AND (max-width: 550px) {
+    .btn-change {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .btn-delete {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

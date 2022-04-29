@@ -1,0 +1,23 @@
+.main {
+    background: repeating-linear-gradient(-180deg,rgba(147,26,222,0.83) 0%,rgba(28,206,234,0.82) 100%);
+}
+
+.contacts-form {
+    margin-top: 12.5%;
+    margin-bottom: 12.5%;
+}
+
+.contacts-form .card {
+    border-radius: 15px;
+    height: 300px;
+}
+
+.contacts-form p {
+    text-align: left;
+}
+
+@media screen AND (max-width: 991px) {
+    .order-md-last, .order-sm-last, .order-last {
+        margin-top: 50px;
+    }
+}

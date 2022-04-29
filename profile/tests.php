@@ -14,6 +14,12 @@
     $tests_user = R::getAll("SELECT test_id, test_name, correct_score, all_count, date
     FROM usersandtests
         WHERE user_id = $user->id");
+
+    $psychology_tests_user = R::getAll("SELECT test_id as psychology_test_id, test_name, score, all_count, date
+    FROM usersandpsychologytest
+        WHERE user_id = $user->id");
+
+    $all_tests_user = array_merge($tests_user, $psychology_tests_user);
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +170,7 @@
 
             <?php if ($user->role == 1) :?>
             <li>
-                <a href="admin" class="adm">
+                <a href="../admin/" class="adm">
                     <div class="nav-profile-item">
                         <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                         <span>Админ. панель</span>
@@ -172,14 +178,6 @@
                 </a>
             </li>
             <?php endif ;?>
-            <li>
-                <a href="help">
-                    <div class="nav-profile-item">
-                        <img src="../img/help.png" alt="help" width=24px height=24px>
-                        <span>Помощь</span>
-                    </div>
-                </a>
-            </li>
             <li class="drop-nav-profile-item">
                 <hr style="color: #fff; margin-bottom: 10px;">
                 <a href="../account/logout">
@@ -220,19 +218,14 @@
             </div>
         </a>                               
         <?php if ($user->role == 1) :?>
-            <a href="admin" class="btn btn-outline-primary mt-1 mb-1">
+            <a href="../admin/" class="btn btn-outline-primary mt-1 mb-1">
                 <div class="nav-profile-item">
                     <img src="../img/admin-profile-nav.png" alt="admin-profile-nav" width=24px height=24px>
                     <span>Админ. панель</span>
                 </div>
             </a>
         <?php endif ;?>  
-        <a href="help" class="btn btn-outline-primary mt-1 mb-1">
-            <div class="nav-profile-item">
-                <img src="../img/help.png" alt="help" width=24px height=24px>
-                <span>Помощь</span>
-            </div>
-        </a>
+
         <a href="../account/logout" class="btn btn-outline-primary mt-1 mb-1">
             <div class="nav-profile-item">
                 <img src="../img/logout.png" alt="logout" width=24px height=24px>
@@ -406,11 +399,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($tests_user as $test_one):?>
+                                                <?php foreach ($all_tests_user as $test_one):?>
 
                                                     <?php 
                                                         $test_id = $test_one['test_id']; 
-                                                        $test = R::findOne( 'test', ' id LIKE ? ', [ "$test_id" ] );       
+                                                        $psychology_test_id = $test_one['psychology_test_id'];
+                                                        if ($test_id) {
+                                                            $test = R::findOne( 'test', ' id LIKE ? ', [ "$test_id" ] );  
+                                                        }
+                                                        else {
+                                                            $test = R::findOne( 'test', ' id LIKE ? ', [ "$psychology_test_id" ] );
+                                                        }      
                                                     ?>
 
                                                     <tr class="sidenav-item sidenav-link">
@@ -419,8 +418,11 @@
 
                                                             <img src="<?=$test->img_link?>" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
 
-                                                            <a href="test-result?test=<?=$test_one['test_id']?>" class="table_test_name"><?=$test_one['test_name']?></a>
-
+                                                            <?php if($test_id): ?>
+                                                                <a href="test-result?test=<?=$test_one['test_id']?>" class="table_test_name"><?=$test_one['test_name']?></a>
+                                                            <?php else: ?>
+                                                                <a href="test-result?test=<?=$test_one['psychology_test_id']?>" class="table_test_name"><?=$test_one['test_name']?></a>
+                                                            <?php endif; ?>
                                                         </td>
 
                                                         <td>
@@ -430,17 +432,27 @@
 
                                                         <td>
 
-                                                            <?php $percent = round( ($test_one['correct_score'] / $test_one['all_count'] * 100 ), 2);?>
+                                                            <?php if($test_id): ?>
+                                                                <?php $percent = round( ($test_one['correct_score'] / $test_one['all_count'] * 100 ), 2);?>
 
-                                                            <?=$percent?>%
+                                                                <?=$percent?>%
 
-                                                            <?php if($percent >= 75): ?>
-                                                                <img src="../img/good-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
-                                                            <?php elseif($percent < 75 && $percent >=50): ?>
-                                                                <img src="../img/okay-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
-                                                            <?php elseif($percent < 50): ?>
-                                                                <img src="../img/bad-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                                <?php if($percent >= 75): ?>
+                                                                    <img src="../img/good-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                                <?php elseif($percent < 75 && $percent >=50): ?>
+                                                                    <img src="../img/okay-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                                <?php elseif($percent < 50): ?>
+                                                                    <img src="../img/bad-passes.png" alt="" width=24px height=24px class="navbar-profile-img" style="border-radius: 50%; object-fit: cover">
+                                                                <?php endif; ?>
+                                                            <?php else: ?>
+                                                                <span><?=$test_one['score']?> б.</span>
                                                             <?php endif; ?>
+
+
+                                                            
+
+
+
 
 
                                                         </td>
@@ -466,7 +478,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-    </script>
+  </script>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js">

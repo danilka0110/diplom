@@ -10,6 +10,9 @@ $(function() {
 
 if ($('.question').length != 1) {
     $('.btn-success').hide();
+} else {
+    $('.btn-next').hide();
+    $('.btn-success').show();
 }
 
     $('.pag a').on('click', function() {

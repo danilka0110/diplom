@@ -133,9 +133,26 @@
 
 
 <div class="main">
-
+  <div class="container">
+    <div class="row text-center contacts-form">
+      <div class="col col-sm-12 col-sm-12 col-sm-12 col-lg-6 col-xl-6 order-xl-first order-lg-first order-md-last order-sm-last order-last">
+        <img src="img/contact.png" alt="" width="300" height="300">
+      </div>
+      <div class="col col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 order-md-2">
+        <div class="card">
+          <div class="card-body">
+            <h2>Наши контакты:</h2>
+            <div class="mt-5">
+              <img src="img/mail.png" alt="" width="32" height="32">
+              <span>paradigm.tests.help@gmail.com</span>
+            </div>
+            <p class="mt-5"><i>По вопросам о тестах, опросах и их создании обращаться на почту.</i></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
 
 
 <footer class="bg-dark text-center text-white">
