@@ -1,15 +1,12 @@
-.main {
-    background: repeating-linear-gradient(-180deg,rgba(147,26,222,0.83) 0%,rgba(28,206,234,0.82) 100%);
-}
-
 .contacts-form {
     margin-top: 12.5%;
     margin-bottom: 12.5%;
 }
 
 .contacts-form .card {
-    border-radius: 15px;
+    border-radius: 35px;
     height: 300px;
+    border: 1px solid rgba(159, 159, 159, 0.601);
 }
 
 .contacts-form p {

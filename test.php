@@ -55,9 +55,11 @@ if (isset($_POST['test'])) {
             $count_passes++;
             $test_for_count_passes->count_passes = $count_passes;
             R::store($test_for_count_passes);
-            save($test_id, $user);
-            savePsychologyTest($test_all_data, $test_id, $user->id, $date);
             $choises = $_POST;
+                if ($user) {
+                    save($test_id, $user);
+                    savePsychologyTest($test_all_data, $test_id, $user->id, $date);
+                }
             echo print_result_psychology_test($test_all_data, $test_id, $choises); // вывод результатов психологического теста
         } 
         
@@ -107,7 +109,7 @@ if (isset($_GET['test'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paradigm Tests</title>
+    <title>Тест №<?=$test_id?></title>
     <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">

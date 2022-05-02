@@ -1,9 +1,3 @@
-/*
-    ------------------------------------------
-                     система
-    ------------------------------------------
-*/
-
 * {
     margin: 0;
     padding: 0;
@@ -21,25 +15,59 @@ body {
     flex-direction: column;
 }
 
+footer, footer .lnk {
+    color: rgb(201, 201, 201);
+    text-decoration: none;
+    font-size: 15px;
+}
+
+footer .logo {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+footer .list-unstyled li a, footer .list-unstyled a{
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+footer .first-hr {
+    margin-top: 0px;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+}
+
+footer .second-hr {
+    margin-top: -14px;
+    color: rgb(236, 154, 154);
+    width: 25%;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+footer .second-hr {
+    margin-top: -14px;
+    color: rgb(236, 154, 154);
+    width: 25%;
+    font-size: 15px;
+}
+
+.footer-heading {
+    font-size: 24px;
+}
+
 .none {
     display:none;
 }
 
-/*
-    ------------------------------------------
-                    тело html
-    ------------------------------------------
-*/
 
 .main {
     flex: 1 0 auto;
 }
 
-/*
-    ------------------------------------------
-                      navbar
-    ------------------------------------------
-*/
 
 .navbar a {
     font-size: 18px;
@@ -58,7 +86,7 @@ body {
     border-radius: 10px;
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
+.navbar-dark .navbar-nav .nav-link:hover, footer .nav-link:hover {
     background: #0079bf69;
     color: #fff;
     border-radius: 10px;
@@ -96,14 +124,6 @@ body {
         margin-bottom: 5px;
     }
 }
-
-
-
-/*
-    ------------------------------------------
-        Страница reg log forgot and newpass
-    ------------------------------------------
-*/
 
 
 .contents {

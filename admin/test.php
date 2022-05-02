@@ -72,7 +72,7 @@ if (isset($_POST['btn-delete'])) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Админ. панель</title>
+	<title>Тест №<?=$test_id?></title>
 	<link rel="apple-touch-icon" sizes="57x57" href="../img/favicon/apple-icon-57x57.png">
 	<link rel="apple-touch-icon" sizes="60x60" href="../img/favicon/apple-icon-60x60.png">
 	<link rel="apple-touch-icon" sizes="72x72" href="../img/favicon/apple-icon-72x72.png">
@@ -267,7 +267,7 @@ if (isset($_POST['btn-delete'])) {
             <div class="main-body">
                 <nav aria-label="breadcrumb" class="main-breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="">Админ. профиль</a></li>
+                        <li class="breadcrumb-item"><a href="index">Админ. профиль</a></li>
                         <li class="breadcrumb-item active" aria-current="page"><a href="tests">Тесты</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Тест №<?=$test_id?></li>
                     </ol>

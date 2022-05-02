@@ -1,9 +1,5 @@
-.main {
-    background: repeating-linear-gradient(-45deg,rgba(147,26,222,0.83) 0%,rgba(28,206,234,0.82) 100%);
-}
-
 .about-content {
-    margin-top: 10%;
+    margin-top: 5%;
     margin-bottom: 10%;
 }
 
@@ -19,7 +15,7 @@
 }
 
 .card-text {
-    text-align: left;
+    text-align: center;
 }
 
 .card-second {

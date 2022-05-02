@@ -377,108 +377,100 @@
         </div>
     </div>
 
+<footer class="bg-dark text-center text-white">
+  <div class="container p-4">
+    <section class="mb-4">
+      <p>
+        Приложение разработано для прохождения и создания тестов и опросов, а так же для просмотра статистика и результатов тестирования. Приятного пользования :)
+      </p>
+    </section>
+		<footer class="footer-06">
+			<div class="container">
+				<div class="row pt-4">
+					<div class="col-md-3 col-lg-6 order-md-last">
+						<div class="row justify-content-end">
+							<div class="col-md-12 col-lg-9 text-md-right mb-md-0 mb-4">
+								<a href="/"><img src="img/icon.svg" alt="favicon" width="191" height="40" class="d-inline-block align-text-top" style="margin-top: -5px;"></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-9 col-lg-6">
+						<div class="row">
+							<div class="col-md-4 mb-md-0 mb-4">
+								<h2 class="footer-heading">Меню</h2>
+                <hr class="first-hr">
+                <hr class="second-hr">
+								<ul class="list-unstyled">
+		              <li>                      
+                    <a class="nav-link" aria-current="page" href="tests">
+                      <img src="img/tests.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                      <span style="margin-left: -3px;">Тесты</span>
+                    </a>
+                    
+                  </li>
 
+		              <li>                      
+                    <a class="nav-link" href="surveys">
+                      <img src="img/surveys.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                      <span style="margin-left: -3px;">Опросы</span>
+                    </a>
+                  </li>
+                    
+                  <li>                      
+                    <a class="nav-link" href="contacts">
+                      <img src="img/contacts.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                      <span style="margin-left: -3px;">Контакты</span>
+                    </a>
+                  </li>
 
-    <footer class="bg-dark text-center text-white">
-        <div class="container p-4">
-            <section class="mb-4">
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
-                    distinctio earum repellat quaerat voluptatibus placeat nam,
-                    commodi optio pariatur est quia magnam eum harum corrupti dicta,
-                    aliquam sequi voluptate quas.
-                </p>
-            </section>
+                  <li>                      
+                    <a class="nav-link" href="about">
+                      <img src="img/about.png" alt="favicon" width="24" height="24" class="d-inline-block align-text-top" style="margin-top: -3px">
+                      <span style="margin-left: -3px;">О нас</span>
+                    </a>
+                  </li>
+		            </ul>
+							</div>
+              <div class="col-md-4 mb-md-0 mb-4">
+								<h2 class="footer-heading">Соц. сети</h2>
+                <hr class="first-hr">
+                <hr class="second-hr">
+								<ul class="list-unstyled">
+                    <li class="nav-link">
+                    <img src="img/vk.png" alt="" width="30px" height="30px">
+                    <a href="">ВКонтакте</a>
+                  </li>
+                  <li class="nav-link">
+                    <img src="img/telegram.png" alt="" width="30px" height="30px">
+                    <a href="">Телеграм</a>
+                  </li>
+		            </ul>
+							</div>
+							<div class="col-md-4 mb-md-0 mb-4">
+								<h2 class="footer-heading">Контакты</h2>
+                <hr class="first-hr">
+                <hr class="second-hr">
+                <ul class="list-unstyled">
+                  <div>
+                    <li class="nav-link">
+                      <img src="img/mail.png" alt="" width="30" height="30">
+                      <span style="word-break: break-all; color: #fff">paradigm.tests.help@gmail.com</span>
+                    </li>
+                  </div>
+		            </ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+  </div>
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+    © <script>document.write(new Date().getFullYear());</script> Copyright:
+    <a class="text-white" href="/">Paradigm Tests</a>
+  </div>
+</footer>
 
-            <section class="">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase">Links</h5>
-
-                        <ul class="list-unstyled mb-0">
-                            <li>
-                                <a href="#!" class="text-white">Link 1</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 2</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 3</a>
-                            </li>
-                            <li>
-                                <a href="#!" class="text-white">Link 4</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-        </div>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2022 Copyright:
-            <a class="text-white" href="#">Paradigm Tests</a>
-        </div>
-    </footer>
-
-
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
     </script>
